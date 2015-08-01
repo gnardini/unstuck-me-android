@@ -19,7 +19,6 @@ public class CreateQuestionsFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_create_questions, container, false);
-        // TODO
         return v;
     }
 }
