@@ -5,4 +5,20 @@
         <!-- Customize your theme here. -->
     </style>
 
+    <style name="create_questions_image_quarter_screen">
+        <item name="android:layout_width">0px</item>
+        <item name="android:layout_height">fill_parent</item>
+        <item name="android:layout_weight">0.5</item>
+    </style>
+
+    <style name="image_upload">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:scaleType">centerCrop</item>
+    </style>
+
+    <style name="create_questions_button_remove_image">
+        <item name="android:layout_width">@dimen/button_height_short</item>
+        <item name="android:layout_height">@dimen/button_height_short</item>
+    </style>
 </resources>

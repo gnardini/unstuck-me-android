@@ -8,10 +8,10 @@ import android.view.ViewGroup;
 
 import ar.com.wolox.unstuckme.R;
 
-public class AnswersFragment extends Fragment {
+public class QuestionsFragment extends Fragment {
 
-    public static AnswersFragment newInstance() {
-        AnswersFragment f = new AnswersFragment();
+    public static QuestionsFragment newInstance() {
+        QuestionsFragment f = new QuestionsFragment();
         return f;
     }
 
