@@ -33,3 +33,4 @@ proguard/
 .navigation/
 
 *.iml
+app/app.iml
