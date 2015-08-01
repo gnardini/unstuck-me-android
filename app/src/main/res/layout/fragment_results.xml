@@ -20,4 +20,14 @@
 
     </android.support.v4.widget.SwipeRefreshLayout>
 
+    <ar.com.wolox.unstuckme.view.FontTextView
+        android:id="@+id/no_results"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:textSize="18dp"
+        android:textColor="@color/black"
+        android:textAllCaps="true"
+        android:visibility="gone"/>
+
 </LinearLayout>

@@ -9,14 +9,14 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import ar.com.wolox.unstuckme.R;
-
 import ar.com.wolox.unstuckme.adapter.ResultsTabsAdapter;
+import ar.com.wolox.unstuckme.view.SlidingTabLayout;
 
 public class AnswersFragment extends Fragment {
 
     private ViewPager mViewPager;
     private ResultsTabsAdapter mTabsAdapter;
-    private TabLayout mTabLayout;
+    private SlidingTabLayout mSlidingTabs;
 
     public static AnswersFragment newInstance() {
         AnswersFragment f = new AnswersFragment();
@@ -34,14 +34,14 @@ public class AnswersFragment extends Fragment {
 
     private void setUi(View v) {
         mViewPager = (ViewPager) v.findViewById(R.id.answers_pager);
-        mTabLayout = (TabLayout) v.findViewById(R.id.answers_tabs);
+        mSlidingTabs = (SlidingTabLayout) v.findViewById(R.id.answers_tabs);
     }
 
     private void init() {
         mTabsAdapter = new ResultsTabsAdapter(getActivity().getSupportFragmentManager(),
                 getActivity());
         mViewPager.setAdapter(mTabsAdapter);
-        mTabLayout.setTabsFromPagerAdapter(mTabsAdapter);
-        mTabLayout.setupWithViewPager(mViewPager);
+        mSlidingTabs.setViewPager(mViewPager);
+        mSlidingTabs.setDistributeEvenly(true);
     }
 }
