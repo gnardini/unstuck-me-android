@@ -5,6 +5,7 @@
         <!-- Customize your theme here. -->
     </style>
 
+
     <style name="create_questions_image_quarter_screen">
         <item name="android:layout_width">0px</item>
         <item name="android:layout_height">fill_parent</item>
@@ -21,4 +22,20 @@
         <item name="android:layout_width">@dimen/button_height_short</item>
         <item name="android:layout_height">@dimen/button_height_short</item>
     </style>
+
+    <style name="QuestionsImageContainer" >
+        <item name="android:layout_margin">@dimen/spacing_tiny</item>
+    </style>
+
+    <style name="QuestionsImage" >
+        <item name="android:scaleType">centerCrop</item>
+    </style>
+
+    <style name="QuestionsImageTick" >
+        <item name="android:scaleType">centerInside</item>
+        <item name="android:background">@color/black</item>
+        <item name="android:src">@drawable/ic_tick</item>
+    </style>
+
+
 </resources>

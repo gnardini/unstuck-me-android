@@ -23,7 +23,7 @@
         android:orientation="horizontal">
 
         <FrameLayout
-            android:id="@+id/main_tab_results"
+            android:id="@+id/main_tab_answers"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1">
@@ -41,7 +41,7 @@
             android:background="@color/gray_dark"/>
 
         <FrameLayout
-            android:id="@+id/main_tab_answer"
+            android:id="@+id/main_tab_questions"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1">
@@ -59,7 +59,7 @@
             android:background="@color/gray_dark"/>
 
         <FrameLayout
-            android:id="@+id/main_tab_create"
+            android:id="@+id/main_tab_create_question"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1">
