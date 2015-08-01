@@ -8,20 +8,20 @@ import android.view.View;
 import ar.com.wolox.unstuckme.R;
 import ar.com.wolox.unstuckme.fragment.AnswersFragment;
 import ar.com.wolox.unstuckme.fragment.CreateQuestionsFragment;
-import ar.com.wolox.unstuckme.fragment.ResultsFragment;
+import ar.com.wolox.unstuckme.fragment.QuestionsFragment;
 
 public class MainActivity extends FragmentActivity {
 
-    private final static int POSITION_RESULTS = 0;
-    private final static int POSITION_ANSWER = 1;
-    private final static int POSITION_CREATE = 2;
+    private final static int POSITION_ANSWERS = 0;
+    private final static int POSITION_QUESTIONS = 1;
+    private final static int POSITION_CREATE_QUESTIONS = 2;
 
-    private View mResultsTab;
-    private View mAnswerTab;
+    private View mAnswersTab;
+    private View mQuestionsTab;
     private View mCreateQuestionTab;
 
-    private ResultsFragment mResultsFragment;
     private AnswersFragment mAnswersFragment;
+    private QuestionsFragment mQuestionsFragment;
     private CreateQuestionsFragment mCreateQuestionsFragment;
 
     @Override
@@ -35,20 +35,20 @@ public class MainActivity extends FragmentActivity {
     }
 
     private void setUi() {
-        mResultsTab = findViewById(R.id.main_tab_results);
-        mAnswerTab = findViewById(R.id.main_tab_answer);
-        mCreateQuestionTab = findViewById(R.id.main_tab_create);
+        mAnswersTab = findViewById(R.id.main_tab_answers);
+        mQuestionsTab = findViewById(R.id.main_tab_questions);
+        mCreateQuestionTab = findViewById(R.id.main_tab_create_question);
     }
 
     private void init() {
-        mResultsTab.setTag(POSITION_RESULTS);
-        mAnswerTab.setTag(POSITION_ANSWER);
-        mCreateQuestionTab.setTag(POSITION_CREATE);
+        mAnswersTab.setTag(POSITION_ANSWERS);
+        mQuestionsTab.setTag(POSITION_QUESTIONS);
+        mCreateQuestionTab.setTag(POSITION_CREATE_QUESTIONS);
 
-        mResultsFragment = ResultsFragment.newInstance();
         mAnswersFragment = AnswersFragment.newInstance();
+        mQuestionsFragment = QuestionsFragment.newInstance();
         mCreateQuestionsFragment = CreateQuestionsFragment.newInstance();
-        setFragment(POSITION_RESULTS);
+        setFragment(POSITION_QUESTIONS);
     }
 
     private void setListeners() {
@@ -58,8 +58,8 @@ public class MainActivity extends FragmentActivity {
                 setFragment((int) view.getTag());
             }
         };
-        mResultsTab.setOnClickListener(onTabClickListener);
-        mAnswerTab.setOnClickListener(onTabClickListener);
+        mAnswersTab.setOnClickListener(onTabClickListener);
+        mQuestionsTab.setOnClickListener(onTabClickListener);
         mCreateQuestionTab.setOnClickListener(onTabClickListener);
     }
 
@@ -74,11 +74,11 @@ public class MainActivity extends FragmentActivity {
 
     private Fragment getFragment(int position) {
         switch (position) {
-            case POSITION_RESULTS:
-                return mResultsFragment;
-            case POSITION_ANSWER:
+            case POSITION_ANSWERS:
                 return mAnswersFragment;
-            case POSITION_CREATE:
+            case POSITION_QUESTIONS:
+                return mQuestionsFragment;
+            case POSITION_CREATE_QUESTIONS:
                 return mCreateQuestionsFragment;
         }
         return null;

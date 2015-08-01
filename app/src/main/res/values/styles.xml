@@ -5,4 +5,18 @@
         <!-- Customize your theme here. -->
     </style>
 
+    <style name="QuestionsImageContainer" >
+        <item name="android:layout_margin">@dimen/spacing_tiny</item>
+    </style>
+
+    <style name="QuestionsImage" >
+        <item name="android:scaleType">centerCrop</item>
+    </style>
+
+    <style name="QuestionsImageTick" >
+        <item name="android:scaleType">centerInside</item>
+        <item name="android:background">@color/black</item>
+        <item name="android:src">@drawable/ic_tick</item>
+    </style>
+
 </resources>
