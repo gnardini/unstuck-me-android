@@ -6,4 +6,15 @@
     <!-- Error Messages -->
     <string name="error.message.network">Network error</string>
 
+    <!-- Answers -->
+    <string name="my_answers">My Answers</string>
+    <string name="my_questions">My Questions</string>
+
+    <!-- Font names -->
+    <string name="font_montserrat">Montserrat-Regular</string>
+    <string name="font_open_sans_regular">OpenSans-Regular</string>
+    <string name="font_open_sans_bold">OpenSans-Bold</string>
+    <string name="font_open_sans_cond_bold">OpenSans-CondBold</string>
+    <string name="font_open_sans_semi_bold">OpenSans-Semibold</string>
+
 </resources>
