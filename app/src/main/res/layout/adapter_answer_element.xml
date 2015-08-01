@@ -6,24 +6,26 @@
     android:layout_weight="1">
 
     <ImageView
-        android:id="@+id/adapter_answers_image"
+        android:id="@+id/adapter_results_image"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:scaleType="centerCrop"/>
 
     <View
-        android:id="@+id/adapter_answers_highlight"
+        android:id="@+id/adapter_results_highlight"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/highlight_green" />
 
     <ar.com.wolox.unstuckme.view.FontTextView
-        android:id="@+id/adapter_answers_percentage"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:id="@+id/adapter_results_percentage"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
         android:layout_gravity="center"
-        android:textSize="20sp"
+        android:gravity="center"
+        android:textSize="18sp"
         android:textColor="@color/black"
+        android:background="@drawable/white_circle_background"
         app:font="@string/font_open_sans_semi_bold"/>
 
 </FrameLayout>

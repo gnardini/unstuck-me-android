@@ -4,6 +4,8 @@ import java.util.List;
 
 public class Question {
 
+    private static final int MAX_PERCENTAGE = 100;
+
     private int id;
     private List<Option> options;
 
@@ -26,5 +28,17 @@ public class Question {
             }
         }
         return maxIndex;
+    }
+
+    public int getTotalVotes() {
+        int votes = 0;
+        for (Option option : options) votes += option.getVotes();
+        return votes;
+    }
+
+    public void calculatePercentages() {
+        int total = getTotalVotes();
+        for (Option option : options) option.setPercentage(MAX_PERCENTAGE
+                * option.getVotes() / total);
     }
 }

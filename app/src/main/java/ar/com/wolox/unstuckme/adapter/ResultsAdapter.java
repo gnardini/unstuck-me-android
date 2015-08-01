@@ -16,16 +16,17 @@ import ar.com.wolox.unstuckme.R;
 import ar.com.wolox.unstuckme.model.Option;
 import ar.com.wolox.unstuckme.model.Question;
 
-public class AnswersAdapter extends BaseAdapter {
+public class ResultsAdapter extends BaseAdapter {
 
     private static final int MAX_IMAGES = 4;
+    private static final String PERCENTAGE = "%";
     private static final String PICTURE_ELEMENT = "adapter_answer_element_";
     private static final String ID = "id";
 
     private List<Question> mList;
     private Context mContext;
 
-    public AnswersAdapter(Context context, List<Question> list) {
+    public ResultsAdapter(Context context, List<Question> list) {
         mContext = context;
         mList = list;
     }
@@ -51,7 +52,7 @@ public class AnswersAdapter extends BaseAdapter {
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         ViewHolder v;
         if (view == null) {
-            view = inflater.inflate(R.layout.adapter_answers, parent, false);
+            view = inflater.inflate(R.layout.adapter_results, parent, false);
             if (view == null) return null;
             v = newViewHolder(view);
             view.setTag(v);
@@ -79,15 +80,30 @@ public class AnswersAdapter extends BaseAdapter {
             }
             v.mPictures[i].mImageHighlight.setVisibility((winner == i)
                     ? View.VISIBLE : View.GONE);
+            v.mPictures[i].mPercentage.setVisibility(View.GONE);
         }
     }
 
     private void setListeners(final Question question, final ViewHolder v, final View view) {
+        view.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                List<Option> options = question.getOptions();
+                for (int i = 0 ; i < options.size() ; i++) {
+                    v.mPictures[i].mPercentage.setVisibility(View.GONE);
+                }
+            }
+        });
         view.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View view) {
-
-                return false;
+                question.calculatePercentages();
+                List<Option> options = question.getOptions();
+                for (int i = 0 ; i < options.size() ; i++) {
+                    v.mPictures[i].mPercentage.setVisibility(View.VISIBLE);
+                    v.mPictures[i].mPercentage.setText(options.get(i).getPercentage() + PERCENTAGE);
+                }
+                return true;
             }
         });
     }
@@ -118,9 +134,9 @@ public class AnswersAdapter extends BaseAdapter {
 
         public PictureElement(View view) {
             mRoot = view;
-            mImage = (ImageView) view.findViewById(R.id.adapter_answers_image);
-            mPercentage = (TextView) view.findViewById(R.id.adapter_answers_percentage);
-            mImageHighlight = view.findViewById(R.id.adapter_answers_highlight);
+            mImage = (ImageView) view.findViewById(R.id.adapter_results_image);
+            mPercentage = (TextView) view.findViewById(R.id.adapter_results_percentage);
+            mImageHighlight = view.findViewById(R.id.adapter_results_highlight);
         }
     }
 }

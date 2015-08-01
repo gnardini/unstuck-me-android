@@ -1,15 +1,21 @@
 package ar.com.wolox.unstuckme.fragment;
 
-import android.widget.BaseAdapter;
+import android.os.Bundle;
+import android.support.design.widget.TabLayout;
+import android.support.v4.app.Fragment;
+import android.support.v4.view.ViewPager;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 
 import ar.com.wolox.unstuckme.R;
-import ar.com.wolox.unstuckme.adapter.AnswersAdapter;
-import ar.com.wolox.unstuckme.fragment.endless.EndlessScrollListFragment;
-import ar.com.wolox.unstuckme.model.Question;
-import ar.com.wolox.unstuckme.network.provider.MyAnswersProvider;
-import ar.com.wolox.unstuckme.network.provider.Provider;
+import ar.com.wolox.unstuckme.adapter.ResultsTabsAdapter;
 
-public class AnswersFragment extends EndlessScrollListFragment<Question> {
+public class AnswersFragment extends Fragment {
+
+    private ViewPager mViewPager;
+    private ResultsTabsAdapter mTabsAdapter;
+    private TabLayout mTabLayout;
 
     public static AnswersFragment newInstance() {
         AnswersFragment f = new AnswersFragment();
@@ -17,17 +23,24 @@ public class AnswersFragment extends EndlessScrollListFragment<Question> {
     }
 
     @Override
-    protected int layout() {
-        return R.layout.fragment_answers;
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        View v = inflater.inflate(R.layout.fragment_answers, container, false);
+        setUi(v);
+        init();
+        return v;
     }
 
-    @Override
-    protected Provider loadProvider() {
-        return new MyAnswersProvider();
+    private void setUi(View v) {
+        mViewPager = (ViewPager) v.findViewById(R.id.answers_pager);
+        mTabLayout = (TabLayout) v.findViewById(R.id.answers_tabs);
     }
 
-    @Override
-    protected BaseAdapter loadAdapter() {
-        return new AnswersAdapter(getActivity(), mList);
+    private void init() {
+        mTabsAdapter = new ResultsTabsAdapter(getActivity().getSupportFragmentManager(),
+                getActivity());
+        mViewPager.setAdapter(mTabsAdapter);
+        mTabLayout.setTabsFromPagerAdapter(mTabsAdapter);
+        mTabLayout.setupWithViewPager(mViewPager);
     }
 }

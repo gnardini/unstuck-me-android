@@ -5,6 +5,7 @@ public class Option {
     private int id;
     private String option;
     private int votes;
+    private int percentage;
 
     public int getId() {
         return id;
@@ -16,5 +17,13 @@ public class Option {
 
     public int getVotes() {
         return votes;
+    }
+
+    public int getPercentage() {
+        return percentage;
+    }
+
+    public void setPercentage(int percentage) {
+        this.percentage = percentage;
     }
 }

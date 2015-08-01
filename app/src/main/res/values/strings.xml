@@ -6,6 +6,10 @@
     <!-- Error Messages -->
     <string name="error.message.network">Network error</string>
 
+    <!-- Answers -->
+    <string name="my_answers">My Answers</string>
+    <string name="my_questions">My Questions</string>
+
     <!-- Font names -->
     <string name="font_montserrat">Montserrat-Regular</string>
     <string name="font_open_sans_regular">OpenSans-Regular</string>
