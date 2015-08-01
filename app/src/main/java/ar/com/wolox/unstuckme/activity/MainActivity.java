@@ -7,7 +7,6 @@ import android.view.View;
 
 import ar.com.wolox.unstuckme.R;
 import ar.com.wolox.unstuckme.fragment.AnswersFragment;
-import ar.com.wolox.unstuckme.fragment.results.ResultsFragment;
 import ar.com.wolox.unstuckme.fragment.CreateQuestionsFragment;
 
 public class MainActivity extends FragmentActivity {
@@ -50,12 +49,14 @@ public class MainActivity extends FragmentActivity {
         mQuestionsFragment = AnswersFragment.newInstance();
         mCreateQuestionsFragment = CreateQuestionsFragment.newInstance();
         setFragment(POSITION_QUESTIONS);
+        setTabSelected(mQuestionsTab);
     }
 
     private void setListeners() {
         View.OnClickListener onTabClickListener = new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                setTabSelected(view);
                 setFragment((int) view.getTag());
             }
         };
@@ -69,6 +70,8 @@ public class MainActivity extends FragmentActivity {
         if (fragment == null) return;
         getSupportFragmentManager()
                 .beginTransaction()
+                .setCustomAnimations(R.anim.abc_grow_fade_in_from_bottom,
+                        R.anim.abc_shrink_fade_out_from_bottom)
                 .replace(R.id.activity_main_container, fragment)
                 .commit();
     }
@@ -83,5 +86,25 @@ public class MainActivity extends FragmentActivity {
                 return mCreateQuestionsFragment;
         }
         return null;
+    }
+
+    private void setTabSelected(View view) {
+        switch ((int) view.getTag()) {
+            case POSITION_ANSWERS:
+                mAnswersTab.setSelected(true);
+                mQuestionsTab.setSelected(false);
+                mCreateQuestionTab.setSelected(false);
+                break;
+            case POSITION_QUESTIONS:
+                mAnswersTab.setSelected(false);
+                mQuestionsTab.setSelected(true);
+                mCreateQuestionTab.setSelected(false);
+                break;
+            case POSITION_CREATE_QUESTIONS:
+                mAnswersTab.setSelected(false);
+                mQuestionsTab.setSelected(false);
+                mCreateQuestionTab.setSelected(true);
+                break;
+        }
     }
 }
