@@ -1,0 +1,9 @@
+<resources>
+
+    <!-- General -->
+    <string name="app_name">Unstuck Me</string>
+
+    <!-- Error Messages -->
+    <string name="error.message.network">Network error</string>
+
+</resources>
