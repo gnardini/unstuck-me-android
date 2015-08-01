@@ -11,6 +11,7 @@
 # Generated files
 bin/
 gen/
+.idea/
 
 # Gradle files
 .gradle/
@@ -25,5 +26,5 @@ proguard/
 # Log Files
 *.log
 
-# OSX
-.DS_Store
+# Android Studio Navigation editor temp files
+.navigation/
