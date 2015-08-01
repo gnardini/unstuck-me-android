@@ -2,7 +2,8 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:background="@color/white">
 
     <FrameLayout
         android:id="@+id/activity_main_container"
@@ -15,7 +16,7 @@
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:background="@color/gray_dark" />
+        android:background="@color/black" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -38,7 +39,7 @@
         <View
             android:layout_width="1dp"
             android:layout_height="match_parent"
-            android:background="@color/gray_dark"/>
+            android:background="@color/black"/>
 
         <FrameLayout
             android:id="@+id/main_tab_questions"
@@ -56,7 +57,7 @@
         <View
             android:layout_width="1dp"
             android:layout_height="match_parent"
-            android:background="@color/gray_dark"/>
+            android:background="@color/black"/>
 
         <FrameLayout
             android:id="@+id/main_tab_create_question"

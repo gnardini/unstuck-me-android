@@ -41,7 +41,7 @@ public class UnstuckMeApplication extends Application {
                 .setRequestInterceptor(sSecureRequestInterceptor)
                 .build();
 
-        sQuestionsService = apiaryAdapter.create(QuestionsService.class);
+        sQuestionsService = apiAdapter.create(QuestionsService.class);
     }
 
     public static Context getAppContext() {

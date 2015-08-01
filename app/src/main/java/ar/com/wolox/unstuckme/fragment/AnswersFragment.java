@@ -1,22 +1,15 @@
 package ar.com.wolox.unstuckme.fragment;
 
-import android.os.Bundle;
-import android.support.v4.app.Fragment;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-
-import java.util.LinkedList;
-import java.util.List;
+import android.widget.BaseAdapter;
 
 import ar.com.wolox.unstuckme.R;
-import ar.com.wolox.unstuckme.UnstuckMeApplication;
+import ar.com.wolox.unstuckme.adapter.AnswersAdapter;
+import ar.com.wolox.unstuckme.fragment.endless.EndlessScrollListFragment;
 import ar.com.wolox.unstuckme.model.Question;
-import retrofit.Callback;
-import retrofit.RetrofitError;
-import retrofit.client.Response;
+import ar.com.wolox.unstuckme.network.provider.MyAnswersProvider;
+import ar.com.wolox.unstuckme.network.provider.Provider;
 
-public class AnswersFragment extends Fragment {
+public class AnswersFragment extends EndlessScrollListFragment<Question> {
 
     public static AnswersFragment newInstance() {
         AnswersFragment f = new AnswersFragment();
@@ -24,10 +17,17 @@ public class AnswersFragment extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.fragment_answers, container, false);
+    protected int layout() {
+        return R.layout.fragment_answers;
+    }
 
-        return v;
+    @Override
+    protected Provider loadProvider() {
+        return new MyAnswersProvider();
+    }
+
+    @Override
+    protected BaseAdapter loadAdapter() {
+        return new AnswersAdapter(getActivity(), mList);
     }
 }
