@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import ar.com.wolox.unstuckme.R;
+
 import ar.com.wolox.unstuckme.adapter.ResultsTabsAdapter;
 
 public class AnswersFragment extends Fragment {
