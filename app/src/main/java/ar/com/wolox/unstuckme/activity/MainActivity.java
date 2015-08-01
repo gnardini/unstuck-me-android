@@ -6,6 +6,9 @@ import android.support.v4.app.FragmentActivity;
 import android.view.View;
 
 import ar.com.wolox.unstuckme.R;
+import ar.com.wolox.unstuckme.fragment.AnswersFragment;
+import ar.com.wolox.unstuckme.fragment.CreateQuestionsFragment;
+import ar.com.wolox.unstuckme.fragment.ResultsFragment;
 
 public class MainActivity extends FragmentActivity {
 
@@ -16,6 +19,10 @@ public class MainActivity extends FragmentActivity {
     private View mResultsTab;
     private View mAnswerTab;
     private View mCreateQuestionTab;
+
+    private ResultsFragment mResultsFragment;
+    private AnswersFragment mAnswersFragment;
+    private CreateQuestionsFragment mCreateQuestionsFragment;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -37,6 +44,11 @@ public class MainActivity extends FragmentActivity {
         mResultsTab.setTag(POSITION_RESULTS);
         mAnswerTab.setTag(POSITION_ANSWER);
         mCreateQuestionTab.setTag(POSITION_CREATE);
+
+        mResultsFragment = ResultsFragment.newInstance();
+        mAnswersFragment = AnswersFragment.newInstance();
+        mCreateQuestionsFragment = CreateQuestionsFragment.newInstance();
+        setFragment(POSITION_RESULTS);
     }
 
     private void setListeners() {
@@ -53,6 +65,7 @@ public class MainActivity extends FragmentActivity {
 
     private void setFragment(int position) {
         Fragment fragment = getFragment(position);
+        if (fragment == null) return;
         getSupportFragmentManager()
                 .beginTransaction()
                 .replace(R.id.activity_main_container, fragment)
@@ -62,11 +75,12 @@ public class MainActivity extends FragmentActivity {
     private Fragment getFragment(int position) {
         switch (position) {
             case POSITION_RESULTS:
-                return null;
+                return mResultsFragment;
             case POSITION_ANSWER:
-                return null;
+                return mAnswersFragment;
             case POSITION_CREATE:
-                return null;
+                return mCreateQuestionsFragment;
         }
+        return null;
     }
 }
