@@ -8,6 +8,7 @@ import android.view.View;
 import ar.com.wolox.unstuckme.R;
 import ar.com.wolox.unstuckme.fragment.AnswersFragment;
 import ar.com.wolox.unstuckme.fragment.CreateQuestionsFragment;
+import ar.com.wolox.unstuckme.fragment.QuestionsFragment;
 
 public class MainActivity extends FragmentActivity {
 
@@ -20,8 +21,7 @@ public class MainActivity extends FragmentActivity {
     private View mCreateQuestionTab;
 
     private AnswersFragment mAnswersFragment;
-
-    private AnswersFragment mQuestionsFragment;
+    private QuestionsFragment mQuestionsFragment;
     private CreateQuestionsFragment mCreateQuestionsFragment;
 
     @Override
@@ -46,7 +46,7 @@ public class MainActivity extends FragmentActivity {
         mCreateQuestionTab.setTag(POSITION_CREATE_QUESTIONS);
 
         mAnswersFragment = AnswersFragment.newInstance();
-        mQuestionsFragment = AnswersFragment.newInstance();
+        mQuestionsFragment = QuestionsFragment.newInstance();
         mCreateQuestionsFragment = CreateQuestionsFragment.newInstance();
         setFragment(POSITION_QUESTIONS);
         setTabSelected(mQuestionsTab);
