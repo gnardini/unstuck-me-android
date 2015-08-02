@@ -36,7 +36,7 @@ public interface QuestionsService {
             Callback<QuestionNew> cb);
 
     @POST(Configuration.API_PREFIX + "questions/vote")
-    void sendVotes(@Body VotesBatch votesBatch, Callback<List<Question>> db);
+    void sendVotes(@Body VotesBatch votesBatch, Callback<Void> db);
 
 
     @GET(Configuration.API_PREFIX + "questions/{question_id}")
