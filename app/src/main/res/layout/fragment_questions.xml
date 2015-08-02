@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:fresco="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
@@ -30,10 +31,13 @@
                     android:layout_weight="0.5"
                     style="@style/QuestionsImageContainer">
 
-                    <ImageView
+                    <com.facebook.drawee.view.SimpleDraweeView
                         android:id="@+id/questions_imageview_answer_1"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
+                        fresco:progressBarImage="@drawable/ic_loader_spinner"
+                        fresco:progressBarImageScaleType="centerInside"
+                        fresco:progressBarAutoRotateInterval="1500"
                         style="@style/QuestionsImage"/>
 
                     <ImageView
@@ -51,10 +55,13 @@
                     android:layout_weight="0.5"
                     style="@style/QuestionsImageContainer">
 
-                    <ImageView
+                    <com.facebook.drawee.view.SimpleDraweeView
                         android:id="@+id/questions_imageview_answer_2"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
+                        fresco:progressBarImage="@drawable/ic_loader_spinner"
+                        fresco:progressBarImageScaleType="centerInside"
+                        fresco:progressBarAutoRotateInterval="1500"
                         style="@style/QuestionsImage"/>
 
                     <ImageView
@@ -82,10 +89,13 @@
                     android:layout_weight="0.5"
                     style="@style/QuestionsImageContainer">
 
-                    <ImageView
+                    <com.facebook.drawee.view.SimpleDraweeView
                         android:id="@+id/questions_imageview_answer_3"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
+                        fresco:progressBarImage="@drawable/ic_loader_spinner"
+                        fresco:progressBarImageScaleType="centerInside"
+                        fresco:progressBarAutoRotateInterval="1500"
                         style="@style/QuestionsImage"/>
 
                     <ImageView
@@ -103,10 +113,13 @@
                     android:layout_weight="0.5"
                     style="@style/QuestionsImageContainer">
 
-                    <ImageView
+                    <com.facebook.drawee.view.SimpleDraweeView
                         android:id="@+id/questions_imageview_answer_4"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
+                        fresco:progressBarImage="@drawable/ic_loader_spinner"
+                        fresco:progressBarImageScaleType="centerInside"
+                        fresco:progressBarAutoRotateInterval="1500"
                         style="@style/QuestionsImage"/>
 
                     <ImageView
