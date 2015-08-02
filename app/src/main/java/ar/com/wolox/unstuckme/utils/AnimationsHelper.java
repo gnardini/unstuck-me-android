@@ -17,4 +17,11 @@ public class AnimationsHelper {
         view.startAnimation(animation);
     }
 
+    public static void scaleDecelerate(View view) {
+        Animation animation = AnimationUtils.loadAnimation(
+                UnstuckMeApplication.getAppContext(),
+                R.anim.scale_anticipate);
+        view.startAnimation(animation);
+    }
+
 }
