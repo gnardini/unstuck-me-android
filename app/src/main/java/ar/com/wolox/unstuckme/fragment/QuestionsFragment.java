@@ -65,7 +65,6 @@ public class QuestionsFragment extends Fragment implements SwipeRefreshLayout.On
             mAnswerImagesTick.get(tickPos).setVisibility(View.VISIBLE);
 
             AnimationsHelper.popImage(view, Configuration.NEXT_QUESTION_DELAY);
-            /*
             populateNextQuestionDelayed();
 
             switch (view.getId()) {
@@ -82,7 +81,6 @@ public class QuestionsFragment extends Fragment implements SwipeRefreshLayout.On
                     voteOption(mQuestionList.get(mQuestionIndex).getOptions().get(3));
                     break;
             }
-            */
         }
     };
 
@@ -190,15 +188,6 @@ public class QuestionsFragment extends Fragment implements SwipeRefreshLayout.On
         //Populate image views
         int i = 0;
         for (Option option : mQuestionList.get(mQuestionIndex).getOptions()) {
-            /*
-            Glide.with(this)
-                    .load(CloudinaryUtils.getQuestionCompressedImage(option.getImageUrl()))
-                    .placeholder(R.drawable.loading_spinner)
-                    .centerCrop()
-                    .crossFade()
-                    .placeholder(R.drawable.nav_panda)
-                    .into(mAnswerImages.get(i));
-                    */
             Uri uri = Uri.parse(CloudinaryUtils.getQuestionCompressedImage(option.getImageUrl()));
             mAnswerImages.get(i).setImageURI(uri);
             mAnswerImages.get(i).setVisibility(View.VISIBLE);

@@ -6,7 +6,25 @@
     android:background="@color/red">
 
     <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:src="@drawable/topbar_logo"
+        android:layout_gravity="center"/>
+
+    <ImageView
         android:id="@+id/toolbar_share"
+        android:layout_width="40dp"
+        android:layout_height="match_parent"
+        android:layout_gravity="right"
+        android:layout_marginRight="48dp"
+        android:paddingRight="10dp"
+        android:paddingLeft="10dp"
+        android:background="@drawable/pressable_red"
+        android:scaleType="fitCenter"
+        android:src="@drawable/ic_share"/>
+
+    <ImageView
+        android:id="@+id/toolbar_user"
         android:layout_width="40dp"
         android:layout_height="match_parent"
         android:layout_gravity="right"
@@ -15,12 +33,6 @@
         android:paddingLeft="10dp"
         android:background="@drawable/pressable_red"
         android:scaleType="fitCenter"
-        android:src="@drawable/ic_share"/>
-
-    <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:src="@drawable/topbar_logo"
-        android:layout_gravity="center"/>
+        android:src="@drawable/ic_profile"/>
 
 </FrameLayout>

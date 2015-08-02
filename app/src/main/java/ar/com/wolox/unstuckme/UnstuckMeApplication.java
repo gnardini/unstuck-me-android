@@ -15,6 +15,7 @@ import java.util.Map;
 
 import ar.com.wolox.unstuckme.model.QuestionNew;
 import ar.com.wolox.unstuckme.network.QuestionsService;
+import ar.com.wolox.unstuckme.network.UserService;
 import ar.com.wolox.unstuckme.network.interceptor.SecureRequestInterceptor;
 import ar.com.wolox.unstuckme.network.serializer.QuestionNewSerializer;
 import ar.com.wolox.unstuckme.utils.PushNotificationUtils;
@@ -29,6 +30,7 @@ public class UnstuckMeApplication extends Application {
     private static Cloudinary sCloudinary;
 
     public static QuestionsService sQuestionsService;
+    public static UserService sUserService;
 
     static {
         buildRestServices();
@@ -53,6 +55,7 @@ public class UnstuckMeApplication extends Application {
 
         apiAdapter.setLogLevel(RestAdapter.LogLevel.FULL);
         sQuestionsService = apiAdapter.create(QuestionsService.class);
+        sUserService = apiAdapter.create(UserService.class);
 
         sCloudinary = configCloudinary();
     }
