@@ -30,11 +30,9 @@ import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
 
-public class QuestionsFragment extends Fragment
-        implements SwipeRefreshLayout.OnRefreshListener {
+public class QuestionsFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
 
     private static final String PLAIN_TEXT = "text/plain";
-    private static final String SHARE_QUESTION_ID = "share_question_id";
 
     private List<ImageView> mAnswerImages = new ArrayList<>();
     private List<ImageView> mAnswerImagesTick = new ArrayList<>();
@@ -178,7 +176,7 @@ public class QuestionsFragment extends Fragment
                     .load(CloudinaryUtils.getQuestionCompressedImage(option.getImageUrl()))
                     .centerCrop()
                     .crossFade()
-                    .placeholder(null)
+                    .placeholder(R.drawable.nav_panda)
                     .into(mAnswerImages.get(i));
             mAnswerImages.get(i).setVisibility(View.VISIBLE);
             mAnswerImagesTick.get(i).setVisibility(View.GONE);
