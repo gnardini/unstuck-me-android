@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -18,15 +17,11 @@ import android.widget.Toast;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Set;
 
-import ar.com.wolox.unstuckme.Configuration;
 import ar.com.wolox.unstuckme.R;
-import ar.com.wolox.unstuckme.UnstuckMeApplication;
-import ar.com.wolox.unstuckme.model.Option;
+import ar.com.wolox.unstuckme.utils.AnimationsHelper;
 import ar.com.wolox.unstuckme.utils.ImageEraseListener;
 import ar.com.wolox.unstuckme.utils.ImageUploadListener;
 import ar.com.wolox.unstuckme.utils.QuestionBuilder;
@@ -105,6 +100,7 @@ public class CreateQuestionsFragment extends Fragment {
         mImageErase4 = (ImageButton) v.findViewById(R.id.create_questions_image_erase_4);
 
         mReadyButton = (ImageView) v.findViewById(R.id.upload_ready);
+        mReadyButton.setVisibility(View.GONE);
     }
 
     private void setListeners(final View v) {
@@ -185,6 +181,8 @@ public class CreateQuestionsFragment extends Fragment {
                     break;
             }
 
+                setReadyButton();
+
             if (imageView != null) {
                 imageView.setImageBitmap(decodeFile(picturePath));
                 placeholderView.setVisibility(View.GONE);
@@ -230,5 +228,14 @@ public class CreateQuestionsFragment extends Fragment {
             return BitmapFactory.decodeStream(new FileInputStream(path), null, o2);
         } catch (FileNotFoundException e) {}
         return null;
+    }
+
+    private void setReadyButton() {
+        if (countEffectiveImages() >= MIN_IMAGES_TO_UPLOAD) {
+            mReadyButton.setVisibility(View.VISIBLE);
+            AnimationsHelper.popImage(mReadyButton, 1000);
+        } else {
+            mReadyButton.setVisibility(View.GONE);
+        }
     }
 }
