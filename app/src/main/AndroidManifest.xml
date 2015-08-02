@@ -31,9 +31,9 @@
                 <action android:name="android.intent.action.VIEW" />
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
-                <data android:scheme="http"
-                      android:host="heinrichlucas0.wix.com"
-                      android:pathPrefix="/app-landing-page-es" />
+                <!--<data android:scheme="http"-->
+                      <!--android:host="heinrichlucas0.wix.com"-->
+                      <!--android:pathPrefix="/app-landing-page-es" />-->
             </intent-filter>
         </activity>
 
