@@ -2,15 +2,14 @@
     xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="ar.com.wolox.unstuckme.fragment.create_question.ShareQuestionFragment"
-    android:background="@color/dark_gray">
+    android:background="@color/gray">
 
 
     <ImageView
         android:id="@+id/create_questions_share_goto_app"
         android:layout_width="fill_parent"
-        android:layout_height="@dimen/button_height_tall"
-        android:src="@drawable/ic_share"
-        android:scaleType="fitCenter"
+        android:layout_height="100dp"
+        android:src="@drawable/ic_share_black"
         android:layout_centerVertical="true"/>
 
     <TextView
