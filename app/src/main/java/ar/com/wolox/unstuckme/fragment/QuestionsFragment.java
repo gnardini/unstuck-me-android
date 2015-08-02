@@ -139,17 +139,22 @@ public class QuestionsFragment extends Fragment implements SwipeRefreshLayout.On
                 mLoadingView.setVisibility(View.GONE);
                 mNoResults.setVisibility(View.GONE);
                 mRefreshView.setRefreshing(false);
+                mRefreshView.setEnabled(false);
                 if (questions.size() == 0) {
                     clearViews();
                     mNoMorePages = true;
                     sendVotesBatch();
-                    if (mWaitingForQuestions) mNoResults.setVisibility(View.VISIBLE);
+                    if (mWaitingForQuestions) {
+                        mNoResults.setVisibility(View.VISIBLE);
+                        mRefreshView.setEnabled(true);
+                    }
                     return;
                 }
                 int size = mQuestionList.size();
                 addQuestionsWithoutDuplicates(questions);
                 if (mQuestionList.size() == size) {
                     mNoResults.setVisibility(View.VISIBLE);
+                    mRefreshView.setEnabled(true);
                     mNoMorePages = true;
                     sendVotesBatch();
                     clearViews();
@@ -167,6 +172,7 @@ public class QuestionsFragment extends Fragment implements SwipeRefreshLayout.On
                 mNoResults.setVisibility(View.VISIBLE);
                 mLoadingView.setVisibility(View.GONE);
                 mRefreshView.setRefreshing(false);
+                mRefreshView.setRefreshing(true);
             }
         });
     }
