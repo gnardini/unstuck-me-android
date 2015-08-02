@@ -101,11 +101,12 @@
         </LinearLayout>
     </LinearLayout>
 
-    <ImageButton
+    <ImageView
         android:id="@+id/upload_ready"
-        android:layout_width="@dimen/button_height_tall"
-        android:layout_height="@dimen/button_height_tall"
+        android:layout_width="90dp"
+        android:layout_height="90dp"
         android:layout_centerVertical="true"
         android:layout_centerHorizontal="true"
+        android:src="@drawable/ic_upload_paperplane"
         />
 </RelativeLayout>

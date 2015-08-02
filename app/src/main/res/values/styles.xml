@@ -30,6 +30,7 @@
     <style name="create_questions_button_remove_image">
         <item name="android:layout_width">@dimen/button_height_short</item>
         <item name="android:layout_height">@dimen/button_height_short</item>
+        <item name="android:background">@drawable/ic_no_np</item>
     </style>
 
     <style name="create_questions_end">

@@ -52,7 +52,7 @@ public class CreateQuestionsFragment extends Fragment {
     ImageButton mImageErase3;
     ImageButton mImageErase4;
 
-    ImageButton mReadyButton;
+    ImageView mReadyButton;
     View.OnClickListener mOpenGallery;
     View.OnClickListener mEraseImageListener;
 
@@ -92,7 +92,7 @@ public class CreateQuestionsFragment extends Fragment {
         mImageErase2 = (ImageButton) v.findViewById(R.id.create_questions_image_erase_2);
         mImageErase3 = (ImageButton) v.findViewById(R.id.create_questions_image_erase_3);
         mImageErase4 = (ImageButton) v.findViewById(R.id.create_questions_image_erase_4);
-        mReadyButton = (ImageButton) v.findViewById(R.id.upload_ready);
+        mReadyButton = (ImageView) v.findViewById(R.id.upload_ready);
     }
 
     private void setListeners(View v) {
@@ -170,8 +170,8 @@ public class CreateQuestionsFragment extends Fragment {
 
             if (imageView != null) {
 //                imageView.setImageDrawable();
-//                imageView.setImageBitmap(decodeFile(picturePath));
-                imageView.setImageURI(selectedImageUri);
+                imageView.setImageBitmap(decodeFile(picturePath));
+//                imageView.setImageURI(selectedImageUri);
             }
         }
     }
