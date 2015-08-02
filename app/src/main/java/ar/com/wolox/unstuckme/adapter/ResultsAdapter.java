@@ -80,7 +80,8 @@ public class ResultsAdapter extends BaseAdapter {
             } else {
                 v.mPictures[i].mRoot.setVisibility(View.GONE);
             }
-            v.mPictures[i].mImageHighlight.setVisibility((winner == i && winner > 1)
+            v.mPictures[i].mImageHighlight.setVisibility((winner == i
+                    && options.get(winner).getVotes() > 1)
                     ? View.VISIBLE : View.GONE);
         }
     }
