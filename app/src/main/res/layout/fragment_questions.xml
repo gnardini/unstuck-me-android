@@ -40,7 +40,7 @@
                         android:id="@+id/questions_imageview_answer_tick_1"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        style="@style/QuestionsImageTick"
+                        style="@style/QuestionsImageVoted"
                         android:visibility="gone"/>
 
                 </FrameLayout>
@@ -61,7 +61,7 @@
                         android:id="@+id/questions_imageview_answer_tick_2"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        style="@style/QuestionsImageTick"
+                        style="@style/QuestionsImageVoted"
                         android:visibility="gone"/>
 
                 </FrameLayout>
@@ -92,7 +92,7 @@
                         android:id="@+id/questions_imageview_answer_tick_3"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        style="@style/QuestionsImageTick"
+                        style="@style/QuestionsImageVoted"
                         android:visibility="gone"/>
 
                 </FrameLayout>
@@ -113,7 +113,7 @@
                         android:id="@+id/questions_imageview_answer_tick_4"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        style="@style/QuestionsImageTick"
+                        style="@style/QuestionsImageVoted"
                         android:visibility="gone"/>
 
                 </FrameLayout>
