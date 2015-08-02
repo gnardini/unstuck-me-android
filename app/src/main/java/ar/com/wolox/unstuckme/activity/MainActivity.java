@@ -1,5 +1,6 @@
 package ar.com.wolox.unstuckme.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
@@ -26,6 +27,7 @@ public class MainActivity extends FragmentActivity {
     private View mQuestionsTab;
     private View mCreateQuestionTab;
     private View mShare;
+    private View mProfile;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -42,6 +44,7 @@ public class MainActivity extends FragmentActivity {
         mQuestionsTab = findViewById(R.id.main_tab_questions);
         mCreateQuestionTab = findViewById(R.id.main_tab_create_question);
         mShare = findViewById(R.id.toolbar_share);
+        mProfile = findViewById(R.id.toolbar_user);
     }
 
     private void init() {
@@ -88,6 +91,12 @@ public class MainActivity extends FragmentActivity {
                 EventBus.getDefault().post(new ShareEvent());
             }
         });
+        mProfile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(MainActivity.this, UserActivity.class));
+            }
+        });
     }
 
     private void setTabSelected(View view) {
@@ -102,6 +111,7 @@ public class MainActivity extends FragmentActivity {
                 fm.popBackStack();
             }
         }
+        mShare.setVisibility(position == POSITION_QUESTIONS ? View.VISIBLE : View.GONE);
         mViewPager.setCurrentItem(position);
     }
 }
