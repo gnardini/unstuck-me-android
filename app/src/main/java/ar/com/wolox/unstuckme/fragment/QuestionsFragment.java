@@ -1,9 +1,11 @@
 package ar.com.wolox.unstuckme.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -21,18 +23,24 @@ import ar.com.wolox.unstuckme.UnstuckMeApplication;
 import ar.com.wolox.unstuckme.model.Option;
 import ar.com.wolox.unstuckme.model.Question;
 import ar.com.wolox.unstuckme.model.VotesBatch;
+import ar.com.wolox.unstuckme.model.event.ShareEvent;
+import ar.com.wolox.unstuckme.utils.CloudinaryUtils;
+import de.greenrobot.event.EventBus;
 import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
 
-public class QuestionsFragment extends Fragment {
+public class QuestionsFragment extends Fragment
+        implements SwipeRefreshLayout.OnRefreshListener {
 
     private static final String PLAIN_TEXT = "text/plain";
     private static final String SHARE_QUESTION_ID = "share_question_id";
 
     private List<ImageView> mAnswerImages = new ArrayList<>();
     private List<ImageView> mAnswerImagesTick = new ArrayList<>();
-    private View mShare;
+    private View mNoResults;
+    private View mLoadingView;
+    private SwipeRefreshLayout mRefreshView;
 
     private Integer mQuestionIndex = null;
     private List<Question> mQuestionList = new ArrayList<>();
@@ -67,12 +75,8 @@ public class QuestionsFragment extends Fragment {
         }
     };
 
-    public static QuestionsFragment newInstance(int questionId) {
+    public static QuestionsFragment newInstance() {
         QuestionsFragment f = new QuestionsFragment();
-        Bundle args = new Bundle();
-        if (questionId != Configuration.QUESTION_ID_ERROR)
-            args.putInt(SHARE_QUESTION_ID, questionId);
-        f.setArguments(args);
         return f;
     }
 
@@ -87,7 +91,6 @@ public class QuestionsFragment extends Fragment {
         return v;
     }
 
-
     private void setUi(View view) {
         mAnswerImages.add( (ImageView) view.findViewById(R.id.questions_imageview_answer_1));
         mAnswerImages.add( (ImageView) view.findViewById(R.id.questions_imageview_answer_2));
@@ -99,58 +102,33 @@ public class QuestionsFragment extends Fragment {
         mAnswerImagesTick.add((ImageView) view.findViewById(R.id.questions_imageview_answer_tick_3));
         mAnswerImagesTick.add((ImageView) view.findViewById(R.id.questions_imageview_answer_tick_4));
 
+        mNoResults = view.findViewById(R.id.no_results);
+        mLoadingView = view.findViewById(R.id.questions_loading);
+        mRefreshView = (SwipeRefreshLayout) view.findViewById(R.id.refresh_view);
     }
 
     private void init() {
         mHandler = new Handler(Looper.getMainLooper());
-        Bundle args = getArguments();
-        if (args != null && args.containsKey(SHARE_QUESTION_ID)) {
-            int shareQuestionId = args.getInt(SHARE_QUESTION_ID);
-            if (shareQuestionId == Configuration.QUESTION_ID_ERROR) getQuestions();
-            else getQuestion(shareQuestionId);
-        } else getQuestions();
+        getQuestions();
     }
 
     private void setListeners() {
         for (View view : mAnswerImages) {
             view.setOnClickListener(mImageAnswerClickListener);
         }
-        /*
-        mShare.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent sendIntent = new Intent();
-                sendIntent.setAction(Intent.ACTION_SEND);
-                sendIntent.putExtra(Intent.EXTRA_TEXT, Configuration.WEB_PAGE
-                        + mQuestionList.get(mQuestionIndex).getId());
-                sendIntent.setType(PLAIN_TEXT);
-                getActivity().startActivity(sendIntent);
-            }
-        });
-        */
-    }
-
-    private void getQuestion(int questionId) {
-        UnstuckMeApplication.sQuestionsService.getQuestion(questionId, new Callback<Question>() {
-            @Override
-            public void success(Question question, Response response) {
-                mQuestionList.add(question);
-            }
-
-            @Override
-            public void failure(RetrofitError error) {
-                Log.e("Error", error.toString());
-                //Do nothing...
-            }
-        });
+        mRefreshView.setOnRefreshListener(this);
     }
 
     private void getQuestions() {
         UnstuckMeApplication.sQuestionsService.getQuestions(new Callback<List<Question>>() {
             @Override
             public void success(List<Question> questions, Response response) {
+                mLoadingView.setVisibility(View.GONE);
+                mRefreshView.setRefreshing(false);
                 if (questions.size() == 0) {
                     mNoMorePages = true;
+                    sendVotesBatch();
+                    if (mWaitingForQuestions) mNoResults.setVisibility(View.VISIBLE);
                     return;
                 }
                 addQuestionsWithoutDuplicates(questions);
@@ -163,7 +141,9 @@ public class QuestionsFragment extends Fragment {
             @Override
             public void failure(RetrofitError error) {
                 Log.e("Error", error.toString());
-                //Do nothing...
+                mNoResults.setVisibility(View.VISIBLE);
+                mLoadingView.setVisibility(View.GONE);
+                mRefreshView.setRefreshing(false);
             }
         });
     }
@@ -171,10 +151,8 @@ public class QuestionsFragment extends Fragment {
     private void populateNextQuestion() {
         if (getActivity() == null) return;
 
-        if (mQuestionIndex == null)
-            mQuestionIndex = 0;
-        else
-            mQuestionIndex++;
+        if (mQuestionIndex == null) mQuestionIndex = 0;
+        else mQuestionIndex++;
 
         //Clean views
         for (View view : mAnswerImages) {
@@ -187,6 +165,9 @@ public class QuestionsFragment extends Fragment {
         //If this is the last question do nothing, wait and cry
         if (mQuestionList.size() == mQuestionIndex) {
             mWaitingForQuestions = true;
+            if (mNoMorePages) mNoResults.setVisibility(View.VISIBLE);
+            else mLoadingView.setVisibility(View.VISIBLE);
+            if (mQuestionIndex < Configuration.QUESTIONS_PAGE_THRESHOLD) getQuestions();
             return;
         }
 
@@ -194,7 +175,7 @@ public class QuestionsFragment extends Fragment {
         int i = 0;
         for (Option option : mQuestionList.get(mQuestionIndex).getOptions()) {
             Glide.with(this)
-                    .load(option.getImageUrl())
+                    .load(CloudinaryUtils.getQuestionCompressedImage(option.getImageUrl()))
                     .centerCrop()
                     .crossFade()
                     .placeholder(null)
@@ -233,24 +214,63 @@ public class QuestionsFragment extends Fragment {
         mVotesList.add(option.getId());
     }
 
+    @Override
+    public void onStop() {
+        sendVotesBatch();
+        super.onStop();
+    }
+
     private void sendVotesBatch() {
         if (mVotesList.size() == 0) return;
         VotesBatch votesBatch = new VotesBatch(mVotesList);
         UnstuckMeApplication.sQuestionsService.sendVotes(votesBatch,
-                new Callback<List<Question>>() {
+                new Callback<Void>() {
+
             @Override
-            public void success(List<Question> questionList, Response response) {
-                int a = 0;
+            public void success(Void aVoid, Response response) {
                 //Do nothing...
             }
 
             @Override
             public void failure(RetrofitError error) {
-                Log.e("Error:", error.toString());
-                int a = 0;
+                Log.e("Votes Error:", error.toString());
                 //Do nothing...
             }
         });
+
         mVotesList = new ArrayList<>();
+    }
+
+    @Override
+    public void onRefresh() {
+        mNoResults.setVisibility(View.GONE);
+        mRefreshView.setRefreshing(true);
+        getQuestions();
+    }
+
+    public void onEvent(ShareEvent event) {
+        if (mQuestionList == null
+                || mQuestionIndex == null
+                || mQuestionList.size() <= mQuestionIndex)
+            return;
+        Intent sendIntent = new Intent();
+        sendIntent.setAction(Intent.ACTION_SEND);
+        sendIntent.putExtra(Intent.EXTRA_TEXT, Configuration.API_ENDPOINT
+                + Configuration.ADD_QUERY
+                + mQuestionList.get(mQuestionIndex).getId());
+        sendIntent.setType(PLAIN_TEXT);
+        getActivity().startActivity(sendIntent);
+    }
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        EventBus.getDefault().register(this);
+    }
+
+    @Override
+    public void onDestroy() {
+        EventBus.getDefault().unregister(this);
+        super.onDestroy();
     }
 }

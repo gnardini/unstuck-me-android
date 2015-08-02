@@ -13,8 +13,10 @@ import com.parse.ParseInstallation;
 import java.util.HashMap;
 import java.util.Map;
 
+import ar.com.wolox.unstuckme.model.QuestionNew;
 import ar.com.wolox.unstuckme.network.QuestionsService;
 import ar.com.wolox.unstuckme.network.interceptor.SecureRequestInterceptor;
+import ar.com.wolox.unstuckme.network.serializer.QuestionNewSerializer;
 import ar.com.wolox.unstuckme.utils.PushNotificationUtils;
 import retrofit.RequestInterceptor;
 import retrofit.RestAdapter;
@@ -36,6 +38,7 @@ public class UnstuckMeApplication extends Application {
         sSecureRequestInterceptor = new SecureRequestInterceptor();
         Gson gson = new GsonBuilder()
                 .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
+                .registerTypeAdapter(QuestionNew.class, new QuestionNewSerializer())
                 .create();
         RestAdapter apiaryAdapter = new RestAdapter.Builder()
                 .setEndpoint(Configuration.APIARY_ENDPOINT)

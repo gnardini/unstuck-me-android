@@ -11,11 +11,13 @@
         android:layout_height="match_parent"
         android:scaleType="centerCrop"/>
 
-    <View
+    <ImageView
         android:id="@+id/adapter_results_highlight"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/highlight_green" />
+        android:src="@drawable/voted"
+        android:scaleType="centerInside"
+        android:background="@color/highlight_black" />
 
     <ar.com.wolox.unstuckme.view.FontTextView
         android:id="@+id/adapter_results_percentage"

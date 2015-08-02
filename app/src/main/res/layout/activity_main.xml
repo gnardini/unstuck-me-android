@@ -5,9 +5,14 @@
     android:orientation="vertical"
     android:background="@color/white">
 
-    <include layout="@layout/unstuckme_toolbar"
+    <include layout="@layout/toolbar_top"
              android:layout_width="match_parent"
              android:layout_height="48dp"/>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:background="@drawable/support_elevation_90"/>
 
     <ar.com.wolox.unstuckme.view.NonSwipeableViewPager
         android:id="@+id/main_view_pager"
@@ -17,60 +22,11 @@
 
     <View
         android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="@color/gray" />
+        android:layout_height="2dp"
+        android:background="@drawable/support_elevation_270"/>
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="48dp"
-        android:orientation="horizontal"
-        android:background="@color/red">
-
-        <FrameLayout
-            android:id="@+id/main_tab_answers"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1">
-
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:src="@drawable/selector_tab_answers"
-                android:scaleType="fitCenter"/>
-
-        </FrameLayout>
-
-        <FrameLayout
-            android:id="@+id/main_tab_questions"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1">
-
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:src="@drawable/selector_tab_questions"
-                android:scaleType="fitCenter"/>
-
-        </FrameLayout>
-
-        <FrameLayout
-            android:id="@+id/main_tab_create_question"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1">
-
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:src="@drawable/selector_tab_create_question"
-                android:scaleType="fitCenter"/>
-
-        </FrameLayout>
-
-    </LinearLayout>
+    <include layout="@layout/toolbar_bottom"
+             android:layout_width="match_parent"
+             android:layout_height="48dp"/>
 
 </LinearLayout>

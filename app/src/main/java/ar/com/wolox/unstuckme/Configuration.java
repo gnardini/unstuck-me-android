@@ -3,7 +3,7 @@ package ar.com.wolox.unstuckme;
 public class Configuration {
 
     //WEB
-    public static final String WEB_PAGE = "http://heinrichlucas0.wix.com/app-landing-page-es?";
+    public static final String ADD_QUERY = "/?";
 
     //API
     public static final String API_ENDPOINT = "http://unstuckme-stage.herokuapp.com";
@@ -14,7 +14,6 @@ public class Configuration {
     public static final String CLOUDINARY_SECRET = "zZaOTaAEQmNSz-yz3JrHlgWOdVY";
 
     public static final String API_PREFIX = "/api/v1/";
-
 
     //UI
     public static final int NEXT_QUESTION_DELAY = 1000;

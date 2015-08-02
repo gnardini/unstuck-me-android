@@ -19,6 +19,7 @@
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">match_parent</item>
         <item name="android:scaleType">centerCrop</item>
+        <item name="android:colorBackground">@color/gray</item>
     </style>
 
     <style name="create_questions_placeholder">
@@ -48,10 +49,10 @@
         <item name="android:scaleType">centerCrop</item>
     </style>
 
-    <style name="QuestionsImageTick" >
+    <style name="QuestionsImageVoted" >
         <item name="android:scaleType">centerInside</item>
-        <item name="android:background">@color/black</item>
-        <item name="android:src">@drawable/ic_tick</item>
+        <item name="android:background">@color/highlight_black</item>
+        <item name="android:src">@drawable/voted</item>
     </style>
 
 

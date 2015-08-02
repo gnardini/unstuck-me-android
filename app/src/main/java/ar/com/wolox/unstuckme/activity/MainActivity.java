@@ -1,26 +1,18 @@
 package ar.com.wolox.unstuckme.activity;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.view.ViewPager;
-import android.util.Log;
 import android.view.View;
-
-import java.util.List;
 
 import ar.com.wolox.unstuckme.Configuration;
 import ar.com.wolox.unstuckme.R;
 import ar.com.wolox.unstuckme.adapter.MainAdapter;
-
-import ar.com.wolox.unstuckme.fragment.AnswersFragment;
-import ar.com.wolox.unstuckme.fragment.create_question.CreateQuestionsContainerFragment;
-import ar.com.wolox.unstuckme.fragment.QuestionsFragment;
-import ar.com.wolox.unstuckme.utils.QuestionBuilder;
-
+import ar.com.wolox.unstuckme.model.event.ShareEvent;
 import ar.com.wolox.unstuckme.network.notification.PushReceiver;
-
+import ar.com.wolox.unstuckme.utils.QuestionBuilder;
+import de.greenrobot.event.EventBus;
 
 public class MainActivity extends FragmentActivity {
 
@@ -33,6 +25,7 @@ public class MainActivity extends FragmentActivity {
     private View mAnswersTab;
     private View mQuestionsTab;
     private View mCreateQuestionTab;
+    private View mShare;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -48,6 +41,7 @@ public class MainActivity extends FragmentActivity {
         mAnswersTab = findViewById(R.id.main_tab_answers);
         mQuestionsTab = findViewById(R.id.main_tab_questions);
         mCreateQuestionTab = findViewById(R.id.main_tab_create_question);
+        mShare = findViewById(R.id.toolbar_share);
     }
 
     private void init() {
@@ -63,23 +57,15 @@ public class MainActivity extends FragmentActivity {
                 return;
             }
         }
-        if (getIntent().getData() != null) {
-           shareInit(Integer.valueOf(getIntent().getData().getQuery()));
-        }
-        commonInit(Configuration.QUESTION_ID_ERROR, Configuration.QUESTION_ID_ERROR, mQuestionsTab);
+        commonInit(Configuration.QUESTION_ID_ERROR, mQuestionsTab);
     }
 
     private void pushNotificationInit(int questionId) {
-        commonInit(questionId, Configuration.QUESTION_ID_ERROR, mAnswersTab);
+        commonInit(questionId, mAnswersTab);
     }
 
-    private void shareInit(int questionId) {
-        commonInit(Configuration.QUESTION_ID_ERROR, questionId, mQuestionsTab);
-    }
-
-    private void commonInit(int pushQuestionId, int shareQuestionId, View selectedTab) {
-        mMainAdapter = new MainAdapter(getSupportFragmentManager(), this,
-                pushQuestionId, shareQuestionId);
+    private void commonInit(int pushQuestionId, View selectedTab) {
+        mMainAdapter = new MainAdapter(getSupportFragmentManager(), this, pushQuestionId);
         mViewPager.setAdapter(mMainAdapter);
         mViewPager.setOffscreenPageLimit(MainAdapter.TABS_COUNT);
         setTabSelected(selectedTab);
@@ -95,6 +81,13 @@ public class MainActivity extends FragmentActivity {
         mAnswersTab.setOnClickListener(onTabClickListener);
         mQuestionsTab.setOnClickListener(onTabClickListener);
         mCreateQuestionTab.setOnClickListener(onTabClickListener);
+
+        mShare.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                EventBus.getDefault().post(new ShareEvent());
+            }
+        });
     }
 
     private void setTabSelected(View view) {
