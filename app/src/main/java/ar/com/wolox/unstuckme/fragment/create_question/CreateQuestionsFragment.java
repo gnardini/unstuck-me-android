@@ -11,11 +11,20 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.Toast;
 
+import java.util.HashSet;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Set;
+
+import ar.com.wolox.unstuckme.Configuration;
 import ar.com.wolox.unstuckme.R;
 import ar.com.wolox.unstuckme.UnstuckMeApplication;
+import ar.com.wolox.unstuckme.model.Option;
 import ar.com.wolox.unstuckme.utils.ImageEraseListener;
 import ar.com.wolox.unstuckme.utils.ImageUploadListener;
+import ar.com.wolox.unstuckme.utils.QuestionBuilder;
 
 public class CreateQuestionsFragment extends Fragment {
 
@@ -24,12 +33,14 @@ public class CreateQuestionsFragment extends Fragment {
     private static final int IMAGE_UPLOAD_3 = 13;
     private static final int IMAGE_UPLOAD_4 = 14;
     private static final String TAG = "IMAGE_UPLOAD";
+    private static final int MIN_IMAGES_TO_UPLOAD = 2;
     private static int RESULT_LOAD_IMAGE = 1;
 
     ImageView mImageUpload1;
     ImageView mImageUpload2;
     ImageView mImageUpload3;
     ImageView mImageUpload4;
+    List<ImageView> mImagesToUpload = new LinkedList<ImageView>();
 
     ImageButton mImageErase1;
     ImageButton mImageErase2;
@@ -60,6 +71,13 @@ public class CreateQuestionsFragment extends Fragment {
         return v;
     }
 
+    @Override
+    public void onViewCreated(View view, Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        add(mImageUpload1).add(mImageUpload2).add(mImageUpload3).add(mImageUpload4);
+        this.getActivity();
+    }
+
     private void setUi(View v) {
         mImageUpload1 = (ImageView) v.findViewById(R.id.create_questions_image_upload_1);
         mImageUpload2 = (ImageView) v.findViewById(R.id.create_questions_image_upload_2);
@@ -86,13 +104,35 @@ public class CreateQuestionsFragment extends Fragment {
         mReadyButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                getFragmentManager()
-                        .beginTransaction()
-                        .replace(R.id.create_questions_container, PrivacyQuestionsFragment.newInstance(), UnstuckMeApplication.CREATE_QUESTION_TAG)
-                        .addToBackStack(TAG)
-                        .commit();
+
+                if (mImageUpload1.getDrawable() != null)
+                    QuestionBuilder.putImage(mImageUpload1);
+                if (mImageUpload2.getDrawable() != null)
+                    QuestionBuilder.putImage(mImageUpload2);
+                if (mImageUpload3.getDrawable() != null)
+                    QuestionBuilder.putImage(mImageUpload3);
+                if (mImageUpload4.getDrawable() != null)
+                    QuestionBuilder.putImage(mImageUpload4);
+                if (countEffectiveImages() >= MIN_IMAGES_TO_UPLOAD) {
+                    getFragmentManager()
+                            .beginTransaction()
+                            .replace(R.id.create_questions_container, PrivacyQuestionsFragment.newInstance())
+                            .addToBackStack(TAG)
+                            .commit();
+                } else {
+                    Toast.makeText(getActivity(), R.string.error_create_question_not_enough_images, Toast.LENGTH_SHORT).show();
+                }
             }
         });
+    }
+
+    private int countEffectiveImages() {
+        int count = 0;
+        for(ImageView iv : mImagesToUpload) {
+            if (iv != null && iv.getDrawable() != null)
+                count++;
+        }
+        return count;
     }
 
     @Override
@@ -122,8 +162,9 @@ public class CreateQuestionsFragment extends Fragment {
                     imageView = (ImageView) getActivity().findViewById(R.id.create_questions_image_upload_4);
                     break;
             }
-            if (imageView != null)
+            if (imageView != null) {
                 imageView.setImageURI(selectedImageUri);
+            }
         }
     }
 
@@ -134,5 +175,10 @@ public class CreateQuestionsFragment extends Fragment {
         int column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
         cursor.moveToFirst();
         return cursor.getString(column_index);
+    }
+
+    private CreateQuestionsFragment add(ImageView iv) {
+        mImagesToUpload.add(iv);
+        return this;
     }
 }

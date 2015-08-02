@@ -40,7 +40,7 @@ public class CreateQuestionsContainerFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         getFragmentManager()
                 .beginTransaction()
-                .replace(R.id.create_questions_container, CreateQuestionsFragment.newInstance(), UnstuckMeApplication.CREATE_QUESTION_TAG)
+                .replace(R.id.create_questions_container, CreateQuestionsFragment.newInstance())
                 .commit();
     }
 }

@@ -19,7 +19,8 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-
+        <!-- TODO configurar ASI -->
+        <!--<meta-data android:name="CLOUDINARY_URL" android:value="cloudinary://123456789012345:abcdeghijklmnopqrstuvwxyz12@n07t21i7"/>-->
     </application>
 
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
