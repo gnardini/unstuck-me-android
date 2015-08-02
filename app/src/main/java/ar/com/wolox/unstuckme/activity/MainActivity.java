@@ -10,6 +10,7 @@ import android.view.View;
 import ar.com.wolox.unstuckme.Configuration;
 import ar.com.wolox.unstuckme.R;
 import ar.com.wolox.unstuckme.adapter.MainAdapter;
+import ar.com.wolox.unstuckme.model.event.LeaveRateViewEvent;
 import ar.com.wolox.unstuckme.model.event.ShareEvent;
 import ar.com.wolox.unstuckme.network.notification.PushReceiver;
 import ar.com.wolox.unstuckme.utils.QuestionBuilder;
@@ -95,12 +96,14 @@ public class MainActivity extends FragmentActivity {
             @Override
             public void onClick(View view) {
                 EventBus.getDefault().post(new ShareEvent());
+                EventBus.getDefault().post(new LeaveRateViewEvent());
             }
         });
         mProfile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 startActivity(new Intent(MainActivity.this, UserActivity.class));
+                EventBus.getDefault().post(new LeaveRateViewEvent());
             }
         });
     }
@@ -119,5 +122,6 @@ public class MainActivity extends FragmentActivity {
         }
         mShare.setVisibility(position == POSITION_QUESTIONS ? View.VISIBLE : View.GONE);
         mViewPager.setCurrentItem(position);
+        if (position != POSITION_QUESTIONS) EventBus.getDefault().post(new LeaveRateViewEvent());
     }
 }
