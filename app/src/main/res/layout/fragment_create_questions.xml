@@ -29,6 +29,7 @@
                     style="@style/create_questions_button_remove_image" />
 
                 <ImageView
+                    android:id="@+id/create_questions_placeholder_1"
                     android:layout_width="@dimen/button_height_tall"
                     android:layout_height="@dimen/button_height_tall"
                     style="@style/create_questions_placeholder"/>
@@ -49,6 +50,7 @@
                     android:layout_gravity="right"/>
 
                 <ImageView
+                    android:id="@+id/create_questions_placeholder_2"
                     android:layout_width="@dimen/button_height_tall"
                     android:layout_height="@dimen/button_height_tall"
                     style="@style/create_questions_placeholder"/>
@@ -74,6 +76,7 @@
                     style="@style/create_questions_button_remove_image" />
 
                 <ImageView
+                    android:id="@+id/create_questions_placeholder_3"
                     android:layout_width="@dimen/button_height_tall"
                     android:layout_height="@dimen/button_height_tall"
                     style="@style/create_questions_placeholder"/>
@@ -94,6 +97,7 @@
                     android:layout_gravity="right"/>
 
                 <ImageView
+                    android:id="@+id/create_questions_placeholder_4"
                     android:layout_width="@dimen/button_height_tall"
                     android:layout_height="@dimen/button_height_tall"
                     style="@style/create_questions_placeholder"/>

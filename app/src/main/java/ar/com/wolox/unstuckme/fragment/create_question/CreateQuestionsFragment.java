@@ -47,6 +47,11 @@ public class CreateQuestionsFragment extends Fragment {
     ImageView mImageUpload4;
     List<ImageView> mImagesToUpload = new LinkedList<ImageView>();
 
+    ImageView mImagePlaceholder1;
+    ImageView mImagePlaceholder2;
+    ImageView mImagePlaceholder3;
+    ImageView mImagePlaceholder4;
+
     ImageButton mImageErase1;
     ImageButton mImageErase2;
     ImageButton mImageErase3;
@@ -88,10 +93,17 @@ public class CreateQuestionsFragment extends Fragment {
         mImageUpload2 = (ImageView) v.findViewById(R.id.create_questions_image_upload_2);
         mImageUpload3 = (ImageView) v.findViewById(R.id.create_questions_image_upload_3);
         mImageUpload4 = (ImageView) v.findViewById(R.id.create_questions_image_upload_4);
+
+        mImagePlaceholder1 = (ImageView) v.findViewById(R.id.create_questions_placeholder_1);
+        mImagePlaceholder2 = (ImageView) v.findViewById(R.id.create_questions_placeholder_2);
+        mImagePlaceholder3 = (ImageView) v.findViewById(R.id.create_questions_placeholder_3);
+        mImagePlaceholder4 = (ImageView) v.findViewById(R.id.create_questions_placeholder_4);
+
         mImageErase1 = (ImageButton) v.findViewById(R.id.create_questions_image_erase_1);
         mImageErase2 = (ImageButton) v.findViewById(R.id.create_questions_image_erase_2);
         mImageErase3 = (ImageButton) v.findViewById(R.id.create_questions_image_erase_3);
         mImageErase4 = (ImageButton) v.findViewById(R.id.create_questions_image_erase_4);
+
         mReadyButton = (ImageView) v.findViewById(R.id.upload_ready);
     }
 
@@ -152,26 +164,30 @@ public class CreateQuestionsFragment extends Fragment {
             String picturePath = getPath(selectedImageUri);
 
             ImageView imageView = null;
+            ImageView placeholderView = null;
 
             switch (requestCode) {
                 case IMAGE_UPLOAD_1:
                     imageView = (ImageView) getActivity().findViewById(R.id.create_questions_image_upload_1);
+                    placeholderView = (ImageView) getActivity().findViewById(R.id.create_questions_placeholder_1);
                     break;
                 case IMAGE_UPLOAD_2:
                     imageView = (ImageView) getActivity().findViewById(R.id.create_questions_image_upload_2);
+                    placeholderView = (ImageView) getActivity().findViewById(R.id.create_questions_placeholder_2);
                     break;
                 case IMAGE_UPLOAD_3:
                     imageView = (ImageView) getActivity().findViewById(R.id.create_questions_image_upload_3);
+                    placeholderView = (ImageView) getActivity().findViewById(R.id.create_questions_placeholder_3);
                     break;
                 case IMAGE_UPLOAD_4:
                     imageView = (ImageView) getActivity().findViewById(R.id.create_questions_image_upload_4);
+                    placeholderView = (ImageView) getActivity().findViewById(R.id.create_questions_placeholder_4);
                     break;
             }
 
             if (imageView != null) {
-//                imageView.setImageDrawable();
                 imageView.setImageBitmap(decodeFile(picturePath));
-//                imageView.setImageURI(selectedImageUri);
+                placeholderView.setVisibility(View.GONE);
             }
         }
     }
