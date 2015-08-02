@@ -12,8 +12,8 @@ import ar.com.wolox.unstuckme.fragment.results.MyQuestionsFragment;
 public class ResultsTabsAdapter extends FragmentStatePagerAdapter {
 
     private static final int TABS_COUNT = 2;
-    private static final int MY_ANSWERS = 0;
-    private static final int MY_QUESTIONS = 1;
+    public static final int MY_ANSWERS = 0;
+    public static final int MY_QUESTIONS = 1;
 
     private static final int[] mTabTitles = {R.string.my_answers, R.string.my_questions};
 

@@ -6,9 +6,12 @@ import android.content.Context;
 import com.google.gson.FieldNamingPolicy;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.parse.Parse;
+import com.parse.ParseInstallation;
 
 import ar.com.wolox.unstuckme.network.QuestionsService;
 import ar.com.wolox.unstuckme.network.interceptor.SecureRequestInterceptor;
+import ar.com.wolox.unstuckme.utils.PushNotificationUtils;
 import retrofit.RequestInterceptor;
 import retrofit.RestAdapter;
 import retrofit.converter.GsonConverter;
@@ -24,7 +27,6 @@ public class UnstuckMeApplication extends Application {
     static {
         buildRestServices();
     }
-
 
     public static void buildRestServices() {
         sSecureRequestInterceptor = new SecureRequestInterceptor();
@@ -54,5 +56,12 @@ public class UnstuckMeApplication extends Application {
     public void onCreate() {
         super.onCreate();
         sContext = getApplicationContext();
+        setupParse();
+    }
+
+    private void setupParse() {
+        Parse.initialize(this, Configuration.PARSE_APP_ID, Configuration.PARSE_CLIENT_KEY);
+        PushNotificationUtils.subscribe();
+        Parse.setLogLevel(Parse.LOG_LEVEL_NONE);
     }
 }
