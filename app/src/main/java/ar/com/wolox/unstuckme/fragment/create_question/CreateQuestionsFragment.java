@@ -13,6 +13,7 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 
 import ar.com.wolox.unstuckme.R;
+import ar.com.wolox.unstuckme.UnstuckMeApplication;
 import ar.com.wolox.unstuckme.utils.ImageEraseListener;
 import ar.com.wolox.unstuckme.utils.ImageUploadListener;
 
@@ -39,8 +40,11 @@ public class CreateQuestionsFragment extends Fragment {
     View.OnClickListener mOpenGallery;
     View.OnClickListener mEraseImageListener;
 
-    private Fragment containerFragment;
 
+    @Override
+    public void onResume() {
+        super.onResume();
+    }
 
     public static CreateQuestionsFragment newInstance() {
         CreateQuestionsFragment f = new CreateQuestionsFragment();
@@ -84,7 +88,7 @@ public class CreateQuestionsFragment extends Fragment {
             public void onClick(View view) {
                 getFragmentManager()
                         .beginTransaction()
-                        .replace(R.id.create_questions_container, PrivacyQuestionsFragment.newInstance())
+                        .replace(R.id.create_questions_container, PrivacyQuestionsFragment.newInstance(), UnstuckMeApplication.CREATE_QUESTION_TAG)
                         .addToBackStack(TAG)
                         .commit();
             }

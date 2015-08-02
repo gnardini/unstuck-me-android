@@ -11,7 +11,6 @@ public class MyQuestionsProvider implements Provider<Question> {
 
     @Override
     public void provide(int currentPage, int itemsPerPage, Callback<List<Question>> callback) {
-        UnstuckMeApplication.sQuestionsService.getMyQuestions(AccessUtils.getDeviceId(),
-                currentPage, itemsPerPage, callback);
+        UnstuckMeApplication.sQuestionsService.getMyQuestions(currentPage, itemsPerPage, callback);
     }
 }

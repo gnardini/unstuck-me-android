@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import ar.com.wolox.unstuckme.R;
+import ar.com.wolox.unstuckme.UnstuckMeApplication;
 
 public class CreateQuestionsContainerFragment extends Fragment {
 
@@ -30,11 +31,16 @@ public class CreateQuestionsContainerFragment extends Fragment {
     }
 
     @Override
+    public void onResume() {
+        super.onResume();
+    }
+
+    @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         getFragmentManager()
                 .beginTransaction()
-                .replace(R.id.create_questions_container, CreateQuestionsFragment.newInstance())
+                .replace(R.id.create_questions_container, CreateQuestionsFragment.newInstance(), UnstuckMeApplication.CREATE_QUESTION_TAG)
                 .commit();
     }
 }

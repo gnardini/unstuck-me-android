@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.ImageButton;
 
 import ar.com.wolox.unstuckme.R;
+import ar.com.wolox.unstuckme.UnstuckMeApplication;
 
 public class PrivacyQuestionsFragment extends Fragment {
 
@@ -39,7 +40,8 @@ public class PrivacyQuestionsFragment extends Fragment {
             public void onClick(View view) {
                 getFragmentManager()
                         .beginTransaction()
-                        .replace(R.id.create_questions_container, EndQuestionsFragment.newInstance())
+                        .replace(R.id.create_questions_container, EndQuestionsFragment.newInstance(), UnstuckMeApplication.CREATE_QUESTION_TAG)
+                        .addToBackStack(null)
                         .commit();
             }
         });

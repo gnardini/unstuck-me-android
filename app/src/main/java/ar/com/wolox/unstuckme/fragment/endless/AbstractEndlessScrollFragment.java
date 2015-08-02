@@ -40,6 +40,7 @@ abstract class AbstractEndlessScrollFragment<T> extends Fragment
     protected Provider mProvider;
     protected EndlessScrollListener mEndlessScrollListener;
     protected View mLoadingView;
+    protected View mNoResultsView;
 
     private int mStartOffset = 0;
 
@@ -103,6 +104,7 @@ abstract class AbstractEndlessScrollFragment<T> extends Fragment
     protected void setUi(View view) {
         mSwipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.refresh_view);
         mLoadingView = View.inflate(getActivity(), R.layout.loading, null);
+        mNoResultsView = view.findViewById(R.id.no_results);
     }
 
     protected void setListeners() {
@@ -141,6 +143,7 @@ abstract class AbstractEndlessScrollFragment<T> extends Fragment
         }
         mStatus = Status.LOADING;
         mSwipeRefreshLayout.setVisibility(View.VISIBLE);
+        mNoResultsView.setVisibility(View.GONE);
         showList();
         setAdapter(mAdapter);
     }
@@ -149,8 +152,11 @@ abstract class AbstractEndlessScrollFragment<T> extends Fragment
         if (mStatus == Status.LOADING) removeFooter();
         mSwipeRefreshLayout.setRefreshing(false);
         mSwipeRefreshLayout.setVisibility(View.VISIBLE);
-        if (!mList.isEmpty()) {
+        if (mList.isEmpty()) {
+            mNoResultsView.setVisibility(View.VISIBLE);
+        } else {
             mSwipeRefreshLayout.setVisibility(View.VISIBLE);
+            mNoResultsView.setVisibility(View.GONE);
             showList();
         }
         mStatus = Status.LOADED;
@@ -159,6 +165,7 @@ abstract class AbstractEndlessScrollFragment<T> extends Fragment
     private void setStatusError() {
         if (mStatus == Status.LOADING) removeFooter();
         mSwipeRefreshLayout.setRefreshing(false);
+        mNoResultsView.setVisibility(View.VISIBLE);
         mStatus = Status.ERROR;
     }
 

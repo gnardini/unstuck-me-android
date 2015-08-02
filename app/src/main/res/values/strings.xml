@@ -5,6 +5,8 @@
 
     <!-- Error Messages -->
     <string name="error.message.network">Network error</string>
+    <string name="error.message.no_answers">No questions answered</string>
+    <string name="error.message.no_questions">No questions started</string>
 
     <!-- Answers -->
     <string name="my_answers">My Answers</string>
