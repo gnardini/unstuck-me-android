@@ -71,7 +71,8 @@ public class QuestionsFragment extends Fragment {
     public static QuestionsFragment newInstance(int questionId) {
         QuestionsFragment f = new QuestionsFragment();
         Bundle args = new Bundle();
-        args.putInt(SHARE_QUESTION_ID, questionId);
+        if (questionId != Configuration.QUESTION_ID_ERROR)
+            args.putInt(SHARE_QUESTION_ID, questionId);
         f.setArguments(args);
         return f;
     }
@@ -106,7 +107,9 @@ public class QuestionsFragment extends Fragment {
         mHandler = new Handler(Looper.getMainLooper());
         Bundle args = getArguments();
         if (args != null && args.containsKey(SHARE_QUESTION_ID)) {
-            getQuestion(args.getInt(SHARE_QUESTION_ID));
+            int shareQuestionId = args.getInt(SHARE_QUESTION_ID);
+            if (shareQuestionId == Configuration.QUESTION_ID_ERROR) getQuestions();
+            else getQuestion(shareQuestionId);
         } else getQuestions();
     }
 
@@ -132,7 +135,6 @@ public class QuestionsFragment extends Fragment {
             @Override
             public void success(Question question, Response response) {
                 mQuestionList.add(question);
-                Log.e("id", question.getId() + "");
             }
 
             @Override
