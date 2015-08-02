@@ -12,9 +12,9 @@
 
     <ImageView
         android:layout_width="fill_parent"
-        android:layout_height="@dimen/button_height_tall"
+        android:layout_height="120dp"
         android:layout_above="@id/create_questions_end_text"
-        android:src="@drawable/test_image"/>
+        android:src="@drawable/ic_smile"/>
 
     <ImageButton
         android:id="@+id/create_questions_end_button_ok"
