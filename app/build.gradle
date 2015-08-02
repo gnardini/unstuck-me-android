@@ -5,7 +5,7 @@ android {
     buildToolsVersion "22.0.1"
 
     defaultConfig {
-        applicationId "ar.com.wolox.unstuck_me_android"
+        applicationId "ar.com.wolox.unstuckme"
         minSdkVersion 16
         targetSdkVersion 22
         versionCode 1
@@ -25,4 +25,5 @@ dependencies {
     compile 'com.android.support:design:22.2.0'
     compile 'com.squareup.retrofit:retrofit:1.9.0'
     compile 'com.github.bumptech.glide:glide:3.6.0'
+    compile 'com.parse.bolts:bolts-android:1.+'
 }

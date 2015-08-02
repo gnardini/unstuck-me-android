@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 
 import ar.com.wolox.unstuckme.R;
 import ar.com.wolox.unstuckme.adapter.ResultsTabsAdapter;
+import ar.com.wolox.unstuckme.network.notification.PushReceiver;
 import ar.com.wolox.unstuckme.view.SlidingTabLayout;
 
 public class AnswersFragment extends Fragment {
@@ -18,8 +19,11 @@ public class AnswersFragment extends Fragment {
     private ResultsTabsAdapter mTabsAdapter;
     private SlidingTabLayout mSlidingTabs;
 
-    public static AnswersFragment newInstance() {
+    public static AnswersFragment newInstance(int questionId) {
         AnswersFragment f = new AnswersFragment();
+        Bundle args = new Bundle();
+        args.putInt(PushReceiver.QUESTION_ID, questionId);
+        f.setArguments(args);
         return f;
     }
 
@@ -43,5 +47,13 @@ public class AnswersFragment extends Fragment {
         mViewPager.setAdapter(mTabsAdapter);
         mSlidingTabs.setViewPager(mViewPager);
         mSlidingTabs.setDistributeEvenly(true);
+
+        Bundle args = getArguments();
+        if (args != null && args.containsKey(PushReceiver.QUESTION_ID)) {
+            int questionId = args.getInt(PushReceiver.QUESTION_ID);
+            if (questionId != PushReceiver.QUESTION_ID_ERROR) {
+                mViewPager.setCurrentItem(ResultsTabsAdapter.MY_QUESTIONS);
+            }
+        }
     }
 }

@@ -3,13 +3,22 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+    <uses-permission android:name="android.permission.GET_ACCOUNTS" />
+    <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
+
+    <permission android:protectionLevel="signature"
+                android:name="ar.com.wolox.unstuckme.permission.C2D_MESSAGE" />
+    <uses-permission android:name="ar.com.wolox.unstuckme.permission.C2D_MESSAGE" />
 
     <application android:allowBackup="true"
                  android:name="ar.com.wolox.unstuckme.UnstuckMeApplication"
                  android:label="@string/app_name"
                  android:icon="@mipmap/ic_launcher"
-                 android:theme="@style/AppTheme"
-            >
+                 android:theme="@style/AppTheme">
 
         <activity
             android:name="ar.com.wolox.unstuckme.activity.MainActivity"
@@ -19,10 +28,34 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
+
         <!-- TODO configurar ASI -->
         <!--<meta-data android:name="CLOUDINARY_URL" android:value="cloudinary://123456789012345:abcdeghijklmnopqrstuvwxyz12@n07t21i7"/>-->
-    </application>
 
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+        <service android:name="com.parse.PushService" />
+        <receiver android:name="com.parse.ParseBroadcastReceiver">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+                <action android:name="android.intent.action.USER_PRESENT" />
+            </intent-filter>
+        </receiver>
+        <receiver android:name="com.parse.GcmBroadcastReceiver"
+                  android:permission="com.google.android.c2dm.permission.SEND">
+            <intent-filter>
+                <action android:name="com.google.android.c2dm.intent.RECEIVE" />
+                <action android:name="com.google.android.c2dm.intent.REGISTRATION" />
+                <category android:name="ar.com.wolox.unstuckme" />
+            </intent-filter>
+        </receiver>
+        <receiver android:name=".network.notification.PushReceiver" android:exported="false">
+            <intent-filter>
+                <action android:name="com.parse.push.intent.RECEIVE" />
+                <action android:name="com.parse.push.intent.DELETE" />
+                <action android:name="com.parse.push.intent.OPEN" />
+            </intent-filter>
+        </receiver>
+        <meta-data android:name="com.parse.push.notification_icon"
+                   android:resource="@mipmap/ic_launcher"/>
+    </application>
 
 </manifest>

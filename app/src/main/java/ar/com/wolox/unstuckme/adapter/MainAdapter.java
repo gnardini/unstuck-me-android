@@ -5,13 +5,9 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 
-import ar.com.wolox.unstuckme.R;
 import ar.com.wolox.unstuckme.fragment.AnswersFragment;
 import ar.com.wolox.unstuckme.fragment.QuestionsFragment;
 import ar.com.wolox.unstuckme.fragment.create_question.CreateQuestionsContainerFragment;
-import ar.com.wolox.unstuckme.fragment.results.MyAnswersFragment;
-import ar.com.wolox.unstuckme.fragment.results.MyQuestionsFragment;
-
 public class MainAdapter extends FragmentStatePagerAdapter {
 
     public static final int TABS_COUNT = 3;
@@ -24,10 +20,10 @@ public class MainAdapter extends FragmentStatePagerAdapter {
     private QuestionsFragment mQuestionsFragment;
     private CreateQuestionsContainerFragment mCreateQuestionsContainerFragment;
 
-    public MainAdapter(FragmentManager fm, Context context) {
+    public MainAdapter(FragmentManager fm, Context context, int questionId) {
         super(fm);
         mContext = context;
-        mAnswersFragment = AnswersFragment.newInstance();
+        mAnswersFragment = AnswersFragment.newInstance(questionId);
         mQuestionsFragment = QuestionsFragment.newInstance();
         mCreateQuestionsContainerFragment = CreateQuestionsContainerFragment.newInstance();
     }

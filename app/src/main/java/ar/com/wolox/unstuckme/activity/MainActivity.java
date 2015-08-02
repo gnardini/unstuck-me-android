@@ -1,19 +1,21 @@
 package ar.com.wolox.unstuckme.activity;
 
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.view.ViewPager;
 import android.view.View;
 
 import ar.com.wolox.unstuckme.R;
-import ar.com.wolox.unstuckme.UnstuckMeApplication;
 import ar.com.wolox.unstuckme.adapter.MainAdapter;
+
 import ar.com.wolox.unstuckme.fragment.AnswersFragment;
 import ar.com.wolox.unstuckme.fragment.create_question.CreateQuestionsContainerFragment;
 import ar.com.wolox.unstuckme.fragment.QuestionsFragment;
 import ar.com.wolox.unstuckme.utils.QuestionBuilder;
+
+import ar.com.wolox.unstuckme.network.notification.PushReceiver;
+
 
 public class MainActivity extends FragmentActivity {
 
@@ -31,7 +33,6 @@ public class MainActivity extends FragmentActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
         setUi();
         init();
         setListeners();
@@ -49,11 +50,17 @@ public class MainActivity extends FragmentActivity {
         mQuestionsTab.setTag(POSITION_QUESTIONS);
         mCreateQuestionTab.setTag(POSITION_CREATE_QUESTIONS);
 
-        mMainAdapter = new MainAdapter(getSupportFragmentManager(), this);
+        int questionId;
+        Bundle extras = getIntent().getExtras();
+        if (extras != null && extras.containsKey(PushReceiver.QUESTION_ID)) {
+            questionId = (int) extras.get(PushReceiver.QUESTION_ID);
+        } else questionId = PushReceiver.QUESTION_ID_ERROR;
+        mMainAdapter = new MainAdapter(getSupportFragmentManager(), this, questionId);
         mViewPager.setAdapter(mMainAdapter);
         mViewPager.setOffscreenPageLimit(MainAdapter.TABS_COUNT);
-        setTabSelected(mQuestionsTab);
 
+        setTabSelected((questionId == PushReceiver.QUESTION_ID_ERROR)
+                ? mQuestionsTab : mAnswersTab);
     }
 
     private void setListeners() {

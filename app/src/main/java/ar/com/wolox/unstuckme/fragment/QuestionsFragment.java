@@ -20,6 +20,7 @@ import ar.com.wolox.unstuckme.R;
 import ar.com.wolox.unstuckme.UnstuckMeApplication;
 import ar.com.wolox.unstuckme.model.Option;
 import ar.com.wolox.unstuckme.model.Question;
+import ar.com.wolox.unstuckme.model.VotesBatch;
 import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
@@ -29,22 +30,36 @@ public class QuestionsFragment extends Fragment {
     private List<ImageView> mAnswerImages = new ArrayList<>();
     private List<ImageView> mAnswerImagesTick = new ArrayList<>();
 
-    private int mPageNumber = 0;
-    private int mQuestionIndex = 0;
+    private Integer mQuestionIndex = null;
     private List<Question> mQuestionList = new ArrayList<>();
+    private boolean mWaitingForQuestions = true;
+    private boolean mNoMorePages = false;
 
-    private Question mQuestionSelected;
-    private Option mOptionSelected;
+    private List<Integer> mVotesList = new ArrayList<>();
 
     private Handler mHandler;
 
     private View.OnClickListener mImageAnswerClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
-            if (view.getTag() == null) return;
             int tickPos = mAnswerImages.indexOf(view);
             mAnswerImagesTick.get(tickPos).setVisibility(View.VISIBLE);
-            getNextQuestionDelayed();
+            populateNextQuestionDelayed();
+
+            switch (view.getId()) {
+                case R.id.questions_imageview_answer_1:
+                    voteOption(mQuestionList.get(mQuestionIndex).getOptions().get(0));
+                    break;
+                case R.id.questions_imageview_answer_2:
+                    voteOption(mQuestionList.get(mQuestionIndex).getOptions().get(1));
+                    break;
+                case R.id.questions_imageview_answer_3:
+                    voteOption(mQuestionList.get(mQuestionIndex).getOptions().get(2));
+                    break;
+                case R.id.questions_imageview_answer_4:
+                    voteOption(mQuestionList.get(mQuestionIndex).getOptions().get(3));
+                    break;
+            }
         }
     };
 
@@ -89,12 +104,18 @@ public class QuestionsFragment extends Fragment {
     }
 
     private void getQuestions() {
-        UnstuckMeApplication.sQuestionsService.getQuestions(mPageNumber,
-                new Callback<List<Question>>() {
+        UnstuckMeApplication.sQuestionsService.getQuestions(new Callback<List<Question>>() {
             @Override
             public void success(List<Question> questions, Response response) {
-                mQuestionList.addAll(questions);
-                populateNextQuestion();
+                if (questions.size() == 0) {
+                    mNoMorePages = true;
+                    return;
+                }
+                addQuestionsWithoutDuplicates(questions);
+                if (mWaitingForQuestions) {
+                    mWaitingForQuestions = false;
+                    populateNextQuestion();
+                }
             }
 
             @Override
@@ -107,13 +128,28 @@ public class QuestionsFragment extends Fragment {
 
     private void populateNextQuestion() {
         if (getActivity() == null) return;
-        int i = 0;
+
+        if (mQuestionIndex == null)
+            mQuestionIndex = 0;
+        else
+            mQuestionIndex++;
+
+        //Clean views
         for (View view : mAnswerImages) {
             view.setVisibility(View.GONE);
         }
         for (View view : mAnswerImagesTick) {
             view.setVisibility(View.GONE);
         }
+
+        //If this is the last question do nothing, wait and cry
+        if (mQuestionList.size() == mQuestionIndex) {
+            mWaitingForQuestions = true;
+            return;
+        }
+
+        //Populate image views
+        int i = 0;
         for (Option option : mQuestionList.get(mQuestionIndex).getOptions()) {
             Glide.with(this)
                     .load(option.getImageUrl())
@@ -125,15 +161,54 @@ public class QuestionsFragment extends Fragment {
             mAnswerImagesTick.get(i).setVisibility(View.GONE);
             i++;
         }
-        mQuestionIndex++;
+        fetchNextQuestionsIfNecessary();
     }
 
-    private void getNextQuestionDelayed() {
+    private void populateNextQuestionDelayed() {
         mHandler.postDelayed(new Runnable() {
             @Override
             public void run() {
                 populateNextQuestion();
             }
         }, Configuration.NEXT_QUESTION_DELAY);
+    }
+
+    private void fetchNextQuestionsIfNecessary() {
+        if ( ((mQuestionList.size() -1 ) - mQuestionIndex)
+                == Configuration.QUESTIONS_PAGE_THRESHOLD) {
+            getQuestions();
+            sendVotesBatch();
+        }
+    }
+
+    private void addQuestionsWithoutDuplicates(List<Question> questionList) {
+        for (Question question : questionList) {
+            if (!mQuestionList.contains(question)) mQuestionList.add(question);
+        }
+    }
+
+    private void voteOption(Option option) {
+        mVotesList.add(option.getId());
+    }
+
+    private void sendVotesBatch() {
+        if (mVotesList.size() == 0) return;
+        VotesBatch votesBatch = new VotesBatch(mVotesList);
+        UnstuckMeApplication.sQuestionsService.sendVotes(votesBatch,
+                new Callback<List<Question>>() {
+            @Override
+            public void success(List<Question> questionList, Response response) {
+                int a = 0;
+                //Do nothing...
+            }
+
+            @Override
+            public void failure(RetrofitError error) {
+                Log.e("Error:", error.toString());
+                int a = 0;
+                //Do nothing...
+            }
+        });
+        mVotesList = new ArrayList<>();
     }
 }
