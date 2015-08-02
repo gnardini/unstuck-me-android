@@ -15,6 +15,7 @@ import java.util.List;
 import ar.com.wolox.unstuckme.R;
 import ar.com.wolox.unstuckme.model.Option;
 import ar.com.wolox.unstuckme.model.Question;
+import ar.com.wolox.unstuckme.network.share.ShareObject;
 
 public class ResultsAdapter extends BaseAdapter {
 
@@ -80,36 +81,36 @@ public class ResultsAdapter extends BaseAdapter {
             }
             v.mPictures[i].mImageHighlight.setVisibility((winner == i)
                     ? View.VISIBLE : View.GONE);
-            v.mPictures[i].mPercentage.setVisibility(View.GONE);
         }
     }
 
     private void setListeners(final Question question, final ViewHolder v, final View view) {
-        view.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                List<Option> options = question.getOptions();
-                for (int i = 0 ; i < options.size() ; i++) {
-                    v.mPictures[i].mPercentage.setVisibility(View.GONE);
-                }
-            }
-        });
         view.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View view) {
-                question.calculatePercentages();
-                List<Option> options = question.getOptions();
-                for (int i = 0 ; i < options.size() ; i++) {
-                    v.mPictures[i].mPercentage.setVisibility(View.VISIBLE);
-                    v.mPictures[i].mPercentage.setText(options.get(i).getImageUrl() + PERCENTAGE);
-                }
-                return true;
+                v.mHighlight.setVisibility(View.VISIBLE);
+                return false;
+            }
+        });
+        v.mHighlight.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                v.mHighlight.setVisibility(View.GONE);
+            }
+        });
+        v.mShare.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                new ShareObject(mContext, question.getId()).share();
             }
         });
     }
 
     static class ViewHolder {
+
         PictureElement[] mPictures;
+        View mHighlight;
+        View mShare;
     }
 
     public ViewHolder newViewHolder(View view) {
@@ -122,6 +123,8 @@ public class ResultsAdapter extends BaseAdapter {
             PictureElement pictureElement = new PictureElement(elementView);
             v.mPictures[i] = pictureElement;
         }
+        v.mHighlight = view.findViewById(R.id.results_highlight);
+        v.mShare = view.findViewById(R.id.results_share);
         return v;
     }
 
@@ -129,13 +132,11 @@ public class ResultsAdapter extends BaseAdapter {
 
         View mRoot;
         ImageView mImage;
-        TextView mPercentage;
         View mImageHighlight;
 
         public PictureElement(View view) {
             mRoot = view;
             mImage = (ImageView) view.findViewById(R.id.adapter_results_image);
-            mPercentage = (TextView) view.findViewById(R.id.adapter_results_percentage);
             mImageHighlight = view.findViewById(R.id.adapter_results_highlight);
         }
     }

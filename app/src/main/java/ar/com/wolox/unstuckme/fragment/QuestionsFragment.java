@@ -25,6 +25,7 @@ import ar.com.wolox.unstuckme.model.Option;
 import ar.com.wolox.unstuckme.model.Question;
 import ar.com.wolox.unstuckme.model.VotesBatch;
 import ar.com.wolox.unstuckme.model.event.ShareEvent;
+import ar.com.wolox.unstuckme.network.share.ShareObject;
 import ar.com.wolox.unstuckme.utils.AnimationsHelper;
 import ar.com.wolox.unstuckme.utils.CloudinaryUtils;
 import de.greenrobot.event.EventBus;
@@ -33,8 +34,6 @@ import retrofit.RetrofitError;
 import retrofit.client.Response;
 
 public class QuestionsFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
-
-    private static final String PLAIN_TEXT = "text/plain";
 
     private List<DraweeView> mAnswerImages = new ArrayList<>();
     private List<ImageView> mAnswerImagesTick = new ArrayList<>();
@@ -274,13 +273,7 @@ public class QuestionsFragment extends Fragment implements SwipeRefreshLayout.On
                 || mQuestionIndex == null
                 || mQuestionList.size() <= mQuestionIndex)
             return;
-        Intent sendIntent = new Intent();
-        sendIntent.setAction(Intent.ACTION_SEND);
-        sendIntent.putExtra(Intent.EXTRA_TEXT, Configuration.API_ENDPOINT
-                + Configuration.ADD_QUERY
-                + mQuestionList.get(mQuestionIndex).getId());
-        sendIntent.setType(PLAIN_TEXT);
-        getActivity().startActivity(sendIntent);
+        new ShareObject(getActivity(), mQuestionList.get(mQuestionIndex).getId());
     }
 
     @Override

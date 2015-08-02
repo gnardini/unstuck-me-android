@@ -25,6 +25,7 @@ public class UserFragment extends Fragment {
     private User mUser;
     private View mShare;
     private View mProfile;
+    private View mBack;
     private TextView mLevel;
     private RoundCornerProgressBar mLevelProgress;
     private TextView mLevelExp;
@@ -49,6 +50,7 @@ public class UserFragment extends Fragment {
     }
 
     private void setUi(View v) {
+        mBack = v.findViewById(R.id.toolbar_back);
         mShare = v.findViewById(R.id.toolbar_share);
         mProfile = v.findViewById(R.id.toolbar_user);
         mLevel = (TextView) v.findViewById(R.id.user_level);
@@ -88,9 +90,15 @@ public class UserFragment extends Fragment {
     private void populate() {
         mShare.setVisibility(View.GONE);
         mProfile.setVisibility(View.GONE);
+        mBack.setVisibility(View.VISIBLE);
     }
 
     private void setListeners() {
-
+        mBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                getActivity().finish();
+            }
+        });
     }
 }
