@@ -4,11 +4,11 @@ import android.app.Application;
 import android.content.Context;
 
 import com.cloudinary.Cloudinary;
+import com.facebook.drawee.backends.pipeline.Fresco;
 import com.google.gson.FieldNamingPolicy;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.parse.Parse;
-import com.parse.ParseInstallation;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -74,12 +74,17 @@ public class UnstuckMeApplication extends Application {
         super.onCreate();
         sContext = getApplicationContext();
         setupParse();
+        setupFresco();
     }
 
     private void setupParse() {
         Parse.initialize(this, Configuration.PARSE_APP_ID, Configuration.PARSE_CLIENT_KEY);
         PushNotificationUtils.subscribe();
         Parse.setLogLevel(Parse.LOG_LEVEL_NONE);
+    }
+
+    private void setupFresco() {
+        Fresco.initialize(getAppContext());
     }
 
     public static Cloudinary getCloudinary() {
