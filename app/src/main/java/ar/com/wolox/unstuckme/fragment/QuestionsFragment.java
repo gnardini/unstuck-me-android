@@ -112,7 +112,10 @@ public class QuestionsFragment extends Fragment {
                     return;
                 }
                 addQuestionsWithoutDuplicates(questions);
-                if (mWaitingForQuestions) populateNextQuestion();
+                if (mWaitingForQuestions) {
+                    mWaitingForQuestions = false;
+                    populateNextQuestion();
+                }
             }
 
             @Override
