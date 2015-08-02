@@ -62,6 +62,7 @@ public class CreateQuestionsFragment extends Fragment {
         super.onResume();
     }
 
+
     public static CreateQuestionsFragment newInstance() {
         CreateQuestionsFragment f = new CreateQuestionsFragment();
         return f;
@@ -80,7 +81,6 @@ public class CreateQuestionsFragment extends Fragment {
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         add(mImageUpload1).add(mImageUpload2).add(mImageUpload3).add(mImageUpload4);
-        this.getActivity();
     }
 
     private void setUi(View v) {
@@ -95,7 +95,7 @@ public class CreateQuestionsFragment extends Fragment {
         mReadyButton = (ImageView) v.findViewById(R.id.upload_ready);
     }
 
-    private void setListeners(View v) {
+    private void setListeners(final View v) {
         mImageUpload1.setOnClickListener(new ImageUploadListener((Fragment) this, IMAGE_UPLOAD_1));
         mImageUpload2.setOnClickListener(new ImageUploadListener((Fragment) this, IMAGE_UPLOAD_2));
         mImageUpload3.setOnClickListener(new ImageUploadListener((Fragment) this, IMAGE_UPLOAD_3));
@@ -121,7 +121,7 @@ public class CreateQuestionsFragment extends Fragment {
                 if (countEffectiveImages() >= MIN_IMAGES_TO_UPLOAD) {
                     getFragmentManager()
                             .beginTransaction()
-                            .replace(R.id.create_questions_container, PrivacyQuestionsFragment.newInstance())
+                            .add(R.id.create_questions_container, PrivacyQuestionsFragment.newInstance())
                             .addToBackStack(TAG)
                             .commit();
                 } else {
