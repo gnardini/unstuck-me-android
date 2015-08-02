@@ -1,4 +1,4 @@
-package ar.com.wolox.unstuckme.fragment;
+package ar.com.wolox.unstuckme.fragment.create_question;
 
 import android.content.Intent;
 import android.database.Cursor;
@@ -22,6 +22,7 @@ public class CreateQuestionsFragment extends Fragment {
     private static final int IMAGE_UPLOAD_2 = 12;
     private static final int IMAGE_UPLOAD_3 = 13;
     private static final int IMAGE_UPLOAD_4 = 14;
+    private static final String TAG = "IMAGE_UPLOAD";
     private static int RESULT_LOAD_IMAGE = 1;
 
     ImageView mImageUpload1;
@@ -37,6 +38,8 @@ public class CreateQuestionsFragment extends Fragment {
     ImageButton mReadyButton;
     View.OnClickListener mOpenGallery;
     View.OnClickListener mEraseImageListener;
+
+    private Fragment containerFragment;
 
 
     public static CreateQuestionsFragment newInstance() {
@@ -75,6 +78,17 @@ public class CreateQuestionsFragment extends Fragment {
         mImageErase2.setOnClickListener(new ImageEraseListener(v, R.id.create_questions_image_upload_2));
         mImageErase3.setOnClickListener(new ImageEraseListener(v, R.id.create_questions_image_upload_3));
         mImageErase4.setOnClickListener(new ImageEraseListener(v, R.id.create_questions_image_upload_4));
+
+        mReadyButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                getFragmentManager()
+                        .beginTransaction()
+                        .replace(R.id.create_questions_container, PrivacyQuestionsFragment.newInstance())
+                        .addToBackStack(TAG)
+                        .commit();
+            }
+        });
     }
 
     @Override

@@ -7,8 +7,7 @@ import android.view.View;
 
 import ar.com.wolox.unstuckme.R;
 import ar.com.wolox.unstuckme.fragment.AnswersFragment;
-import ar.com.wolox.unstuckme.fragment.results.ResultsFragment;
-import ar.com.wolox.unstuckme.fragment.CreateQuestionsFragment;
+import ar.com.wolox.unstuckme.fragment.create_question.CreateQuestionsContainerFragment;
 
 public class MainActivity extends FragmentActivity {
 
@@ -23,7 +22,7 @@ public class MainActivity extends FragmentActivity {
     private AnswersFragment mAnswersFragment;
 
     private AnswersFragment mQuestionsFragment;
-    private CreateQuestionsFragment mCreateQuestionsFragment;
+    private CreateQuestionsContainerFragment mCreateQuestionsFragment;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -48,7 +47,7 @@ public class MainActivity extends FragmentActivity {
 
         mAnswersFragment = AnswersFragment.newInstance();
         mQuestionsFragment = AnswersFragment.newInstance();
-        mCreateQuestionsFragment = CreateQuestionsFragment.newInstance();
+        mCreateQuestionsFragment = CreateQuestionsContainerFragment.newInstance();
         setFragment(POSITION_QUESTIONS);
     }
 

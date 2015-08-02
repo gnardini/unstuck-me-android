@@ -5,6 +5,7 @@
         <!-- Customize your theme here. -->
     </style>
 
+    <!-- Create Questions Styles -->
 
     <style name="create_questions_image_quarter_screen">
         <item name="android:layout_width">0px</item>
@@ -22,6 +23,15 @@
         <item name="android:layout_width">@dimen/button_height_short</item>
         <item name="android:layout_height">@dimen/button_height_short</item>
     </style>
+
+    <style name="create_questions_end">
+        <item name="android:textSize">@dimen/font_larger</item>
+        <item name="android:layout_centerHorizontal">true</item>
+        <item name="android:layout_centerVertical">true</item>
+        <item name="android:layout_marginTop">@dimen/spacing_normal</item>
+    </style>
+
+    <!-- End Create Questions Styles -->
 
     <style name="QuestionsImageContainer" >
         <item name="android:layout_margin">@dimen/spacing_tiny</item>
