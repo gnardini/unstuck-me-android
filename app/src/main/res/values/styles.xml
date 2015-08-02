@@ -48,6 +48,7 @@
 
     <style name="QuestionsImage" >
         <item name="android:scaleType">centerCrop</item>
+        <item name="android:background">@color/dark_gray</item>
     </style>
 
     <style name="QuestionsImageVoted" >

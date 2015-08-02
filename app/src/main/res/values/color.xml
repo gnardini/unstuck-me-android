@@ -5,7 +5,8 @@
     <!-- grayscale -->
     <color name="white"     >#FEFEFE</color>
     <color name="gray"      >#F9F9F9</color>
-    <color name="dark_gray" >#999999</color>
+    <color name="dark_gray">#BBBDBF</color>
+
     <color name="black"     >#1B1B1B</color>
 
     <!-- basic colors -->
