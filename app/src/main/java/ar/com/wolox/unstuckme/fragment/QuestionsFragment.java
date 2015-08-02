@@ -21,6 +21,7 @@ import ar.com.wolox.unstuckme.UnstuckMeApplication;
 import ar.com.wolox.unstuckme.model.Option;
 import ar.com.wolox.unstuckme.model.Question;
 import ar.com.wolox.unstuckme.model.VotesBatch;
+import ar.com.wolox.unstuckme.utils.CloudinaryUtils;
 import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
@@ -195,7 +196,7 @@ public class QuestionsFragment extends Fragment {
         int i = 0;
         for (Option option : mQuestionList.get(mQuestionIndex).getOptions()) {
             Glide.with(this)
-                    .load(option.getImageUrl())
+                    .load(CloudinaryUtils.getQuestionCompressedImage(option.getImageUrl()))
                     .centerCrop()
                     .crossFade()
                     .placeholder(null)
@@ -245,17 +246,19 @@ public class QuestionsFragment extends Fragment {
         VotesBatch votesBatch = new VotesBatch(mVotesList);
         UnstuckMeApplication.sQuestionsService.sendVotes(votesBatch,
                 new Callback<List<Question>>() {
-                    @Override
-                    public void success(List<Question> questionList, Response response) {
-                        //Do nothing...
-                    }
 
-                    @Override
-                    public void failure(RetrofitError error) {
-                        Log.e("Error:", error.toString());
-                        //Do nothing...
-                    }
-                });
+            @Override
+            public void success(List<Question> questionList, Response response) {
+                //Do nothing...
+            }
+
+            @Override
+            public void failure(RetrofitError error) {
+                Log.e("Error:", error.toString());
+                //Do nothing...
+            }
+        });
+
         mVotesList = new ArrayList<>();
 
 
