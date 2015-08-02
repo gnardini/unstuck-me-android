@@ -26,6 +26,7 @@ public class UserFragment extends Fragment {
     private static final String EXP = "%d/%d";
 
     private User mUser;
+    private View mUserView;
     private View mShare;
     private View mProfile;
     private View mBack;
@@ -36,6 +37,7 @@ public class UserFragment extends Fragment {
     private TextView mMyQuestionsAnswered;
     private TextView mQuestionsAsked;
     private int mExtraVotes;
+    private View mLoading;
 
     public static UserFragment newInstance() {
         UserFragment f = new UserFragment();
@@ -54,6 +56,7 @@ public class UserFragment extends Fragment {
     }
 
     private void setUi(View v) {
+        mUserView = v.findViewById(R.id.user_data_container);
         mBack = v.findViewById(R.id.toolbar_back);
         mShare = v.findViewById(R.id.toolbar_share);
         mProfile = v.findViewById(R.id.toolbar_user);
@@ -63,6 +66,7 @@ public class UserFragment extends Fragment {
         mAnswersCount = (TextView) v.findViewById(R.id.user_questions_answered_count);
         mMyQuestionsAnswered = (TextView) v.findViewById(R.id.user_my_questions_answered_count);
         mQuestionsAsked = (TextView) v.findViewById(R.id.user_questions_asked);
+        mLoading = v.findViewById(R.id.user_loading);
     }
 
     private void init() {
@@ -70,6 +74,8 @@ public class UserFragment extends Fragment {
             @Override
             public void success(User user, Response response) {
                 mUser = user;
+                mLoading.setVisibility(View.GONE);
+                mUserView.setVisibility(View.VISIBLE);
                 setUserInfo();
             }
 

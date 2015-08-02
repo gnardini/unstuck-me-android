@@ -1,12 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-
     <!-- grayscale -->
     <color name="white"     >#FEFEFE</color>
     <color name="gray"      >#F2F2F2</color>
     <color name="dark_gray">#BBBDBF</color>
-
     <color name="black"     >#1B1B1B</color>
 
     <!-- basic colors -->
