@@ -12,6 +12,10 @@
     <string name="my_answers">My Answers</string>
     <string name="my_questions">My Questions</string>
 
+    <!-- Push Notifications -->
+    <string name="push_notification_text">One of the questions you started
+        reached its limit!</string>
+
     <!-- Font names -->
     <string name="font_montserrat">Montserrat-Regular</string>
     <string name="font_open_sans_regular">OpenSans-Regular</string>
