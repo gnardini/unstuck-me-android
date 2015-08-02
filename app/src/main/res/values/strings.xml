@@ -26,7 +26,7 @@
     <string name="push_notification_level_up">You leveled up!</string>
 
     <!-- Share Question -->
-    <string name="share_text">Share this question</string>
+    <string name="share_text">Share it!</string>
     <string name="share_goto_app">Go to app</string>
     <string name="share_preparing">Preparing to share</string>
 
@@ -40,5 +40,9 @@
 <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="create_questions_end_text">People will answer for you!</string>
+    <string name="loading">Uploading images..</string>
+    <string name="create_questions_upload_ok">Images OK</string>
+    <string name="error_network_create_questions_upload">Unable to upload images</string>
+    <string name="create_questions_share_no_thanks">No thanks!</string>
 
 </resources>

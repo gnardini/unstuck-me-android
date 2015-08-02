@@ -25,12 +25,17 @@ import java.util.List;
 import java.util.Map;
 
 import ar.com.wolox.unstuckme.Configuration;
+import ar.com.wolox.unstuckme.R;
 import ar.com.wolox.unstuckme.UnstuckMeApplication;
+import ar.com.wolox.unstuckme.fragment.create_question.FinishLoadingListener;
+import ar.com.wolox.unstuckme.fragment.create_question.ShareQuestionFragment;
+import ar.com.wolox.unstuckme.model.Question;
 import ar.com.wolox.unstuckme.model.QuestionNew;
 import ar.com.wolox.unstuckme.network.QuestionsService;
 import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
+import retrofit.mime.TypedByteArray;
 
 /**
  * Created by agustinpagnoni on 8/2/15.
@@ -39,6 +44,16 @@ public class QuestionBuilder {
 
     private static List<InputStream> imagesStreams = new LinkedList<InputStream>();
     private static boolean privacy;
+
+
+
+    private static Question questionReady;
+
+    public static void setListener(FinishLoadingListener listener) {
+        QuestionBuilder.listener = listener;
+    }
+
+    private static FinishLoadingListener listener;
 
     public static void putImage(ImageView imageView) {
         Bitmap bm = ((BitmapDrawable)imageView.getDrawable()).getBitmap();
@@ -113,13 +128,30 @@ public class QuestionBuilder {
             @Override
             public void success(QuestionNew jsonObject, Response response) {
                 //TODO notify good
-                Toast.makeText(UnstuckMeApplication.getAppContext(), "QUESTION CREADAAAA", Toast.LENGTH_LONG).show();
+                String jsonResponse = new String(((TypedByteArray) response.getBody()).getBytes());
+                Toast.makeText(UnstuckMeApplication.getAppContext(), R.string.create_questions_upload_ok, Toast.LENGTH_LONG).show();
+                Gson gson = new Gson();
+                Question question = gson.fromJson(jsonResponse, Question.class);
+                if (listener != null) {
+                    questionReady = question;
+                    listener.onFinish();
+                }
+                else
+                    onErrorToast();
             }
 
             @Override
             public void failure(RetrofitError error) {
-                Toast.makeText(UnstuckMeApplication.getAppContext(), "QUESTION ERROOOR", Toast.LENGTH_LONG).show();
+                onErrorToast();
             }
         });
+    }
+
+    private static void onErrorToast() {
+        Toast.makeText(UnstuckMeApplication.getAppContext(), R.string.error_network_create_questions_upload, Toast.LENGTH_LONG).show();
+    }
+
+    public static Question getQuestionReady() {
+        return questionReady;
     }
 }

@@ -37,7 +37,7 @@ public class CreateQuestionsFragment extends Fragment {
     private static final int IMAGE_UPLOAD_2 = 12;
     private static final int IMAGE_UPLOAD_3 = 13;
     private static final int IMAGE_UPLOAD_4 = 14;
-    private static final String TAG = "IMAGE_UPLOAD";
+    public static final String TAG = "IMAGE_UPLOAD_FRAGMENT";
     private static final int MIN_IMAGES_TO_UPLOAD = 2;
     private static int RESULT_LOAD_IMAGE = 1;
 

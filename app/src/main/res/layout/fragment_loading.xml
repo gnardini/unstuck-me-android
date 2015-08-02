@@ -1,0 +1,21 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="ar.com.wolox.unstuckme.fragment.create_question.LoadingFragment">
+
+    <ImageView
+        android:id="@+id/create_questions_spinner"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_loader_spinner"
+        android:layout_centerVertical="true"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/font_larger"
+        android:text="@string/loading"
+        android:layout_below="@id/create_questions_spinner"
+        android:gravity="center"
+        android:layout_marginTop="@dimen/spacing_large"/>
+
+</RelativeLayout>
