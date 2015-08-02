@@ -16,14 +16,12 @@ public interface QuestionsService {
 
     @GET("/api/v1/questions/my_answers")
     void getMyAnswers(
-            @Query("user") String user,
             @Query("page") int page,
             @Query("amount") int amountPerPage,
             Callback<List<Question>> db);
 
     @GET("/api/v1/questions/my_questions")
     void getMyQuestions(
-            @Query("user") String user,
             @Query("page") int page,
             @Query("amount") int amountPerPage,
             Callback<List<Question>> db);

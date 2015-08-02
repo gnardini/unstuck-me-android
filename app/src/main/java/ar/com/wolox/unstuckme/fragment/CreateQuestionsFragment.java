@@ -38,7 +38,6 @@ public class CreateQuestionsFragment extends Fragment {
     View.OnClickListener mOpenGallery;
     View.OnClickListener mEraseImageListener;
 
-
     public static CreateQuestionsFragment newInstance() {
         CreateQuestionsFragment f = new CreateQuestionsFragment();
         return f;
