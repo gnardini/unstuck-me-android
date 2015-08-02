@@ -13,6 +13,9 @@ import com.akexorcist.roundcornerprogressbar.RoundCornerProgressBar;
 import ar.com.wolox.unstuckme.R;
 import ar.com.wolox.unstuckme.UnstuckMeApplication;
 import ar.com.wolox.unstuckme.model.User;
+import ar.com.wolox.unstuckme.model.event.LeaveRateViewEvent;
+import ar.com.wolox.unstuckme.model.event.VotesSentEvent;
+import de.greenrobot.event.EventBus;
 import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
@@ -32,6 +35,7 @@ public class UserFragment extends Fragment {
     private TextView mAnswersCount;
     private TextView mMyQuestionsAnswered;
     private TextView mQuestionsAsked;
+    private int mExtraVotes;
 
     public static UserFragment newInstance() {
         UserFragment f = new UserFragment();
@@ -100,5 +104,22 @@ public class UserFragment extends Fragment {
                 getActivity().finish();
             }
         });
+    }
+
+    public void onEvent(VotesSentEvent event) {
+        mExtraVotes += event.getVotes();
+        mAnswersCount.setText(String.valueOf(mExtraVotes + mUser.getAnsweredQuestions()));
+    }
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        EventBus.getDefault().register(this);
+    }
+
+    @Override
+    public void onDestroy() {
+        EventBus.getDefault().unregister(this);
+        super.onDestroy();
     }
 }

@@ -22,8 +22,8 @@
     <string name="user_questions_asnwered">Questions answered</string>
 
     <!-- Push Notifications -->
-    <string name="push_notification_text">One of the questions you started
-        reached its limit!</string>
+    <string name="push_notification_limit">Your question reached its limit!</string>
+    <string name="push_notification_level_up">You leveled up!</string>
 
     <!-- Share Question -->
     <string name="share_text">Share it!</string>
