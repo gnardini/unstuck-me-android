@@ -1,5 +1,6 @@
 package ar.com.wolox.unstuckme.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
@@ -27,8 +28,12 @@ import retrofit.client.Response;
 
 public class QuestionsFragment extends Fragment {
 
+    private static final String PLAIN_TEXT = "text/plain";
+    private static final String SHARE_QUESTION_ID = "share_question_id";
+
     private List<ImageView> mAnswerImages = new ArrayList<>();
     private List<ImageView> mAnswerImagesTick = new ArrayList<>();
+    private View mShare;
 
     private Integer mQuestionIndex = null;
     private List<Question> mQuestionList = new ArrayList<>();
@@ -63,8 +68,11 @@ public class QuestionsFragment extends Fragment {
         }
     };
 
-    public static QuestionsFragment newInstance() {
+    public static QuestionsFragment newInstance(int questionId) {
         QuestionsFragment f = new QuestionsFragment();
+        Bundle args = new Bundle();
+        args.putInt(SHARE_QUESTION_ID, questionId);
+        f.setArguments(args);
         return f;
     }
 
@@ -90,17 +98,49 @@ public class QuestionsFragment extends Fragment {
         mAnswerImagesTick.add((ImageView) view.findViewById(R.id.questions_imageview_answer_tick_2));
         mAnswerImagesTick.add((ImageView) view.findViewById(R.id.questions_imageview_answer_tick_3));
         mAnswerImagesTick.add((ImageView) view.findViewById(R.id.questions_imageview_answer_tick_4));
+
+        mShare = view.findViewById(R.id.toolbar_share);
     }
 
     private void init() {
         mHandler = new Handler(Looper.getMainLooper());
-        getQuestions();
+        Bundle args = getArguments();
+        if (args != null && args.containsKey(SHARE_QUESTION_ID)) {
+            getQuestion(args.getInt(SHARE_QUESTION_ID));
+        } else getQuestions();
     }
 
     private void setListeners() {
         for (View view : mAnswerImages) {
             view.setOnClickListener(mImageAnswerClickListener);
         }
+        mShare.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent sendIntent = new Intent();
+                sendIntent.setAction(Intent.ACTION_SEND);
+                sendIntent.putExtra(Intent.EXTRA_TEXT, Configuration.WEB_PAGE
+                        + mQuestionList.get(mQuestionIndex).getId());
+                sendIntent.setType(PLAIN_TEXT);
+                getActivity().startActivity(sendIntent);
+            }
+        });
+    }
+
+    private void getQuestion(int questionId) {
+        UnstuckMeApplication.sQuestionsService.getQuestion(questionId, new Callback<Question>() {
+            @Override
+            public void success(Question question, Response response) {
+                mQuestionList.add(question);
+                Log.e("id", question.getId() + "");
+            }
+
+            @Override
+            public void failure(RetrofitError error) {
+                Log.e("Error", error.toString());
+                //Do nothing...
+            }
+        });
     }
 
     private void getQuestions() {

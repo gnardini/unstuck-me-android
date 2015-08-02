@@ -9,6 +9,7 @@ import com.parse.ParsePushBroadcastReceiver;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import ar.com.wolox.unstuckme.Configuration;
 import ar.com.wolox.unstuckme.R;
 import ar.com.wolox.unstuckme.activity.MainActivity;
 
@@ -17,7 +18,7 @@ public class PushReceiver extends ParsePushBroadcastReceiver {
     private static final int APP_PUSH_ID = 17523;
 
     public static final String QUESTION_ID = "question_id";
-    public static final int QUESTION_ID_ERROR = -1;
+
 
     private static final String PARSE_DATA_PARAMETER = "com.parse.Data";
     private static final String DATA = "data";
@@ -35,7 +36,7 @@ public class PushReceiver extends ParsePushBroadcastReceiver {
             JSONObject data = new JSONObject(intent.getStringExtra(PARSE_DATA_PARAMETER));
             questionId = data.getInt(QUESTION_ID);
         } catch (JSONException e) {
-            questionId = QUESTION_ID_ERROR;
+            questionId = Configuration.QUESTION_ID_ERROR;
         }
         Intent newIntent = new Intent(context, MainActivity.class);
         newIntent.putExtra(QUESTION_ID, questionId);
