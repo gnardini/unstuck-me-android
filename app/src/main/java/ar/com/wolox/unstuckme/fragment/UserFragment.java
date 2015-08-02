@@ -5,6 +5,8 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -70,10 +72,13 @@ public class UserFragment extends Fragment {
     }
 
     private void init() {
+        Animation rotation = AnimationUtils.loadAnimation(getActivity(), R.anim.rotate);
+        mLoading.startAnimation(rotation);
         UnstuckMeApplication.sUserService.getUserStats(new Callback<User>() {
             @Override
             public void success(User user, Response response) {
                 mUser = user;
+                mLoading.clearAnimation();
                 mLoading.setVisibility(View.GONE);
                 mUserView.setVisibility(View.VISIBLE);
                 setUserInfo();
