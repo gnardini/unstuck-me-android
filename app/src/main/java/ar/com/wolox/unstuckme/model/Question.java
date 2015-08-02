@@ -1,7 +1,5 @@
 package ar.com.wolox.unstuckme.model;
 
-import com.google.gson.annotations.SerializedName;
-
 import java.util.List;
 
 public class Question {
@@ -46,4 +44,10 @@ public class Question {
                 * option.getVotes() / total);
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (!(o instanceof Question)) return false;
+        Question q = (Question) o;
+        return id == q.getId();
+    }
 }
