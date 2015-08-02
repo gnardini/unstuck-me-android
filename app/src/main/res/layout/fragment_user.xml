@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <include layout="@layout/toolbar_top"
+             android:layout_width="match_parent"
+             android:layout_height="48dp"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="48dp"
+        android:orientation="vertical">
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1">
+
+            <ar.com.wolox.unstuckme.view.FontTextView
+                android:id="@+id/user_level"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:layout_gravity="center_horizontal"
+                android:text="Level"
+                android:textSize="18sp"
+                android:textColor="@color/green"
+                android:textAllCaps="true"/>
+
+            <FrameLayout
+                android:layout_width="250dp"
+                android:layout_height="30dp"
+                android:layout_gravity="center"
+                android:layout_marginTop="10dp">
+
+                <com.akexorcist.roundcornerprogressbar.RoundCornerProgressBar
+                    android:id="@+id/user_level_progress"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    app:rcBackgroundPadding="1dp"
+                    app:rcBackgroundRadius="3dp"
+                    app:rcBackgroundColor="@color/gray"
+                    app:rcProgressColor="@color/red" />
+
+                <ar.com.wolox.unstuckme.view.FontTextView
+                    android:id="@+id/user_level_exp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:text="20/40"
+                    android:textSize="15sp"
+                    android:textColor="@color/black"/>
+
+            </FrameLayout>
+
+        </FrameLayout>
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1">
+
+            <ar.com.wolox.unstuckme.view.FontTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_gravity="center_horizontal"
+                android:text="@string/user_questions_asnwered"
+                android:textSize="18sp"
+                android:textColor="@color/green"
+                android:textAllCaps="true"/>
+
+            <ar.com.wolox.unstuckme.view.FontTextView
+                android:id="@+id/user_questions_answered_count"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_gravity="center"
+                android:textSize="38sp"
+                android:textColor="@color/red"
+                android:textAllCaps="true"/>
+
+        </FrameLayout>
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1">
+
+            <ar.com.wolox.unstuckme.view.FontTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_gravity="center_horizontal"
+                android:text="@string/user_questions_asked"
+                android:textSize="18sp"
+                android:textColor="@color/green"
+                android:textAllCaps="true"/>
+
+            <ar.com.wolox.unstuckme.view.FontTextView
+                android:id="@+id/user_questions_asked"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_gravity="center"
+                android:textSize="38sp"
+                android:textColor="@color/red"
+                android:textAllCaps="true"/>
+
+        </FrameLayout>
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1">
+
+            <ar.com.wolox.unstuckme.view.FontTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_gravity="center_horizontal"
+                android:text="@string/user_my_questions_answered"
+                android:textSize="18sp"
+                android:textColor="@color/green"
+                android:textAllCaps="true"/>
+
+            <ar.com.wolox.unstuckme.view.FontTextView
+                android:id="@+id/user_my_questions_answered_count"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_gravity="center"
+                android:textSize="38sp"
+                android:textColor="@color/red"
+                android:textAllCaps="true"/>
+
+        </FrameLayout>
+
+    </LinearLayout>
+
+</FrameLayout>

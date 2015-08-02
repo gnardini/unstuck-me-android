@@ -30,4 +30,5 @@ dependencies {
     compile 'com.squareup.okhttp:okhttp:2.4.0'
     compile 'de.greenrobot:eventbus:2.4.0'
     compile 'com.facebook.fresco:fresco:0.6.0+'
+    compile 'com.akexorcist:RoundCornerProgressBar:1.2.0'
 }
