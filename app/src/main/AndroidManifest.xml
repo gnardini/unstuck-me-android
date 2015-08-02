@@ -40,7 +40,7 @@
 
                 <data android:scheme="http"
                       android:host="unstuckme-stage.herokuapp.com"
-                      android:pathPrefix="/landing" />
+                      android:pathPrefix="/" />
             </intent-filter>
 
         </activity>

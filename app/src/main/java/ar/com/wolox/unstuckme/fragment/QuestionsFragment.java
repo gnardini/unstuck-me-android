@@ -224,16 +224,16 @@ public class QuestionsFragment extends Fragment
         if (mVotesList.size() == 0) return;
         VotesBatch votesBatch = new VotesBatch(mVotesList);
         UnstuckMeApplication.sQuestionsService.sendVotes(votesBatch,
-                new Callback<List<Question>>() {
+                new Callback<Void>() {
 
             @Override
-            public void success(List<Question> questionList, Response response) {
+            public void success(Void aVoid, Response response) {
                 //Do nothing...
             }
 
             @Override
             public void failure(RetrofitError error) {
-                Log.e("Error:", error.toString());
+                Log.e("Votes Error:", error.toString());
                 //Do nothing...
             }
         });
@@ -251,12 +251,12 @@ public class QuestionsFragment extends Fragment
     public void onEvent(ShareEvent event) {
         if (mQuestionList == null
                 || mQuestionIndex == null
-                || mQuestionList.size() >= mQuestionIndex)
+                || mQuestionList.size() <= mQuestionIndex)
             return;
         Intent sendIntent = new Intent();
         sendIntent.setAction(Intent.ACTION_SEND);
         sendIntent.putExtra(Intent.EXTRA_TEXT, Configuration.API_ENDPOINT
-                + Configuration.LANDING_WEB_PAGE
+                + Configuration.ADD_QUERY
                 + mQuestionList.get(mQuestionIndex).getId());
         sendIntent.setType(PLAIN_TEXT);
         getActivity().startActivity(sendIntent);
