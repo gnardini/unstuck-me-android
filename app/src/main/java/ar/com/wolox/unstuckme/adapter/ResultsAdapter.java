@@ -20,7 +20,6 @@ import ar.com.wolox.unstuckme.network.share.ShareObject;
 public class ResultsAdapter extends BaseAdapter {
 
     private static final int MAX_IMAGES = 4;
-    private static final String PERCENTAGE = "%";
     private static final String PICTURE_ELEMENT = "adapter_answer_element_";
     private static final String ID = "id";
 

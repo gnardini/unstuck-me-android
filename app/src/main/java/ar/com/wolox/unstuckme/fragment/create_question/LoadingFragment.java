@@ -1,10 +1,6 @@
 package ar.com.wolox.unstuckme.fragment.create_question;
 
-import android.app.Activity;
-import android.app.PendingIntent;
-import android.net.Uri;
 import android.os.Bundle;
-
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.view.LayoutInflater;
@@ -16,7 +12,6 @@ import android.view.animation.AnimationUtils;
 import ar.com.wolox.unstuckme.R;
 import ar.com.wolox.unstuckme.model.Question;
 import ar.com.wolox.unstuckme.utils.QuestionBuilder;
-
 
 public class LoadingFragment extends Fragment implements FinishLoadingListener{
 

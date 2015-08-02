@@ -9,10 +9,12 @@
              android:layout_height="48dp"/>
 
     <LinearLayout
+        android:id="@+id/user_data_container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginTop="48dp"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:visibility="gone">
 
         <FrameLayout
             android:layout_width="match_parent"
@@ -50,7 +52,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:text="20/40"
                     android:textSize="15sp"
                     android:textColor="@color/black"/>
 
@@ -140,5 +141,20 @@
         </FrameLayout>
 
     </LinearLayout>
+
+    <FrameLayout
+        android:id="@+id/user_loading"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="48dp">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:src="@drawable/ic_loader_spinner"/>
+
+
+    </FrameLayout>
 
 </FrameLayout>

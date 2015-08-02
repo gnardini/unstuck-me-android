@@ -5,6 +5,8 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -26,6 +28,7 @@ public class UserFragment extends Fragment {
     private static final String EXP = "%d/%d";
 
     private User mUser;
+    private View mUserView;
     private View mShare;
     private View mProfile;
     private View mBack;
@@ -36,6 +39,7 @@ public class UserFragment extends Fragment {
     private TextView mMyQuestionsAnswered;
     private TextView mQuestionsAsked;
     private int mExtraVotes;
+    private View mLoading;
 
     public static UserFragment newInstance() {
         UserFragment f = new UserFragment();
@@ -54,6 +58,7 @@ public class UserFragment extends Fragment {
     }
 
     private void setUi(View v) {
+        mUserView = v.findViewById(R.id.user_data_container);
         mBack = v.findViewById(R.id.toolbar_back);
         mShare = v.findViewById(R.id.toolbar_share);
         mProfile = v.findViewById(R.id.toolbar_user);
@@ -63,13 +68,19 @@ public class UserFragment extends Fragment {
         mAnswersCount = (TextView) v.findViewById(R.id.user_questions_answered_count);
         mMyQuestionsAnswered = (TextView) v.findViewById(R.id.user_my_questions_answered_count);
         mQuestionsAsked = (TextView) v.findViewById(R.id.user_questions_asked);
+        mLoading = v.findViewById(R.id.user_loading);
     }
 
     private void init() {
+        Animation rotation = AnimationUtils.loadAnimation(getActivity(), R.anim.rotate);
+        mLoading.startAnimation(rotation);
         UnstuckMeApplication.sUserService.getUserStats(new Callback<User>() {
             @Override
             public void success(User user, Response response) {
                 mUser = user;
+                mLoading.clearAnimation();
+                mLoading.setVisibility(View.GONE);
+                mUserView.setVisibility(View.VISIBLE);
                 setUserInfo();
             }
 

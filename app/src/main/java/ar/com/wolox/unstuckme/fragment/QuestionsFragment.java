@@ -152,7 +152,7 @@ public class QuestionsFragment extends Fragment implements SwipeRefreshLayout.On
                 }
                 int size = mQuestionList.size();
                 addQuestionsWithoutDuplicates(questions);
-                if (mQuestionList.size() == size) {
+                if (mQuestionList.size() == size && mQuestionList.size() <= mQuestionIndex) {
                     mNoResults.setVisibility(View.VISIBLE);
                     mRefreshView.setEnabled(true);
                     mNoMorePages = true;
