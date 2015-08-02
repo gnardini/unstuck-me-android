@@ -292,7 +292,7 @@ public class QuestionsFragment extends Fragment implements SwipeRefreshLayout.On
                 || mQuestionIndex == null
                 || mQuestionList.size() <= mQuestionIndex)
             return;
-        new ShareObject(getActivity(), mQuestionList.get(mQuestionIndex).getId());
+        new ShareObject(getActivity(), mQuestionList.get(mQuestionIndex).getId()).share();
     }
 
     public void onEvent(LeaveRateViewEvent event) {
