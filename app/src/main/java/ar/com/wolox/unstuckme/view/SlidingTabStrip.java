@@ -45,7 +45,7 @@ class SlidingTabStrip extends LinearLayout {
 
         mDefaultTabColorizer = new SimpleTabColorizer();
         mDefaultTabColorizer.setIndicatorColors(getResources()
-                .getColor(ar.com.wolox.unstuckme.R.color.green));
+                .getColor(ar.com.wolox.unstuckme.R.color.red));
 
         mBottomBorderThickness = (int) getResources().getDimension(
                 ar.com.wolox.unstuckme.R.dimen.default_bottom_border_thickness);
