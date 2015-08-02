@@ -72,7 +72,7 @@ public class ResultsAdapter extends BaseAdapter {
             if ( i < options.size()) {
                 v.mPictures[i].mRoot.setVisibility(View.VISIBLE);
                 Glide.with(mContext)
-                        .load(options.get(i).getOption())
+                        .load(options.get(i).getImageUrl())
                         .placeholder(null)
                         .into(v.mPictures[i].mImage);
             } else {
@@ -101,7 +101,7 @@ public class ResultsAdapter extends BaseAdapter {
                 List<Option> options = question.getOptions();
                 for (int i = 0 ; i < options.size() ; i++) {
                     v.mPictures[i].mPercentage.setVisibility(View.VISIBLE);
-                    v.mPictures[i].mPercentage.setText(options.get(i).getPercentage() + PERCENTAGE);
+                    v.mPictures[i].mPercentage.setText(options.get(i).getImageUrl() + PERCENTAGE);
                 }
                 return true;
             }

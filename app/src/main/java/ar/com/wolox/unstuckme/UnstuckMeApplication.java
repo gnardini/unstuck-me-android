@@ -42,6 +42,7 @@ public class UnstuckMeApplication extends Application {
                 .setRequestInterceptor(sSecureRequestInterceptor)
                 .build();
 
+        apiAdapter.setLogLevel(RestAdapter.LogLevel.FULL);
         sQuestionsService = apiAdapter.create(QuestionsService.class);
     }
 
