@@ -16,5 +16,13 @@
         android:layout_above="@id/create_questions_end_text"
         android:src="@drawable/test_image"/>
 
+    <ImageButton
+        android:id="@+id/create_questions_end_button_ok"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_tick_white"
+        android:background="@color/green"
+        android:layout_alignParentBottom="true"/>
+
 
 </RelativeLayout>

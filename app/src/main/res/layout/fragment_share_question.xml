@@ -1,18 +1,10 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="ar.com.wolox.unstuckme.fragment.create_question.ShareQuestionFragment">
+    tools:context="ar.com.wolox.unstuckme.fragment.create_question.ShareQuestionFragment"
+    android:background="@color/dark_gray">
 
 
-    <TextView
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:textSize="@dimen/font_larger"
-        android:text="@string/share_text"
-        android:gravity="center"
-        android:layout_above="@id/create_questions_share_goto_app"
-        android:layout_marginBottom="@dimen/spacing_large"
-        />
     <ImageView
         android:id="@+id/create_questions_share_goto_app"
         android:layout_width="fill_parent"
@@ -20,4 +12,14 @@
         android:src="@drawable/ic_share"
         android:scaleType="fitCenter"
         android:layout_centerVertical="true"/>
+
+    <TextView
+        android:id="@+id/create_questions_share_no_thanks"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/create_questions_share_no_thanks"
+        android:textSize="@dimen/font_larger"
+        android:gravity="center"
+        android:layout_alignParentBottom="true"
+        android:layout_below="@id/create_questions_share_goto_app"/>
 </RelativeLayout>

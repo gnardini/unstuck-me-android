@@ -2,6 +2,7 @@ package ar.com.wolox.unstuckme.fragment.create_question;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -54,10 +55,10 @@ public class PrivacyQuestionsFragment extends Fragment {
 
     private void makeTransition() {
         QuestionBuilder.handleImageLoading();
-        getFragmentManager()
-                .beginTransaction()
-                .replace(R.id.create_questions_container, EndQuestionsFragment.newInstance())
-                .addToBackStack(null)
+        FragmentManager fm = getFragmentManager();
+        fm.popBackStack();
+        fm.beginTransaction()
+                .replace(R.id.create_questions_container, LoadingFragment.newInstance())
                 .commit();
     }
 

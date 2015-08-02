@@ -1,6 +1,7 @@
 package ar.com.wolox.unstuckme.fragment.create_question;
 
 import android.app.Activity;
+import android.app.FragmentManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -13,6 +14,8 @@ import ar.com.wolox.unstuckme.R;
 
 
 public class EndQuestionsFragment extends Fragment {
+
+    private ImageButton mOkButton;
 
     public static EndQuestionsFragment newInstance() {
         EndQuestionsFragment fragment = new EndQuestionsFragment();
@@ -29,9 +32,19 @@ public class EndQuestionsFragment extends Fragment {
     }
 
     private void setUi(View v) {
+        mOkButton = (ImageButton) v.findViewById(R.id.create_questions_end_button_ok);
     }
 
     private void setListeners() {
+        mOkButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                getFragmentManager()
+                        .beginTransaction()
+                        .replace(R.id.create_questions_container, CreateQuestionsFragment.newInstance())
+                        .commit();
+            }
+        });
     }
 
 
