@@ -1,121 +1,141 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<FrameLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <LinearLayout
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:id="@+id/refresh_view"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:weightSum="1"
-        android:orientation="vertical">
+        android:layout_height="wrap_content">
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="0.5"
-            android:gravity="center_horizontal"
-            android:orientation="horizontal"
-            android:weightSum="1">
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="vertical">
 
-            <FrameLayout
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
                 android:layout_weight="0.5"
-                style="@style/QuestionsImageContainer">
+                android:gravity="center_horizontal"
+                android:orientation="horizontal"
+                android:weightSum="1">
 
-                <ImageView
-                    android:id="@+id/questions_imageview_answer_1"
-                    android:layout_width="match_parent"
+                <FrameLayout
+                    android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    style="@style/QuestionsImage"/>
+                    android:layout_weight="0.5"
+                    style="@style/QuestionsImageContainer">
 
-                <ImageView
-                    android:id="@+id/questions_imageview_answer_tick_1"
-                    android:layout_width="match_parent"
+                    <ImageView
+                        android:id="@+id/questions_imageview_answer_1"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        style="@style/QuestionsImage"/>
+
+                    <ImageView
+                        android:id="@+id/questions_imageview_answer_tick_1"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        style="@style/QuestionsImageVoted"
+                        android:visibility="gone"/>
+
+                </FrameLayout>
+
+                <FrameLayout
+                    android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    style="@style/QuestionsImageTick"
-                    android:visibility="gone"/>
+                    android:layout_weight="0.5"
+                    style="@style/QuestionsImageContainer">
 
-            </FrameLayout>
+                    <ImageView
+                        android:id="@+id/questions_imageview_answer_2"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        style="@style/QuestionsImage"/>
 
-            <FrameLayout
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
+                    <ImageView
+                        android:id="@+id/questions_imageview_answer_tick_2"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        style="@style/QuestionsImageVoted"
+                        android:visibility="gone"/>
+
+                </FrameLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
                 android:layout_weight="0.5"
-                style="@style/QuestionsImageContainer">
+                android:gravity="center_horizontal"
+                android:weightSum="1">
 
-                <ImageView
-                    android:id="@+id/questions_imageview_answer_2"
-                    android:layout_width="match_parent"
+                <FrameLayout
+                    android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    style="@style/QuestionsImage"/>
+                    android:layout_weight="0.5"
+                    style="@style/QuestionsImageContainer">
 
-                <ImageView
-                    android:id="@+id/questions_imageview_answer_tick_2"
-                    android:layout_width="match_parent"
+                    <ImageView
+                        android:id="@+id/questions_imageview_answer_3"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        style="@style/QuestionsImage"/>
+
+                    <ImageView
+                        android:id="@+id/questions_imageview_answer_tick_3"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        style="@style/QuestionsImageVoted"
+                        android:visibility="gone"/>
+
+                </FrameLayout>
+
+                <FrameLayout
+                    android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    style="@style/QuestionsImageTick"
-                    android:visibility="gone"/>
+                    android:layout_weight="0.5"
+                    style="@style/QuestionsImageContainer">
 
-            </FrameLayout>
+                    <ImageView
+                        android:id="@+id/questions_imageview_answer_4"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        style="@style/QuestionsImage"/>
+
+                    <ImageView
+                        android:id="@+id/questions_imageview_answer_tick_4"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        style="@style/QuestionsImageVoted"
+                        android:visibility="gone"/>
+
+                </FrameLayout>
+
+            </LinearLayout>
 
         </LinearLayout>
 
-        <LinearLayout
-            android:orientation="horizontal"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="0.5"
-            android:gravity="center_horizontal"
-            android:weightSum="1">
+    </android.support.v4.widget.SwipeRefreshLayout>
 
-            <FrameLayout
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="0.5"
-                style="@style/QuestionsImageContainer">
+    <include layout="@layout/loading"
+        android:id="@+id/questions_loading"/>
 
-                <ImageView
-                    android:id="@+id/questions_imageview_answer_3"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    style="@style/QuestionsImage"/>
+    <ar.com.wolox.unstuckme.view.FontTextView
+        android:id="@+id/no_results"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text="@string/error.no.questions"
+        android:textSize="18dp"
+        android:textColor="@color/black"
+        android:textAllCaps="true"
+        android:visibility="gone"/>
 
-                <ImageView
-                    android:id="@+id/questions_imageview_answer_tick_3"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    style="@style/QuestionsImageTick"
-                    android:visibility="gone"/>
-
-            </FrameLayout>
-
-            <FrameLayout
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="0.5"
-                style="@style/QuestionsImageContainer">
-
-                <ImageView
-                    android:id="@+id/questions_imageview_answer_4"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    style="@style/QuestionsImage"/>
-
-                <ImageView
-                    android:id="@+id/questions_imageview_answer_tick_4"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    style="@style/QuestionsImageTick"
-                    android:visibility="gone"/>
-
-            </FrameLayout>
-
-        </LinearLayout>
-
-    </LinearLayout>
-
-</LinearLayout>
+</FrameLayout>
