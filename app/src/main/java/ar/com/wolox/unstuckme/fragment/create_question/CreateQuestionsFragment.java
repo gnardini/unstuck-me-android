@@ -11,6 +11,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.Toast;
@@ -136,11 +137,22 @@ public class CreateQuestionsFragment extends Fragment {
                 if (mImageUpload4.getDrawable() != null)
                     QuestionBuilder.putImage(mImageUpload4);
                 if (countEffectiveImages() >= MIN_IMAGES_TO_UPLOAD) {
-                    getFragmentManager()
-                            .beginTransaction()
-                            .add(R.id.create_questions_container, PrivacyQuestionsFragment.newInstance())
-                            .addToBackStack(TAG)
-                            .commit();
+                    AnimationsHelper.flyPlane(mReadyButton).setAnimationListener(new Animation.AnimationListener(){
+                        @Override
+                        public void onAnimationStart(Animation arg0) {
+                        }
+                        @Override
+                        public void onAnimationRepeat(Animation arg0) {
+                        }
+                        @Override
+                        public void onAnimationEnd(Animation arg0) {
+                            getFragmentManager()
+                                    .beginTransaction()
+                                    .add(R.id.create_questions_container, PrivacyQuestionsFragment.newInstance())
+                                    .addToBackStack(TAG)
+                                    .commit();
+                        }
+                    });
                 } else {
                     Toast.makeText(getActivity(), R.string.error_create_question_not_enough_images, Toast.LENGTH_SHORT).show();
                 }

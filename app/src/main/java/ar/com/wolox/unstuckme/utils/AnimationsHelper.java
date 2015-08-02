@@ -24,4 +24,11 @@ public class AnimationsHelper {
         view.startAnimation(animation);
     }
 
+    public static Animation flyPlane(View view) {
+        Animation animation = AnimationUtils.loadAnimation(
+                UnstuckMeApplication.getAppContext(),
+                R.anim.fly_plane);
+        view.startAnimation(animation);
+        return animation;
+    }
 }
