@@ -1,13 +1,17 @@
 package ar.com.wolox.unstuckme.model;
 
+import com.google.gson.annotations.SerializedName;
+
 import java.util.List;
 
 public class Question {
 
     private static final int MAX_PERCENTAGE = 100;
+    private static final int MAX_OPTIONS = 4;
 
     private int id;
     private List<Option> options;
+
 
     public int getId() {
         return id;
@@ -41,4 +45,5 @@ public class Question {
         for (Option option : options) option.setPercentage(MAX_PERCENTAGE
                 * option.getVotes() / total);
     }
+
 }

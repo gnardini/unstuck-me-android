@@ -3,11 +3,15 @@ package ar.com.wolox.unstuckme;
 import android.app.Application;
 import android.content.Context;
 
+import com.cloudinary.Cloudinary;
 import com.google.gson.FieldNamingPolicy;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.parse.Parse;
 import com.parse.ParseInstallation;
+
+import java.util.HashMap;
+import java.util.Map;
 
 import ar.com.wolox.unstuckme.network.QuestionsService;
 import ar.com.wolox.unstuckme.network.interceptor.SecureRequestInterceptor;
@@ -18,9 +22,9 @@ import retrofit.converter.GsonConverter;
 
 public class UnstuckMeApplication extends Application {
 
-    public static final String CREATE_QUESTION_TAG = "CREATE_QUESTION_FRAGMENTS";
     private static Context sContext;
     private static RequestInterceptor sSecureRequestInterceptor;
+    private static Cloudinary sCloudinary;
 
     public static QuestionsService sQuestionsService;
 
@@ -46,6 +50,16 @@ public class UnstuckMeApplication extends Application {
 
         apiAdapter.setLogLevel(RestAdapter.LogLevel.FULL);
         sQuestionsService = apiAdapter.create(QuestionsService.class);
+
+        sCloudinary = configCloudinary();
+    }
+
+    private static Cloudinary configCloudinary() {
+        Map config = new HashMap();
+        config.put("cloud_name", Configuration.CLOUDINARY_NAME);
+        config.put("api_key", Configuration.CLOUDINARY_KEY);
+        config.put("api_secret", Configuration.CLOUDINARY_SECRET);
+        return new Cloudinary(config);
     }
 
     public static Context getAppContext() {
@@ -64,4 +78,9 @@ public class UnstuckMeApplication extends Application {
         PushNotificationUtils.subscribe();
         Parse.setLogLevel(Parse.LOG_LEVEL_NONE);
     }
+
+    public static Cloudinary getCloudinary() {
+        return sCloudinary;
+    }
+
 }

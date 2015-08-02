@@ -8,7 +8,7 @@ import android.view.ViewGroup;
 import android.widget.ImageButton;
 
 import ar.com.wolox.unstuckme.R;
-import ar.com.wolox.unstuckme.UnstuckMeApplication;
+import ar.com.wolox.unstuckme.utils.QuestionBuilder;
 
 public class PrivacyQuestionsFragment extends Fragment {
 
@@ -38,21 +38,28 @@ public class PrivacyQuestionsFragment extends Fragment {
         mPrivacyOnButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                getFragmentManager()
-                        .beginTransaction()
-                        .replace(R.id.create_questions_container, EndQuestionsFragment.newInstance(), UnstuckMeApplication.CREATE_QUESTION_TAG)
-                        .addToBackStack(null)
-                        .commit();
+                QuestionBuilder.putPrivacy(true);
+                makeTransition();
             }
         });
 
         mPrivacyOffButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                QuestionBuilder.putPrivacy(false);
+                makeTransition();
             }
         });
     }
 
-    
+    private void makeTransition() {
+        QuestionBuilder.handleImageLoading();
+        getFragmentManager()
+                .beginTransaction()
+                .replace(R.id.create_questions_container, EndQuestionsFragment.newInstance())
+                .addToBackStack(null)
+                .commit();
+    }
+
+
 }

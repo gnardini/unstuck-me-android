@@ -8,7 +8,14 @@ import android.view.View;
 
 import ar.com.wolox.unstuckme.R;
 import ar.com.wolox.unstuckme.adapter.MainAdapter;
+
+import ar.com.wolox.unstuckme.fragment.AnswersFragment;
+import ar.com.wolox.unstuckme.fragment.create_question.CreateQuestionsContainerFragment;
+import ar.com.wolox.unstuckme.fragment.QuestionsFragment;
+import ar.com.wolox.unstuckme.utils.QuestionBuilder;
+
 import ar.com.wolox.unstuckme.network.notification.PushReceiver;
+
 
 public class MainActivity extends FragmentActivity {
 
@@ -74,6 +81,7 @@ public class MainActivity extends FragmentActivity {
         mQuestionsTab.setSelected(position == POSITION_QUESTIONS);
         mCreateQuestionTab.setSelected(position == POSITION_CREATE_QUESTIONS);
         if (position == POSITION_CREATE_QUESTIONS) {
+            QuestionBuilder.resetBuilder();
             FragmentManager fm = getSupportFragmentManager();
             for(int i = 0; i < fm.getBackStackEntryCount(); ++i) {
                 fm.popBackStack();
