@@ -1,6 +1,7 @@
 package ar.com.wolox.unstuckme.fragment;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
@@ -12,7 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
-import com.bumptech.glide.Glide;
+import com.facebook.drawee.view.DraweeView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,6 +25,7 @@ import ar.com.wolox.unstuckme.model.Option;
 import ar.com.wolox.unstuckme.model.Question;
 import ar.com.wolox.unstuckme.model.VotesBatch;
 import ar.com.wolox.unstuckme.model.event.ShareEvent;
+import ar.com.wolox.unstuckme.utils.AnimationsHelper;
 import ar.com.wolox.unstuckme.utils.CloudinaryUtils;
 import de.greenrobot.event.EventBus;
 import retrofit.Callback;
@@ -34,11 +36,12 @@ public class QuestionsFragment extends Fragment implements SwipeRefreshLayout.On
 
     private static final String PLAIN_TEXT = "text/plain";
 
-    private List<ImageView> mAnswerImages = new ArrayList<>();
+    private List<DraweeView> mAnswerImages = new ArrayList<>();
     private List<ImageView> mAnswerImagesTick = new ArrayList<>();
     private View mNoResults;
     private View mLoadingView;
     private SwipeRefreshLayout mRefreshView;
+    private ImageView mSpinner;
 
     private Integer mQuestionIndex = null;
     private List<Question> mQuestionList = new ArrayList<>();
@@ -60,6 +63,9 @@ public class QuestionsFragment extends Fragment implements SwipeRefreshLayout.On
                 return;
             int tickPos = mAnswerImages.indexOf(view);
             mAnswerImagesTick.get(tickPos).setVisibility(View.VISIBLE);
+
+            AnimationsHelper.popImage(view, Configuration.NEXT_QUESTION_DELAY);
+            /*
             populateNextQuestionDelayed();
 
             switch (view.getId()) {
@@ -76,6 +82,7 @@ public class QuestionsFragment extends Fragment implements SwipeRefreshLayout.On
                     voteOption(mQuestionList.get(mQuestionIndex).getOptions().get(3));
                     break;
             }
+            */
         }
     };
 
@@ -96,10 +103,10 @@ public class QuestionsFragment extends Fragment implements SwipeRefreshLayout.On
     }
 
     private void setUi(View view) {
-        mAnswerImages.add( (ImageView) view.findViewById(R.id.questions_imageview_answer_1));
-        mAnswerImages.add( (ImageView) view.findViewById(R.id.questions_imageview_answer_2));
-        mAnswerImages.add( (ImageView) view.findViewById(R.id.questions_imageview_answer_3));
-        mAnswerImages.add( (ImageView) view.findViewById(R.id.questions_imageview_answer_4));
+        mAnswerImages.add( (DraweeView) view.findViewById(R.id.questions_imageview_answer_1));
+        mAnswerImages.add( (DraweeView) view.findViewById(R.id.questions_imageview_answer_2));
+        mAnswerImages.add( (DraweeView) view.findViewById(R.id.questions_imageview_answer_3));
+        mAnswerImages.add( (DraweeView) view.findViewById(R.id.questions_imageview_answer_4));
 
         mAnswerImagesTick.add( (ImageView) view.findViewById(R.id.questions_imageview_answer_tick_1));
         mAnswerImagesTick.add((ImageView) view.findViewById(R.id.questions_imageview_answer_tick_2));
@@ -183,12 +190,17 @@ public class QuestionsFragment extends Fragment implements SwipeRefreshLayout.On
         //Populate image views
         int i = 0;
         for (Option option : mQuestionList.get(mQuestionIndex).getOptions()) {
+            /*
             Glide.with(this)
                     .load(CloudinaryUtils.getQuestionCompressedImage(option.getImageUrl()))
+                    .placeholder(R.drawable.loading_spinner)
                     .centerCrop()
                     .crossFade()
                     .placeholder(R.drawable.nav_panda)
                     .into(mAnswerImages.get(i));
+                    */
+            Uri uri = Uri.parse(CloudinaryUtils.getQuestionCompressedImage(option.getImageUrl()));
+            mAnswerImages.get(i).setImageURI(uri);
             mAnswerImages.get(i).setVisibility(View.VISIBLE);
             mAnswerImagesTick.get(i).setVisibility(View.GONE);
             i++;
