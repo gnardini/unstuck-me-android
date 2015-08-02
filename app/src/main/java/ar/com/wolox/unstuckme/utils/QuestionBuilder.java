@@ -3,22 +3,34 @@ package ar.com.wolox.unstuckme.utils;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.AsyncTask;
+import android.util.Log;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.cloudinary.Cloudinary;
 import com.cloudinary.utils.ObjectUtils;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 import org.cloudinary.json.JSONObject;
+import org.json.JSONException;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 
 import ar.com.wolox.unstuckme.Configuration;
 import ar.com.wolox.unstuckme.UnstuckMeApplication;
+import ar.com.wolox.unstuckme.model.QuestionNew;
+import ar.com.wolox.unstuckme.network.QuestionsService;
+import retrofit.Callback;
+import retrofit.RetrofitError;
+import retrofit.client.Response;
 
 /**
  * Created by agustinpagnoni on 8/2/15.
@@ -87,13 +99,27 @@ public class QuestionBuilder {
             //TODO
             if (result != null) {
                 QuestionBuilder.onImagesUploaded(result);
+            } else {
+                // TODO handle error in upload
             }
 
         }
     }
 
     private static void onImagesUploaded(List<String> cloudinaryPaths) {
+        QuestionNew question = new QuestionNew(cloudinaryPaths, privacy);
 
+        UnstuckMeApplication.sQuestionsService.postQuestion(question, new Callback<QuestionNew>() {
+            @Override
+            public void success(QuestionNew jsonObject, Response response) {
+                //TODO notify good
+                Toast.makeText(UnstuckMeApplication.getAppContext(), "QUESTION CREADAAAA", Toast.LENGTH_LONG).show();
+            }
 
+            @Override
+            public void failure(RetrofitError error) {
+                Toast.makeText(UnstuckMeApplication.getAppContext(), "QUESTION ERROOOR", Toast.LENGTH_LONG).show();
+            }
+        });
     }
 }

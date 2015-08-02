@@ -17,6 +17,7 @@
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">match_parent</item>
         <item name="android:scaleType">centerCrop</item>
+        <item name="android:colorBackground">@color/gray</item>
     </style>
 
     <style name="create_questions_button_remove_image">
