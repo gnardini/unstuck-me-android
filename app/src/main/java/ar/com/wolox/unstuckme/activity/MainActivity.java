@@ -72,6 +72,12 @@ public class MainActivity extends FragmentActivity {
         mViewPager.setAdapter(mMainAdapter);
         mViewPager.setOffscreenPageLimit(MainAdapter.TABS_COUNT);
         setTabSelected(selectedTab);
+
+        Bundle extras = getIntent().getExtras();
+        if (extras != null && extras.containsKey(PushReceiver.LEVEL_UP)) {
+            startActivity(new Intent(this, UserActivity.class));
+            return;
+        }
     }
 
     private void setListeners() {
