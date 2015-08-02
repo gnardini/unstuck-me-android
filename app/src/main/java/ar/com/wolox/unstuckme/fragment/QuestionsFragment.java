@@ -16,6 +16,7 @@ import android.widget.ImageView;
 import com.facebook.drawee.view.DraweeView;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 import ar.com.wolox.unstuckme.Configuration;
@@ -24,7 +25,9 @@ import ar.com.wolox.unstuckme.UnstuckMeApplication;
 import ar.com.wolox.unstuckme.model.Option;
 import ar.com.wolox.unstuckme.model.Question;
 import ar.com.wolox.unstuckme.model.VotesBatch;
+import ar.com.wolox.unstuckme.model.event.LeaveRateViewEvent;
 import ar.com.wolox.unstuckme.model.event.ShareEvent;
+import ar.com.wolox.unstuckme.model.event.VotesSentEvent;
 import ar.com.wolox.unstuckme.network.share.ShareObject;
 import ar.com.wolox.unstuckme.utils.AnimationsHelper;
 import ar.com.wolox.unstuckme.utils.CloudinaryUtils;
@@ -149,6 +152,7 @@ public class QuestionsFragment extends Fragment implements SwipeRefreshLayout.On
                     mNoResults.setVisibility(View.VISIBLE);
                     mNoMorePages = true;
                     sendVotesBatch();
+                    clearViews();
                     return;
                 }
                 if (mWaitingForQuestions) {
@@ -242,23 +246,32 @@ public class QuestionsFragment extends Fragment implements SwipeRefreshLayout.On
 
     private void sendVotesBatch() {
         if (mVotesList.size() == 0) return;
+        final int size = mVotesList.size();
+        final List<Integer> deepCopy = getDeepCopy(mVotesList);
         VotesBatch votesBatch = new VotesBatch(mVotesList);
         UnstuckMeApplication.sQuestionsService.sendVotes(votesBatch,
                 new Callback<Void>() {
 
-            @Override
-            public void success(Void aVoid, Response response) {
-                //Do nothing...
-            }
+                    @Override
+                    public void success(Void aVoid, Response response) {
+                        mVotesList.removeAll(deepCopy);
+                        EventBus.getDefault().post(new VotesSentEvent(size));
+                    }
 
-            @Override
-            public void failure(RetrofitError error) {
-                Log.e("Votes Error:", error.toString());
-                //Do nothing...
-            }
-        });
+                    @Override
+                    public void failure(RetrofitError error) {
+                        Log.e("Votes Error:", error.toString());
+                        //Do nothing...
+                    }
+                });
 
         mVotesList = new ArrayList<>();
+    }
+
+    private List<Integer> getDeepCopy(List<Integer> list) {
+        List<Integer> copy = new LinkedList<>();
+        for (Integer integer : list) copy.add(integer);
+        return copy;
     }
 
     @Override
@@ -274,6 +287,10 @@ public class QuestionsFragment extends Fragment implements SwipeRefreshLayout.On
                 || mQuestionList.size() <= mQuestionIndex)
             return;
         new ShareObject(getActivity(), mQuestionList.get(mQuestionIndex).getId());
+    }
+
+    public void onEvent(LeaveRateViewEvent event) {
+        sendVotesBatch();
     }
 
     @Override
