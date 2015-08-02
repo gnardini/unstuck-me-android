@@ -170,8 +170,8 @@ public class CreateQuestionsFragment extends Fragment {
 
             if (imageView != null) {
 //                imageView.setImageDrawable();
-//                imageView.setImageBitmap(decodeFile(picturePath));
-                imageView.setImageURI(selectedImageUri);
+                imageView.setImageBitmap(decodeFile(picturePath));
+//                imageView.setImageURI(selectedImageUri);
             }
         }
     }

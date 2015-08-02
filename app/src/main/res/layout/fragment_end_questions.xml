@@ -14,7 +14,7 @@
         android:layout_width="fill_parent"
         android:layout_height="@dimen/button_height_tall"
         android:layout_above="@id/create_questions_end_text"
-        android:src="@drawable/test_image"/>
+        android:src="@drawable/nav_panda"/>
 
 
 </RelativeLayout>
