@@ -15,6 +15,7 @@ import retrofit.converter.GsonConverter;
 
 public class UnstuckMeApplication extends Application {
 
+    public static final String CREATE_QUESTION_TAG = "CREATE_QUESTION_FRAGMENTS";
     private static Context sContext;
     private static RequestInterceptor sSecureRequestInterceptor;
 

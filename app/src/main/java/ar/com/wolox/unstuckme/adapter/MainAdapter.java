@@ -7,8 +7,8 @@ import android.support.v4.app.FragmentStatePagerAdapter;
 
 import ar.com.wolox.unstuckme.R;
 import ar.com.wolox.unstuckme.fragment.AnswersFragment;
-import ar.com.wolox.unstuckme.fragment.CreateQuestionsFragment;
 import ar.com.wolox.unstuckme.fragment.QuestionsFragment;
+import ar.com.wolox.unstuckme.fragment.create_question.CreateQuestionsContainerFragment;
 import ar.com.wolox.unstuckme.fragment.results.MyAnswersFragment;
 import ar.com.wolox.unstuckme.fragment.results.MyQuestionsFragment;
 
@@ -22,14 +22,14 @@ public class MainAdapter extends FragmentStatePagerAdapter {
     private Context mContext;
     private AnswersFragment mAnswersFragment;
     private QuestionsFragment mQuestionsFragment;
-    private CreateQuestionsFragment mCreateQuestionsFragment;
+    private CreateQuestionsContainerFragment mCreateQuestionsContainerFragment;
 
     public MainAdapter(FragmentManager fm, Context context) {
         super(fm);
         mContext = context;
         mAnswersFragment = AnswersFragment.newInstance();
         mQuestionsFragment = QuestionsFragment.newInstance();
-        mCreateQuestionsFragment = CreateQuestionsFragment.newInstance();
+        mCreateQuestionsContainerFragment = CreateQuestionsContainerFragment.newInstance();
     }
 
     @Override
@@ -40,7 +40,7 @@ public class MainAdapter extends FragmentStatePagerAdapter {
             case QUESTIONS:
                 return mQuestionsFragment;
             case CREATE_QUESTIONS:
-                return mCreateQuestionsFragment;
+                return mCreateQuestionsContainerFragment;
         }
         return null;
     }

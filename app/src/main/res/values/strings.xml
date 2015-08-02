@@ -19,4 +19,8 @@
     <string name="font_open_sans_cond_bold">OpenSans-CondBold</string>
     <string name="font_open_sans_semi_bold">OpenSans-Semibold</string>
 
+<!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="create_questions_end_text">People will answer for you!</string>
+
 </resources>

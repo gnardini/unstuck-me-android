@@ -3,13 +3,15 @@ package ar.com.wolox.unstuckme.activity;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.view.ViewPager;
 import android.view.View;
 
 import ar.com.wolox.unstuckme.R;
+import ar.com.wolox.unstuckme.UnstuckMeApplication;
 import ar.com.wolox.unstuckme.adapter.MainAdapter;
 import ar.com.wolox.unstuckme.fragment.AnswersFragment;
-import ar.com.wolox.unstuckme.fragment.CreateQuestionsFragment;
+import ar.com.wolox.unstuckme.fragment.create_question.CreateQuestionsContainerFragment;
 import ar.com.wolox.unstuckme.fragment.QuestionsFragment;
 
 public class MainActivity extends FragmentActivity {
@@ -50,6 +52,7 @@ public class MainActivity extends FragmentActivity {
         mViewPager.setAdapter(mMainAdapter);
         mViewPager.setOffscreenPageLimit(MainAdapter.TABS_COUNT);
         setTabSelected(mQuestionsTab);
+
     }
 
     private void setListeners() {
@@ -69,6 +72,12 @@ public class MainActivity extends FragmentActivity {
         mAnswersTab.setSelected(position == POSITION_ANSWERS);
         mQuestionsTab.setSelected(position == POSITION_QUESTIONS);
         mCreateQuestionTab.setSelected(position == POSITION_CREATE_QUESTIONS);
+        if (position == POSITION_CREATE_QUESTIONS) {
+            FragmentManager fm = getSupportFragmentManager();
+            for(int i = 0; i < fm.getBackStackEntryCount(); ++i) {
+                fm.popBackStack();
+            }
+        }
         mViewPager.setCurrentItem(position);
     }
 }
