@@ -15,7 +15,6 @@ import com.akexorcist.roundcornerprogressbar.RoundCornerProgressBar;
 import ar.com.wolox.unstuckme.R;
 import ar.com.wolox.unstuckme.UnstuckMeApplication;
 import ar.com.wolox.unstuckme.model.User;
-import ar.com.wolox.unstuckme.model.event.LeaveRateViewEvent;
 import ar.com.wolox.unstuckme.model.event.VotesSentEvent;
 import de.greenrobot.event.EventBus;
 import retrofit.Callback;
