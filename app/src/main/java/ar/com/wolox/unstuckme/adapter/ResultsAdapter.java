@@ -19,12 +19,14 @@ import ar.com.wolox.unstuckme.network.share.ShareObject;
 
 public class ResultsAdapter extends BaseAdapter {
 
+    private static final String TOTAL_VOTES = "Total Votes: %d";
     private static final int MAX_IMAGES = 4;
     private static final String PICTURE_ELEMENT = "adapter_answer_element_";
     private static final String ID = "id";
 
     private List<Question> mList;
     private Context mContext;
+    private View mLongClicked;
 
     public ResultsAdapter(Context context, List<Question> list) {
         mContext = context;
@@ -87,8 +89,17 @@ public class ResultsAdapter extends BaseAdapter {
         view.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View view) {
+                if (mLongClicked != null) mLongClicked.setVisibility(View.GONE);
+                mLongClicked = v.mHighlight;
                 v.mHighlight.setVisibility(View.VISIBLE);
+                v.mTotalVotes.setText(String.format(TOTAL_VOTES, question.getTotalVotes()));
                 return false;
+            }
+        });
+        view.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (mLongClicked != null) mLongClicked.setVisibility(View.GONE);
             }
         });
         v.mHighlight.setOnClickListener(new View.OnClickListener() {
@@ -108,6 +119,7 @@ public class ResultsAdapter extends BaseAdapter {
     static class ViewHolder {
 
         PictureElement[] mPictures;
+        TextView mTotalVotes;
         View mHighlight;
         View mShare;
     }
@@ -122,6 +134,7 @@ public class ResultsAdapter extends BaseAdapter {
             PictureElement pictureElement = new PictureElement(elementView);
             v.mPictures[i] = pictureElement;
         }
+        v.mTotalVotes = (TextView) view.findViewById(R.id.results_total_votes);
         v.mHighlight = view.findViewById(R.id.results_highlight);
         v.mShare = view.findViewById(R.id.results_share);
         return v;

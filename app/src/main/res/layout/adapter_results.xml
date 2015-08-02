@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="100dp">
+             xmlns:app="http://schemas.android.com/apk/res-auto"
+             android:layout_width="match_parent"
+             android:layout_height="100dp">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -45,11 +46,23 @@
         android:background="@color/highlight_black"
         android:visibility="gone">
 
+        <ar.com.wolox.unstuckme.view.FontTextView
+            android:id="@+id/results_total_votes"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="left|center_vertical"
+            android:layout_marginLeft="30dp"
+            android:text="Total Votes: 200"
+            android:textColor="@color/white"
+            android:textSize="16sp"
+            app:font="@string/font_open_sans_regular"/>
+
         <ImageView
             android:id="@+id/results_share"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:layout_gravity="center"
+            android:layout_marginLeft="70dp"
             android:src="@drawable/ic_share"/>
 
     </FrameLayout>
