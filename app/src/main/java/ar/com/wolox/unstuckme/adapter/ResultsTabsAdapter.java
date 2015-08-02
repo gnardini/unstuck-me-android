@@ -12,29 +12,29 @@ import ar.com.wolox.unstuckme.fragment.results.MyQuestionsFragment;
 public class ResultsTabsAdapter extends FragmentStatePagerAdapter {
 
     private static final int TABS_COUNT = 2;
-    public static final int MY_ANSWERS = 0;
-    public static final int MY_QUESTIONS = 1;
+    public static final int MY_QUESTIONS = 0;
+    public static final int MY_ANSWERS = 1;
 
-    private static final int[] mTabTitles = {R.string.my_answers, R.string.my_questions};
+    private static final int[] mTabTitles = {R.string.my_questions, R.string.my_answers};
 
     private Context mContext;
-    private MyAnswersFragment mMyAnswersFragment;
     private MyQuestionsFragment mMyQuestionsFragment;
+    private MyAnswersFragment mMyAnswersFragment;
 
     public ResultsTabsAdapter(FragmentManager fm, Context context) {
         super(fm);
         mContext = context;
-        mMyAnswersFragment = MyAnswersFragment.newInstance();
         mMyQuestionsFragment = MyQuestionsFragment.newInstance();
+        mMyAnswersFragment = MyAnswersFragment.newInstance();
     }
 
     @Override
     public Fragment getItem(int position) {
         switch (position) {
-            case MY_ANSWERS:
-                return mMyAnswersFragment;
             case MY_QUESTIONS:
                 return mMyQuestionsFragment;
+            case MY_ANSWERS:
+                return mMyAnswersFragment;
         }
         return null;
     }
