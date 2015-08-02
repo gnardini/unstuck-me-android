@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import ar.com.wolox.unstuckme.Configuration;
 import ar.com.wolox.unstuckme.R;
 import ar.com.wolox.unstuckme.adapter.ResultsTabsAdapter;
 import ar.com.wolox.unstuckme.network.notification.PushReceiver;
@@ -51,7 +52,7 @@ public class AnswersFragment extends Fragment {
         Bundle args = getArguments();
         if (args != null && args.containsKey(PushReceiver.QUESTION_ID)) {
             int questionId = args.getInt(PushReceiver.QUESTION_ID);
-            if (questionId != PushReceiver.QUESTION_ID_ERROR) {
+            if (questionId != Configuration.QUESTION_ID_ERROR) {
                 mViewPager.setCurrentItem(ResultsTabsAdapter.MY_QUESTIONS);
             }
         }

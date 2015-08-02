@@ -11,5 +11,6 @@
     <color name="highlight_green">#8853C3B0</color>
     <color name="green">#53C3B0</color>
     <color name="red">#E44E4B</color>
+    <color name="red_pressed">#990000</color>
 
 </resources>
