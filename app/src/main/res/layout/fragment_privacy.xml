@@ -8,7 +8,9 @@
         android:id="@+id/create_questions_privacy_on"
         android:layout_width="fill_parent"
         android:layout_height="0dp"
-        android:layout_weight="0.5"/>
+        android:layout_weight="0.5"
+        android:src="@drawable/lock"
+        android:scaleType="fitCenter"/>
 
     <ImageButton
         android:id="@+id/create_questions_privacy_off"

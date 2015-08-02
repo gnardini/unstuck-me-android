@@ -2,6 +2,9 @@ package ar.com.wolox.unstuckme.fragment.create_question;
 
 import android.content.Intent;
 import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -13,6 +16,8 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
@@ -162,7 +167,10 @@ public class CreateQuestionsFragment extends Fragment {
                     imageView = (ImageView) getActivity().findViewById(R.id.create_questions_image_upload_4);
                     break;
             }
+
             if (imageView != null) {
+//                imageView.setImageDrawable();
+//                imageView.setImageBitmap(decodeFile(picturePath));
                 imageView.setImageURI(selectedImageUri);
             }
         }
@@ -180,5 +188,31 @@ public class CreateQuestionsFragment extends Fragment {
     private CreateQuestionsFragment add(ImageView iv) {
         mImagesToUpload.add(iv);
         return this;
+    }
+
+    // Decodes image and scales it to reduce memory consumption
+    private Bitmap decodeFile(String path) {
+        try {
+            // Decode image size
+            BitmapFactory.Options o = new BitmapFactory.Options();
+            o.inJustDecodeBounds = true;
+            BitmapFactory.decodeStream(new FileInputStream(path), null, o);
+
+            // The new size we want to scale to
+            final int REQUIRED_SIZE=150;
+
+            // Find the correct scale value. It should be the power of 2.
+            int scale = 1;
+            while(o.outWidth / scale / 2 >= REQUIRED_SIZE &&
+                    o.outHeight / scale / 2 >= REQUIRED_SIZE) {
+                scale *= 2;
+            }
+
+            // Decode with inSampleSize
+            BitmapFactory.Options o2 = new BitmapFactory.Options();
+            o2.inSampleSize = scale;
+            return BitmapFactory.decodeStream(new FileInputStream(path), null, o2);
+        } catch (FileNotFoundException e) {}
+        return null;
     }
 }
