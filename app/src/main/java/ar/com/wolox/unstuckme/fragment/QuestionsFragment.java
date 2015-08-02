@@ -1,6 +1,5 @@
 package ar.com.wolox.unstuckme.fragment;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
@@ -100,7 +99,6 @@ public class QuestionsFragment extends Fragment {
         mAnswerImagesTick.add((ImageView) view.findViewById(R.id.questions_imageview_answer_tick_3));
         mAnswerImagesTick.add((ImageView) view.findViewById(R.id.questions_imageview_answer_tick_4));
 
-        mShare = view.findViewById(R.id.toolbar_share);
     }
 
     private void init() {
@@ -117,6 +115,7 @@ public class QuestionsFragment extends Fragment {
         for (View view : mAnswerImages) {
             view.setOnClickListener(mImageAnswerClickListener);
         }
+        /*
         mShare.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -128,6 +127,7 @@ public class QuestionsFragment extends Fragment {
                 getActivity().startActivity(sendIntent);
             }
         });
+        */
     }
 
     private void getQuestion(int questionId) {
