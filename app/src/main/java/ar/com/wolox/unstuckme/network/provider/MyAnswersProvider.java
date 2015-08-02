@@ -4,7 +4,6 @@ import java.util.List;
 
 import ar.com.wolox.unstuckme.UnstuckMeApplication;
 import ar.com.wolox.unstuckme.model.Question;
-import ar.com.wolox.unstuckme.utils.AccessUtils;
 import retrofit.Callback;
 
 public class MyAnswersProvider implements Provider<Question> {
