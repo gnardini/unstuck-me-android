@@ -28,6 +28,7 @@
     <!-- Share Question -->
     <string name="share_text">Share this question</string>
     <string name="share_goto_app">Go to app</string>
+    <string name="share_preparing">Preparing to share</string>
 
     <!-- Font names -->
     <string name="font_montserrat">Montserrat-Regular</string>

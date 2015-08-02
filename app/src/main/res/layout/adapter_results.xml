@@ -1,35 +1,57 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="100dp"
-    android:elevation="5dp"
-    android:orientation="horizontal">
+    android:layout_height="100dp">
 
-    <include layout="@layout/adapter_answer_element"
-        android:id="@+id/adapter_answer_element_1"/>
-
-    <View
-        android:layout_width="1dp"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/white" />
+        android:elevation="5dp"
+        android:orientation="horizontal">
 
-    <include layout="@layout/adapter_answer_element"
-             android:id="@+id/adapter_answer_element_2"/>
+        <include layout="@layout/adapter_answer_element"
+            android:id="@+id/adapter_answer_element_1"/>
 
-    <View
-        android:layout_width="1dp"
+        <View
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:background="@color/white" />
+
+        <include layout="@layout/adapter_answer_element"
+                 android:id="@+id/adapter_answer_element_2"/>
+
+        <View
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:background="@color/white" />
+
+        <include layout="@layout/adapter_answer_element"
+                 android:id="@+id/adapter_answer_element_3"/>
+
+        <View
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:background="@color/white" />
+
+        <include layout="@layout/adapter_answer_element"
+                 android:id="@+id/adapter_answer_element_4"/>
+
+    </LinearLayout>
+
+    <FrameLayout
+        android:id="@+id/results_highlight"
+        android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/white" />
+        android:background="@color/highlight_black"
+        android:visibility="gone">
 
-    <include layout="@layout/adapter_answer_element"
-             android:id="@+id/adapter_answer_element_3"/>
+        <ImageView
+            android:id="@+id/results_share"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_gravity="center"
+            android:src="@drawable/ic_share"/>
 
-    <View
-        android:layout_width="1dp"
-        android:layout_height="match_parent"
-        android:background="@color/white" />
+    </FrameLayout>
 
-    <include layout="@layout/adapter_answer_element"
-             android:id="@+id/adapter_answer_element_4"/>
-
-</LinearLayout>
+</FrameLayout>
