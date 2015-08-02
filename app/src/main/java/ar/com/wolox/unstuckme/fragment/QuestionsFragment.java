@@ -151,6 +151,7 @@ public class QuestionsFragment extends Fragment {
             public void success(List<Question> questions, Response response) {
                 if (questions.size() == 0) {
                     mNoMorePages = true;
+                    sendVotesBatch();
                     return;
                 }
                 addQuestionsWithoutDuplicates(questions);
@@ -233,24 +234,30 @@ public class QuestionsFragment extends Fragment {
         mVotesList.add(option.getId());
     }
 
+    @Override
+    public void onStop() {
+        sendVotesBatch();
+        super.onStop();
+    }
+
     private void sendVotesBatch() {
         if (mVotesList.size() == 0) return;
         VotesBatch votesBatch = new VotesBatch(mVotesList);
         UnstuckMeApplication.sQuestionsService.sendVotes(votesBatch,
                 new Callback<List<Question>>() {
-            @Override
-            public void success(List<Question> questionList, Response response) {
-                int a = 0;
-                //Do nothing...
-            }
+                    @Override
+                    public void success(List<Question> questionList, Response response) {
+                        //Do nothing...
+                    }
 
-            @Override
-            public void failure(RetrofitError error) {
-                Log.e("Error:", error.toString());
-                int a = 0;
-                //Do nothing...
-            }
-        });
+                    @Override
+                    public void failure(RetrofitError error) {
+                        Log.e("Error:", error.toString());
+                        //Do nothing...
+                    }
+                });
         mVotesList = new ArrayList<>();
+
+
     }
 }
