@@ -20,12 +20,11 @@ public class MainAdapter extends FragmentStatePagerAdapter {
     private QuestionsFragment mQuestionsFragment;
     private CreateQuestionsContainerFragment mCreateQuestionsContainerFragment;
 
-    public MainAdapter(FragmentManager fm, Context context,
-                       int pushQuestionId, int shareQuestionId) {
+    public MainAdapter(FragmentManager fm, Context context, int pushQuestionId) {
         super(fm);
         mContext = context;
         mAnswersFragment = AnswersFragment.newInstance(pushQuestionId);
-        mQuestionsFragment = QuestionsFragment.newInstance(shareQuestionId);
+        mQuestionsFragment = QuestionsFragment.newInstance();
         mCreateQuestionsContainerFragment = CreateQuestionsContainerFragment.newInstance();
     }
 
