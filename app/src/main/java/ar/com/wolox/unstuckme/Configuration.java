@@ -3,7 +3,7 @@ package ar.com.wolox.unstuckme;
 public class Configuration {
 
     //WEB
-    public static final String WEB_PAGE = "http://heinrichlucas0.wix.com/app-landing-page-es?";
+    public static final String LANDING_WEB_PAGE = "/landing?";
 
     //API
     public static final String API_ENDPOINT = "http://unstuckme-stage.herokuapp.com";
