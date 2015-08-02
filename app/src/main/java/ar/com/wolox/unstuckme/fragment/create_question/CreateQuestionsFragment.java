@@ -103,16 +103,25 @@ public class CreateQuestionsFragment extends Fragment {
         mReadyButton.setVisibility(View.GONE);
     }
 
-    private void setListeners(final View v) {
+    private void setListeners(final View view) {
+
         mImageUpload1.setOnClickListener(new ImageUploadListener((Fragment) this, IMAGE_UPLOAD_1));
         mImageUpload2.setOnClickListener(new ImageUploadListener((Fragment) this, IMAGE_UPLOAD_2));
         mImageUpload3.setOnClickListener(new ImageUploadListener((Fragment) this, IMAGE_UPLOAD_3));
         mImageUpload4.setOnClickListener(new ImageUploadListener((Fragment) this, IMAGE_UPLOAD_4));
 
-        mImageErase1.setOnClickListener(new ImageEraseListener(v, R.id.create_questions_image_upload_1));
-        mImageErase2.setOnClickListener(new ImageEraseListener(v, R.id.create_questions_image_upload_2));
-        mImageErase3.setOnClickListener(new ImageEraseListener(v, R.id.create_questions_image_upload_3));
-        mImageErase4.setOnClickListener(new ImageEraseListener(v, R.id.create_questions_image_upload_4));
+        mImageErase1.setOnClickListener(new ImageEraseListener(view,
+                R.id.create_questions_image_upload_1
+                , mImageErase1));
+        mImageErase2.setOnClickListener(new ImageEraseListener(view,
+                R.id.create_questions_image_upload_2,
+                mImageErase2));
+        mImageErase3.setOnClickListener(new ImageEraseListener(view,
+                R.id.create_questions_image_upload_3,
+                mImageErase3));
+        mImageErase4.setOnClickListener(new ImageEraseListener(view,
+                R.id.create_questions_image_upload_4,
+                mImageErase4));
 
         mReadyButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -166,27 +175,31 @@ public class CreateQuestionsFragment extends Fragment {
                 case IMAGE_UPLOAD_1:
                     imageView = (ImageView) getActivity().findViewById(R.id.create_questions_image_upload_1);
                     placeholderView = (ImageView) getActivity().findViewById(R.id.create_questions_placeholder_1);
+                    mImageErase1.setVisibility(View.VISIBLE);
                     break;
                 case IMAGE_UPLOAD_2:
                     imageView = (ImageView) getActivity().findViewById(R.id.create_questions_image_upload_2);
                     placeholderView = (ImageView) getActivity().findViewById(R.id.create_questions_placeholder_2);
+                    mImageErase2.setVisibility(View.VISIBLE);
                     break;
                 case IMAGE_UPLOAD_3:
                     imageView = (ImageView) getActivity().findViewById(R.id.create_questions_image_upload_3);
                     placeholderView = (ImageView) getActivity().findViewById(R.id.create_questions_placeholder_3);
+                    mImageErase3.setVisibility(View.VISIBLE);
                     break;
                 case IMAGE_UPLOAD_4:
                     imageView = (ImageView) getActivity().findViewById(R.id.create_questions_image_upload_4);
                     placeholderView = (ImageView) getActivity().findViewById(R.id.create_questions_placeholder_4);
+                    mImageErase4.setVisibility(View.VISIBLE);
                     break;
             }
-
-                setReadyButton();
 
             if (imageView != null) {
                 imageView.setImageBitmap(decodeFile(picturePath));
                 placeholderView.setVisibility(View.GONE);
             }
+
+            setReadyButton();
         }
     }
 
@@ -212,10 +225,10 @@ public class CreateQuestionsFragment extends Fragment {
             o.inJustDecodeBounds = true;
             BitmapFactory.decodeStream(new FileInputStream(path), null, o);
 
-            // The new size we want to scale to
+            // The new size we want to scale_anticipate to
             final int REQUIRED_SIZE=150;
 
-            // Find the correct scale value. It should be the power of 2.
+            // Find the correct scale_anticipate value. It should be the power of 2.
             int scale = 1;
             while(o.outWidth / scale / 2 >= REQUIRED_SIZE &&
                     o.outHeight / scale / 2 >= REQUIRED_SIZE) {
@@ -233,7 +246,7 @@ public class CreateQuestionsFragment extends Fragment {
     private void setReadyButton() {
         if (countEffectiveImages() >= MIN_IMAGES_TO_UPLOAD) {
             mReadyButton.setVisibility(View.VISIBLE);
-            AnimationsHelper.popImage(mReadyButton, 1000);
+            AnimationsHelper.scaleDecelerate(mReadyButton);
         } else {
             mReadyButton.setVisibility(View.GONE);
         }

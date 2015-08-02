@@ -14,7 +14,7 @@
         android:id="@+id/adapter_results_highlight"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:src="@drawable/voted"
+        android:src="@drawable/ic_tick"
         android:scaleType="centerInside"
         android:background="@color/highlight_black" />
 
