@@ -5,6 +5,10 @@
     android:orientation="vertical"
     android:background="@color/white">
 
+    <include layout="@layout/unstuckme_toolbar"
+             android:layout_width="match_parent"
+             android:layout_height="48dp"/>
+
     <ar.com.wolox.unstuckme.view.NonSwipeableViewPager
         android:id="@+id/main_view_pager"
         android:layout_width="match_parent"
@@ -18,7 +22,7 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="60dp"
+        android:layout_height="48dp"
         android:orientation="horizontal"
         android:background="@color/red">
 
