@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent" android:layout_height="match_parent">
+    android:layout_width="match_parent" android:layout_height="match_parent"
+    android:id="@+id/create_questions_upload_fragment"
+    >
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -17,6 +19,7 @@
             <FrameLayout
                 style="@style/create_questions_image_quarter_screen">
 
+
                 <ImageView
                     android:id="@+id/create_questions_image_upload_1"
                     style="@style/image_upload" />
@@ -24,10 +27,17 @@
                 <ImageButton
                     android:id="@+id/create_questions_image_erase_1"
                     style="@style/create_questions_button_remove_image" />
+
+                <ImageView
+                    android:layout_width="@dimen/button_height_tall"
+                    android:layout_height="@dimen/button_height_tall"
+                    style="@style/create_questions_placeholder"/>
             </FrameLayout>
 
             <FrameLayout
                 style="@style/create_questions_image_quarter_screen">
+
+
 
                 <ImageView
                     android:id="@+id/create_questions_image_upload_2"
@@ -37,6 +47,11 @@
                     android:id="@+id/create_questions_image_erase_2"
                     style="@style/create_questions_button_remove_image"
                     android:layout_gravity="right"/>
+
+                <ImageView
+                    android:layout_width="@dimen/button_height_tall"
+                    android:layout_height="@dimen/button_height_tall"
+                    style="@style/create_questions_placeholder"/>
             </FrameLayout>
         </LinearLayout>
         <LinearLayout
@@ -48,6 +63,8 @@
             <FrameLayout
                 style="@style/create_questions_image_quarter_screen">
 
+
+
                 <ImageView
                     android:id="@+id/create_questions_image_upload_3"
                     style="@style/image_upload" />
@@ -55,10 +72,17 @@
                 <ImageButton
                     android:id="@+id/create_questions_image_erase_3"
                     style="@style/create_questions_button_remove_image" />
+
+                <ImageView
+                    android:layout_width="@dimen/button_height_tall"
+                    android:layout_height="@dimen/button_height_tall"
+                    style="@style/create_questions_placeholder"/>
             </FrameLayout>
 
             <FrameLayout
                 style="@style/create_questions_image_quarter_screen">
+
+
 
                 <ImageView
                     android:id="@+id/create_questions_image_upload_4"
@@ -68,15 +92,22 @@
                     android:id="@+id/create_questions_image_erase_4"
                     style="@style/create_questions_button_remove_image"
                     android:layout_gravity="right"/>
+
+                <ImageView
+                    android:layout_width="@dimen/button_height_tall"
+                    android:layout_height="@dimen/button_height_tall"
+                    style="@style/create_questions_placeholder"/>
             </FrameLayout>
 
         </LinearLayout>
     </LinearLayout>
 
-    <ImageButton
+    <ImageView
         android:id="@+id/upload_ready"
-        android:layout_width="@dimen/button_height_tall"
-        android:layout_height="@dimen/button_height_tall"
+        android:layout_width="90dp"
+        android:layout_height="90dp"
         android:layout_centerVertical="true"
-        android:layout_centerHorizontal="true"/>
+        android:layout_centerHorizontal="true"
+        android:src="@drawable/ic_upload_paperplane"
+        />
 </RelativeLayout>

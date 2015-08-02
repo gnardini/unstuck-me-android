@@ -11,6 +11,8 @@
         <item name="android:layout_width">0px</item>
         <item name="android:layout_height">fill_parent</item>
         <item name="android:layout_weight">0.5</item>
+        <item name="android:layout_margin">@dimen/spacing_tiny</item>
+        <item name="android:background">@color/dark_gray</item>
     </style>
 
     <style name="image_upload">
@@ -20,9 +22,15 @@
         <item name="android:colorBackground">@color/gray</item>
     </style>
 
+    <style name="create_questions_placeholder">
+        <item name="android:src">@drawable/add_image</item>
+        <item name="android:layout_gravity">center</item>
+    </style>
+
     <style name="create_questions_button_remove_image">
         <item name="android:layout_width">@dimen/button_height_short</item>
         <item name="android:layout_height">@dimen/button_height_short</item>
+        <item name="android:background">@drawable/ic_no_np</item>
     </style>
 
     <style name="create_questions_end">
