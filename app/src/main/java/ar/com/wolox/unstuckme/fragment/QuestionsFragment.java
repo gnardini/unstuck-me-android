@@ -1,6 +1,5 @@
 package ar.com.wolox.unstuckme.fragment;
 
-import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
@@ -66,7 +65,8 @@ public class QuestionsFragment extends Fragment implements SwipeRefreshLayout.On
             int tickPos = mAnswerImages.indexOf(view);
             mAnswerImagesTick.get(tickPos).setVisibility(View.VISIBLE);
 
-            AnimationsHelper.popImage(view, Configuration.NEXT_QUESTION_DELAY);
+            AnimationsHelper.startAnimation(getActivity(), view, R.anim.abc_popup_enter,
+                    Configuration.NEXT_QUESTION_DELAY);
             populateNextQuestionDelayed();
 
             switch (view.getId()) {
