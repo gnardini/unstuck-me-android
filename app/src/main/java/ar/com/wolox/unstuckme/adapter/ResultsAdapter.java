@@ -83,6 +83,7 @@ public class ResultsAdapter extends BaseAdapter {
             v.mPictures[i].mImageHighlight.setVisibility((winner == i
                     && options.get(winner).getVotes() > 1)
                     ? View.VISIBLE : View.GONE);
+            v.mHighlight.setVisibility(View.GONE);
         }
     }
 

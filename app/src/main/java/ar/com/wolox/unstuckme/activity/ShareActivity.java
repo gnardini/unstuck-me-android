@@ -1,6 +1,7 @@
 package ar.com.wolox.unstuckme.activity;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.util.Log;
@@ -137,12 +138,8 @@ public class ShareActivity extends FragmentActivity {
     private void populate(Question question) {
         int i = 0;
         for (Option option : question.getOptions()) {
-            Glide.with(this)
-                    .load(CloudinaryUtils.getQuestionCompressedImage(option.getImageUrl()))
-                    .centerCrop()
-                    .crossFade()
-                    .placeholder(null)
-                    .into(mAnswerImages.get(i));
+            Uri uri = Uri.parse(CloudinaryUtils.getQuestionCompressedImage(option.getImageUrl()));
+            mAnswerImages.get(i).setImageURI(uri);
             mAnswerImages.get(i).setVisibility(View.VISIBLE);
             mAnswerImagesTick.get(i).setVisibility(View.GONE);
             i++;
