@@ -8,6 +8,7 @@ public class Question {
     private static final int MAX_OPTIONS = 4;
 
     private int id;
+    private boolean voted ;
     private List<Option> options;
 
 
@@ -17,6 +18,10 @@ public class Question {
 
     public List<Option> getOptions() {
         return options;
+    }
+
+    public boolean isVoted() {
+        return voted;
     }
 
     public int getWinnerIndex() {

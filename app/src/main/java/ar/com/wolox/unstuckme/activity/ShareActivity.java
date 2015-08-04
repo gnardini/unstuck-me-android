@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.util.Log;
 import android.view.View;
+import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.Toast;
 
@@ -19,6 +20,7 @@ import ar.com.wolox.unstuckme.UnstuckMeApplication;
 import ar.com.wolox.unstuckme.model.Option;
 import ar.com.wolox.unstuckme.model.Question;
 import ar.com.wolox.unstuckme.model.VotesBatch;
+import ar.com.wolox.unstuckme.utils.AnimationsHelper;
 import ar.com.wolox.unstuckme.utils.CloudinaryUtils;
 import retrofit.Callback;
 import retrofit.RetrofitError;
@@ -28,7 +30,11 @@ public class ShareActivity extends FragmentActivity {
 
     private List<ImageView> mAnswerImages = new ArrayList<>();
     private List<ImageView> mAnswerImagesTick = new ArrayList<>();
+    private View mToolbarShare;
+    private View mToolbarProfile;
     private View mGoToApp;
+    private View mLockContainer;
+    private View mLock;
 
     private Question mQuestion;
 
@@ -52,7 +58,14 @@ public class ShareActivity extends FragmentActivity {
         mAnswerImagesTick.add((ImageView) findViewById(R.id.questions_imageview_answer_tick_3));
         mAnswerImagesTick.add((ImageView) findViewById(R.id.questions_imageview_answer_tick_4));
 
+        mToolbarShare = findViewById(R.id.toolbar_share);
+        mToolbarProfile = findViewById(R.id.toolbar_user);
+        mToolbarShare.setVisibility(View.GONE);
+        mToolbarProfile.setVisibility(View.GONE);
+
         mGoToApp = findViewById(R.id.share_goto_app);
+        mLockContainer = findViewById(R.id.share_lock);
+        mLock = findViewById(R.id.share_lock_image);
     }
 
     private void init() {
@@ -77,6 +90,12 @@ public class ShareActivity extends FragmentActivity {
         for (View view : mAnswerImages) {
             view.setOnClickListener(mImageAnswerClickListener);
         }
+        mLockContainer.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AnimationsHelper.startAnimation(ShareActivity.this, mLock, R.anim.shake);
+            }
+        });
         mGoToApp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -85,25 +104,16 @@ public class ShareActivity extends FragmentActivity {
         });
     }
 
-    private void populate(Question question) {
-        int i = 0;
-        for (Option option : question.getOptions()) {
-            Glide.with(this)
-                    .load(CloudinaryUtils.getQuestionCompressedImage(option.getImageUrl()))
-                    .centerCrop()
-                    .crossFade()
-                    .placeholder(null)
-                    .into(mAnswerImages.get(i));
-            mAnswerImages.get(i).setVisibility(View.VISIBLE);
-            mAnswerImagesTick.get(i).setVisibility(View.GONE);
-            i++;
-        }
-    }
-
     private View.OnClickListener mImageAnswerClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
             if (mQuestion == null) return;
+
+            if(mQuestion.isVoted()) {
+                AnimationsHelper.startAnimation(ShareActivity.this, mLock, R.anim.shake);
+                return;
+            }
+
             int tickPos = mAnswerImages.indexOf(view);
             mAnswerImagesTick.get(tickPos).setVisibility(View.VISIBLE);
 
@@ -123,6 +133,22 @@ public class ShareActivity extends FragmentActivity {
             }
         }
     };
+
+    private void populate(Question question) {
+        int i = 0;
+        for (Option option : question.getOptions()) {
+            Glide.with(this)
+                    .load(CloudinaryUtils.getQuestionCompressedImage(option.getImageUrl()))
+                    .centerCrop()
+                    .crossFade()
+                    .placeholder(null)
+                    .into(mAnswerImages.get(i));
+            mAnswerImages.get(i).setVisibility(View.VISIBLE);
+            mAnswerImagesTick.get(i).setVisibility(View.GONE);
+            i++;
+        }
+        if (question.isVoted()) mLockContainer.setVisibility(View.VISIBLE);
+    }
 
     private void voteOption(Option option) {
         List<Integer> votes = new LinkedList<>();
