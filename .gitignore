@@ -34,3 +34,6 @@ proguard/
 
 *.iml
 app/app.iml
+
+#Annoying .DS_store files!!!!
+.DS_Store
