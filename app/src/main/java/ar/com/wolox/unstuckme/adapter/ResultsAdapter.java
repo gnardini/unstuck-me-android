@@ -1,14 +1,14 @@
 package ar.com.wolox.unstuckme.adapter;
 
 import android.content.Context;
+import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
+import com.facebook.drawee.view.DraweeView;
 
 import java.util.List;
 
@@ -73,10 +73,7 @@ public class ResultsAdapter extends BaseAdapter {
         for (int i = 0 ; i < MAX_IMAGES ; i++) {
             if ( i < options.size()) {
                 v.mPictures[i].mRoot.setVisibility(View.VISIBLE);
-                Glide.with(mContext)
-                        .load(options.get(i).getImageUrl())
-                        .placeholder(null)
-                        .into(v.mPictures[i].mImage);
+                v.mPictures[i].mImage.setImageURI(Uri.parse(options.get(i).getImageUrl()));
             } else {
                 v.mPictures[i].mRoot.setVisibility(View.GONE);
             }
@@ -145,12 +142,12 @@ public class ResultsAdapter extends BaseAdapter {
     static class PictureElement {
 
         View mRoot;
-        ImageView mImage;
+        DraweeView mImage;
         View mImageHighlight;
 
         public PictureElement(View view) {
             mRoot = view;
-            mImage = (ImageView) view.findViewById(R.id.adapter_results_image);
+            mImage = (DraweeView) view.findViewById(R.id.adapter_results_image);
             mImageHighlight = view.findViewById(R.id.adapter_results_highlight);
         }
     }
