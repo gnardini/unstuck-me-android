@@ -21,8 +21,7 @@ public class CloudinaryUtils {
                 .transformation(new Transformation()
                         .width(200)
                         .height(400)
-                        .crop("fill")
-                        .gravity("face:center")
+                        .crop("fit")
                         .quality(80))
                 .generate(imageId + ".webp");
     }
