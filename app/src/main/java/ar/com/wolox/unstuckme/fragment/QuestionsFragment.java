@@ -6,13 +6,13 @@ import android.os.Handler;
 import android.os.Looper;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.facebook.drawee.view.DraweeView;
+import com.facebook.drawee.view.SimpleDraweeView;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -24,7 +24,7 @@ import ar.com.wolox.unstuckme.UnstuckMeApplication;
 import ar.com.wolox.unstuckme.model.Option;
 import ar.com.wolox.unstuckme.model.Question;
 import ar.com.wolox.unstuckme.model.VotesBatch;
-import ar.com.wolox.unstuckme.model.event.LeaveRateViewEvent;
+import ar.com.wolox.unstuckme.model.event.LeaveVoteViewEvent;
 import ar.com.wolox.unstuckme.model.event.ShareEvent;
 import ar.com.wolox.unstuckme.model.event.VotesSentEvent;
 import ar.com.wolox.unstuckme.network.share.ShareObject;
@@ -37,59 +37,30 @@ import retrofit.client.Response;
 
 public class QuestionsFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
 
-    private List<DraweeView> mAnswerImages = new ArrayList<>();
+    private List<SimpleDraweeView> mAnswerImages = new ArrayList<>();
     private List<ImageView> mAnswerImagesTick = new ArrayList<>();
     private View mNoResults;
     private View mLoadingView;
     private SwipeRefreshLayout mRefreshView;
     private ImageView mSpinner;
 
-    private Integer mQuestionIndex = null;
     private List<Question> mQuestionList = new ArrayList<>();
+    private List<Question> mQuestionBackup = new ArrayList<>();
+    private List<Question> mVotedQuestions = new ArrayList<>();
     private boolean mWaitingForQuestions = true;
-    private boolean mNoMorePages = false;
+    private boolean mNoMorePages;
     private boolean mCanVote;
 
     private List<Integer> mVotesList = new ArrayList<>();
 
     private Handler mHandler;
 
-    private View.OnClickListener mImageAnswerClickListener = new View.OnClickListener() {
-        @Override
-        public void onClick(View view) {
-            if (mQuestionList == null
-                    || mQuestionIndex == null
-                    || mQuestionList.size() <= mQuestionIndex
-                    || !mCanVote)
-                return;
-            int tickPos = mAnswerImages.indexOf(view);
-            mAnswerImagesTick.get(tickPos).setVisibility(View.VISIBLE);
-
-            AnimationsHelper.startAnimation(getActivity(), view, R.anim.abc_popup_enter,
-                    Configuration.NEXT_QUESTION_DELAY);
-            populateNextQuestionDelayed();
-
-            switch (view.getId()) {
-                case R.id.questions_imageview_answer_1:
-                    voteOption(mQuestionList.get(mQuestionIndex).getOptions().get(0));
-                    break;
-                case R.id.questions_imageview_answer_2:
-                    voteOption(mQuestionList.get(mQuestionIndex).getOptions().get(1));
-                    break;
-                case R.id.questions_imageview_answer_3:
-                    voteOption(mQuestionList.get(mQuestionIndex).getOptions().get(2));
-                    break;
-                case R.id.questions_imageview_answer_4:
-                    voteOption(mQuestionList.get(mQuestionIndex).getOptions().get(3));
-                    break;
-            }
-        }
-    };
 
     public static QuestionsFragment newInstance() {
         QuestionsFragment f = new QuestionsFragment();
         return f;
     }
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -103,12 +74,12 @@ public class QuestionsFragment extends Fragment implements SwipeRefreshLayout.On
     }
 
     private void setUi(View view) {
-        mAnswerImages.add( (DraweeView) view.findViewById(R.id.questions_imageview_answer_1));
-        mAnswerImages.add( (DraweeView) view.findViewById(R.id.questions_imageview_answer_2));
-        mAnswerImages.add( (DraweeView) view.findViewById(R.id.questions_imageview_answer_3));
-        mAnswerImages.add( (DraweeView) view.findViewById(R.id.questions_imageview_answer_4));
+        mAnswerImages.add( (SimpleDraweeView) view.findViewById(R.id.questions_imageview_answer_1));
+        mAnswerImages.add( (SimpleDraweeView) view.findViewById(R.id.questions_imageview_answer_2));
+        mAnswerImages.add( (SimpleDraweeView) view.findViewById(R.id.questions_imageview_answer_3));
+        mAnswerImages.add( (SimpleDraweeView) view.findViewById(R.id.questions_imageview_answer_4));
 
-        mAnswerImagesTick.add( (ImageView) view.findViewById(R.id.questions_imageview_answer_tick_1));
+        mAnswerImagesTick.add((ImageView) view.findViewById(R.id.questions_imageview_answer_tick_1));
         mAnswerImagesTick.add((ImageView) view.findViewById(R.id.questions_imageview_answer_tick_2));
         mAnswerImagesTick.add((ImageView) view.findViewById(R.id.questions_imageview_answer_tick_3));
         mAnswerImagesTick.add((ImageView) view.findViewById(R.id.questions_imageview_answer_tick_4));
@@ -132,47 +103,73 @@ public class QuestionsFragment extends Fragment implements SwipeRefreshLayout.On
         mRefreshView.setOnRefreshListener(this);
     }
 
+
+    private View.OnClickListener mImageAnswerClickListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            if (mQuestionList == null
+                    || mQuestionList.isEmpty()
+                    || !mCanVote)
+                return;
+            int tickPos = mAnswerImages.indexOf(view);
+            mAnswerImagesTick.get(tickPos).setVisibility(View.VISIBLE);
+
+            AnimationsHelper.startAnimation(getActivity(), view, R.anim.abc_popup_enter,
+                    Configuration.NEXT_QUESTION_DELAY);
+            populateNextQuestionDelayed();
+
+            switch (view.getId()) {
+                case R.id.questions_imageview_answer_1:
+                    voteOption(mQuestionList.get(0).getOptions().get(0));
+                    break;
+                case R.id.questions_imageview_answer_2:
+                    voteOption(mQuestionList.get(0).getOptions().get(1));
+                    break;
+                case R.id.questions_imageview_answer_3:
+                    voteOption(mQuestionList.get(0).getOptions().get(2));
+                    break;
+                case R.id.questions_imageview_answer_4:
+                    voteOption(mQuestionList.get(0).getOptions().get(3));
+                    break;
+            }
+            mVotedQuestions.add(mQuestionList.remove(0));
+        }
+    };
+
     private void getQuestions() {
         UnstuckMeApplication.sQuestionsService.getQuestions(new Callback<List<Question>>() {
             @Override
             public void success(List<Question> questions, Response response) {
                 mLoadingView.setVisibility(View.GONE);
                 mNoResults.setVisibility(View.GONE);
-                mRefreshView.setRefreshing(false);
-                mRefreshView.setEnabled(false);
+                mRefreshView.setVisibility(View.GONE);
                 if (questions.size() == 0) {
-                    clearViews();
                     mNoMorePages = true;
-                    sendVotesBatch();
                     if (mWaitingForQuestions) {
+                        mWaitingForQuestions = false;
                         mNoResults.setVisibility(View.VISIBLE);
-                        mRefreshView.setEnabled(true);
+                        mRefreshView.setVisibility(View.VISIBLE);
+                        sendVotesBatch();
+                        clearViews();
                     }
                     return;
                 }
-                int size = mQuestionList.size();
-                addQuestionsWithoutDuplicates(questions);
-                if (mQuestionList.size() == size && mQuestionList.size() <= mQuestionIndex) {
-                    mNoResults.setVisibility(View.VISIBLE);
-                    mRefreshView.setEnabled(true);
-                    mNoMorePages = true;
-                    sendVotesBatch();
-                    clearViews();
-                    return;
-                }
                 if (mWaitingForQuestions) {
-                    mWaitingForQuestions = false;
+                    addQuestionsWithoutDuplicates(mQuestionList, questions);
                     populateNextQuestion();
-                }
+                } else addQuestionsWithoutDuplicates(mQuestionBackup, questions);
             }
 
             @Override
             public void failure(RetrofitError error) {
-                Log.e("Error", error.toString());
-                mNoResults.setVisibility(View.VISIBLE);
-                mLoadingView.setVisibility(View.GONE);
-                mRefreshView.setRefreshing(false);
-                mRefreshView.setRefreshing(true);
+                mNoMorePages = true;
+                if (mWaitingForQuestions) {
+                    mWaitingForQuestions = false;
+                    clearViews();
+                    mNoResults.setVisibility(View.VISIBLE);
+                    mLoadingView.setVisibility(View.GONE);
+                    mRefreshView.setVisibility(View.VISIBLE);
+                }
             }
         });
     }
@@ -180,23 +177,29 @@ public class QuestionsFragment extends Fragment implements SwipeRefreshLayout.On
     private void populateNextQuestion() {
         if (getActivity() == null) return;
 
-        if (mQuestionIndex == null) mQuestionIndex = 0;
-        else mQuestionIndex++;
-
         clearViews();
 
         //If this is the last question do nothing, wait and cry
-        if (mQuestionList.size() <= mQuestionIndex) {
-            mWaitingForQuestions = true;
-            if (mNoMorePages) mNoResults.setVisibility(View.VISIBLE);
-            else mLoadingView.setVisibility(View.VISIBLE);
-            getQuestions();
-            return;
+        if (mQuestionList.isEmpty()) {
+            if (mQuestionBackup.isEmpty()) {
+                if (mNoMorePages) {
+                    mNoResults.setVisibility(View.VISIBLE);
+                    mRefreshView.setVisibility(View.VISIBLE);
+                } else {
+                    mWaitingForQuestions = true;
+                    mLoadingView.setVisibility(View.VISIBLE);
+                }
+                return;
+            } else {
+                mQuestionList.addAll(mQuestionBackup);
+                mQuestionBackup.clear();
+            }
         }
 
         //Populate image views
         int i = 0;
-        for (Option option : mQuestionList.get(mQuestionIndex).getOptions()) {
+        Question question = mQuestionList.get(0);
+        for (Option option : question.getOptions()) {
             Uri uri = Uri.parse(CloudinaryUtils.getQuestionCompressedImage(option.getImageUrl()));
             mAnswerImages.get(i).setImageURI(uri);
             mAnswerImages.get(i).setVisibility(View.VISIBLE);
@@ -218,25 +221,24 @@ public class QuestionsFragment extends Fragment implements SwipeRefreshLayout.On
     }
 
     private void fetchNextQuestionsIfNecessary() {
-        if ( ((mQuestionList.size() -1 ) - mQuestionIndex)
-                == Configuration.QUESTIONS_PAGE_THRESHOLD) {
+        if (mQuestionList.size() == Configuration.QUESTIONS_PAGE_THRESHOLD) {
             getQuestions();
             sendVotesBatch();
         }
     }
 
     private void clearViews() {
-        for (View view : mAnswerImages) {
-            view.setVisibility(View.GONE);
+        for (DraweeView draweeView : mAnswerImages) {
+            draweeView.setVisibility(View.GONE);
         }
         for (View view : mAnswerImagesTick) {
             view.setVisibility(View.GONE);
         }
     }
 
-    private void addQuestionsWithoutDuplicates(List<Question> questionList) {
-        for (Question question : questionList) {
-            if (!mQuestionList.contains(question)) mQuestionList.add(question);
+    private void addQuestionsWithoutDuplicates(List<Question> dest, List<Question> source) {
+        for (Question question : source) {
+            if (!mVotedQuestions.contains(question)) dest.add(question);
         }
     }
 
@@ -254,7 +256,7 @@ public class QuestionsFragment extends Fragment implements SwipeRefreshLayout.On
         if (mVotesList.size() == 0) return;
         final int size = mVotesList.size();
         final List<Integer> deepCopy = getDeepCopy(mVotesList);
-        VotesBatch votesBatch = new VotesBatch(mVotesList);
+        VotesBatch votesBatch = new VotesBatch(deepCopy);
         UnstuckMeApplication.sQuestionsService.sendVotes(votesBatch,
                 new Callback<Void>() {
 
@@ -266,36 +268,31 @@ public class QuestionsFragment extends Fragment implements SwipeRefreshLayout.On
 
                     @Override
                     public void failure(RetrofitError error) {
-                        Log.e("Votes Error:", error.toString());
-                        //Do nothing...
                     }
                 });
 
         mVotesList = new ArrayList<>();
     }
 
+    // Just being paranoid here
     private List<Integer> getDeepCopy(List<Integer> list) {
         List<Integer> copy = new LinkedList<>();
-        for (Integer integer : list) copy.add(integer);
+        for (Integer integer : list) copy.add(integer.intValue());
         return copy;
     }
 
     @Override
     public void onRefresh() {
         mNoResults.setVisibility(View.GONE);
-        mRefreshView.setRefreshing(true);
         getQuestions();
     }
 
     public void onEvent(ShareEvent event) {
-        if (mQuestionList == null
-                || mQuestionIndex == null
-                || mQuestionList.size() <= mQuestionIndex)
-            return;
-        new ShareObject(getActivity(), mQuestionList.get(mQuestionIndex).getId()).share();
+        if (mQuestionList == null || mQuestionList.isEmpty()) return;
+        new ShareObject(getActivity(), mQuestionList.get(0).getId()).share();
     }
 
-    public void onEvent(LeaveRateViewEvent event) {
+    public void onEvent(LeaveVoteViewEvent event) {
         sendVotesBatch();
     }
 
