@@ -10,13 +10,14 @@ import android.view.View;
 import ar.com.wolox.unstuckme.Configuration;
 import ar.com.wolox.unstuckme.R;
 import ar.com.wolox.unstuckme.adapter.MainAdapter;
+import ar.com.wolox.unstuckme.listener.OnShareAvailableListener;
 import ar.com.wolox.unstuckme.model.event.LeaveVoteViewEvent;
 import ar.com.wolox.unstuckme.model.event.ShareEvent;
 import ar.com.wolox.unstuckme.network.notification.PushReceiver;
 import ar.com.wolox.unstuckme.utils.QuestionBuilder;
 import de.greenrobot.event.EventBus;
 
-public class MainActivity extends FragmentActivity {
+public class MainActivity extends FragmentActivity implements OnShareAvailableListener {
 
     private final static int POSITION_ANSWERS = 0;
     private final static int POSITION_QUESTIONS = 1;
@@ -120,8 +121,13 @@ public class MainActivity extends FragmentActivity {
                 fm.popBackStack();
             }
         }
-        mShare.setVisibility(position == POSITION_QUESTIONS ? View.VISIBLE : View.GONE);
+        canShare(position == POSITION_QUESTIONS && mMainAdapter.canShare());
         mViewPager.setCurrentItem(position);
         if (position != POSITION_QUESTIONS) EventBus.getDefault().post(new LeaveVoteViewEvent());
+    }
+
+    @Override
+    public void canShare(boolean canShare) {
+        mShare.setVisibility(canShare ? View.VISIBLE : View.GONE);
     }
 }
