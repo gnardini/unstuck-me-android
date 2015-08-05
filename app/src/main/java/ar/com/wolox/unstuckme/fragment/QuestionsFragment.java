@@ -29,6 +29,7 @@ import ar.com.wolox.unstuckme.model.Option;
 import ar.com.wolox.unstuckme.model.Question;
 import ar.com.wolox.unstuckme.model.VotesBatch;
 import ar.com.wolox.unstuckme.model.event.LeaveVoteViewEvent;
+import ar.com.wolox.unstuckme.model.event.QuestionAnsweredEvent;
 import ar.com.wolox.unstuckme.model.event.ShareEvent;
 import ar.com.wolox.unstuckme.model.event.VotesSentEvent;
 import ar.com.wolox.unstuckme.network.share.ShareObject;
@@ -137,6 +138,7 @@ public class QuestionsFragment extends Fragment implements SwipeRefreshLayout.On
             voteOption(mQuestionList.get(0).getOptions().get(selectedTag));
             Question removedQuestion = mQuestionList.remove(0);
             mVotedQuestions.add(removedQuestion);
+            EventBus.getDefault().post(new QuestionAnsweredEvent(removedQuestion));
 
             Uri uri;
             for (Option option : removedQuestion.getOptions()) {
