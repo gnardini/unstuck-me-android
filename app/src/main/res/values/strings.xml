@@ -15,6 +15,9 @@
     <!-- Answers -->
     <string name="my_answers">My Answers</string>
     <string name="my_questions">My Questions</string>
+    
+    <!-- Questions -->
+    <string name="question_image_id">ID</string>
 
     <!-- User -->
     <string name="user_my_questions_answered">My Questions answered</string>

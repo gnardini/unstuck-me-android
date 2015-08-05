@@ -5,12 +5,10 @@ import java.util.List;
 public class Question {
 
     private static final int MAX_PERCENTAGE = 100;
-    private static final int MAX_OPTIONS = 4;
 
     private int id;
     private boolean voted ;
     private List<Option> options;
-
 
     public int getId() {
         return id;

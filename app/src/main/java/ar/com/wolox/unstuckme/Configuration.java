@@ -17,7 +17,7 @@ public class Configuration {
 
     //UI
     public static final int NEXT_QUESTION_DELAY = 1000;
-    public static final int QUESTIONS_PAGE_THRESHOLD = 5;
+    public static final int QUESTIONS_PAGE_THRESHOLD = 10;
 
     //PARSE
     public static final String PARSE_APP_ID = "wtyCWCDbimy34dtue0wuMNW2LT7T8fkbJda7TqcT";
