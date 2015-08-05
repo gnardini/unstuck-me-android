@@ -45,4 +45,8 @@ public class MainAdapter extends FragmentStatePagerAdapter {
     public int getCount() {
         return TABS_COUNT;
     }
+
+    public boolean canShare() {
+        return mQuestionsFragment.canShare();
+    }
 }
