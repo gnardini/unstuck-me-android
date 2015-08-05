@@ -1,4 +1,4 @@
 package ar.com.wolox.unstuckme.model.event;
 
-public class LeaveRateViewEvent {
+public class LeaveVoteViewEvent {
 }

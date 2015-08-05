@@ -30,7 +30,7 @@ public interface QuestionsService {
             @Query("amount") int amountPerPage,
             Callback<List<Question>> db);
 
-    @POST(Configuration.API_PREFIX + "/questions")
+    @POST(Configuration.API_PREFIX + "questions")
     void postQuestion(
             @Body QuestionNew body,
             Callback<QuestionNew> cb);
