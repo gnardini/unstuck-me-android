@@ -22,7 +22,7 @@
 
                 <ImageView
                     android:id="@+id/create_questions_image_upload_1"
-                    style="@style/image_upload" />
+                    style="@style/image_upload"/>
 
                 <ImageButton
                     android:id="@+id/create_questions_image_erase_1"
@@ -31,6 +31,7 @@
 
                 <ImageView
                     android:id="@+id/create_questions_placeholder_1"
+                    android:tag="placeholder"
                     android:layout_width="@dimen/button_height_tall"
                     android:layout_height="@dimen/button_height_tall"
                     style="@style/create_questions_placeholder"/>
@@ -38,8 +39,6 @@
 
             <FrameLayout
                 style="@style/create_questions_image_quarter_screen">
-
-
 
                 <ImageView
                     android:id="@+id/create_questions_image_upload_2"
@@ -53,6 +52,7 @@
 
                 <ImageView
                     android:id="@+id/create_questions_placeholder_2"
+                    android:tag="placeholder"
                     android:layout_width="@dimen/button_height_tall"
                     android:layout_height="@dimen/button_height_tall"
                     style="@style/create_questions_placeholder"/>
@@ -67,8 +67,6 @@
             <FrameLayout
                 style="@style/create_questions_image_quarter_screen">
 
-
-
                 <ImageView
                     android:id="@+id/create_questions_image_upload_3"
                     style="@style/image_upload" />
@@ -80,6 +78,7 @@
 
                 <ImageView
                     android:id="@+id/create_questions_placeholder_3"
+                    android:tag="placeholder"
                     android:layout_width="@dimen/button_height_tall"
                     android:layout_height="@dimen/button_height_tall"
                     style="@style/create_questions_placeholder"/>
@@ -87,8 +86,6 @@
 
             <FrameLayout
                 style="@style/create_questions_image_quarter_screen">
-
-
 
                 <ImageView
                     android:id="@+id/create_questions_image_upload_4"
@@ -102,6 +99,7 @@
 
                 <ImageView
                     android:id="@+id/create_questions_placeholder_4"
+                    android:tag="placeholder"
                     android:layout_width="@dimen/button_height_tall"
                     android:layout_height="@dimen/button_height_tall"
                     style="@style/create_questions_placeholder"/>

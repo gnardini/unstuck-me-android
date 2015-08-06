@@ -13,4 +13,6 @@
     <color name="red">#E44E4B</color>
     <color name="red_pressed">#990000</color>
 
+    <color name="transparent">#0000</color>
+
 </resources>

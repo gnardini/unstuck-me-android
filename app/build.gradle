@@ -31,4 +31,5 @@ dependencies {
     compile 'de.greenrobot:eventbus:2.4.0'
     compile 'com.facebook.fresco:fresco:0.6.0+'
     compile 'com.akexorcist:RoundCornerProgressBar:1.2.0'
+    compile 'com.theartofdev.edmodo:android-image-cropper:1.0.+'
 }

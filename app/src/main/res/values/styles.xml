@@ -19,6 +19,7 @@
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">match_parent</item>
         <item name="android:scaleType">centerCrop</item>
+
         <item name="android:colorBackground">@color/gray</item>
     </style>
 
@@ -38,6 +39,16 @@
         <item name="android:layout_centerHorizontal">true</item>
         <item name="android:layout_centerVertical">true</item>
         <item name="android:layout_marginTop">@dimen/spacing_normal</item>
+    </style>
+
+    <!-- Crop image -->
+
+
+    <style name="crop_image_style">
+        <item name="android:textSize">@dimen/font_larger</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textColor"> @color/white</item>
+        <item name="android:textAllCaps">true</item>
     </style>
 
     <!-- End Create Questions Styles -->

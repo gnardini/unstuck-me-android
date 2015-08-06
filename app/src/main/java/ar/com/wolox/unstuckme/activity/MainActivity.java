@@ -1,7 +1,10 @@
 package ar.com.wolox.unstuckme.activity;
 
+
 import android.content.Intent;
 import android.os.Bundle;
+
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.view.ViewPager;
@@ -123,5 +126,10 @@ public class MainActivity extends FragmentActivity {
         mShare.setVisibility(position == POSITION_QUESTIONS ? View.VISIBLE : View.GONE);
         mViewPager.setCurrentItem(position);
         if (position != POSITION_QUESTIONS) EventBus.getDefault().post(new LeaveRateViewEvent());
+    }
+
+    public void removeFragment(Fragment fragment) {
+        // Be careful with the kind of fragment we are dealing , remove() doesnt like appv4fragent
+        getSupportFragmentManager().beginTransaction().remove(fragment).commit();
     }
 }
