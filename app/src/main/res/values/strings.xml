@@ -50,6 +50,8 @@
     <string name="create_questions_upload_ok">Images OK</string>
     <string name="error_network_create_questions_upload">Unable to upload images</string>
     <string name="create_questions_share_no_thanks">No thanks!</string>
+    <string name="rotate">Rotate</string>
+    <string name="crop">Crop</string>
 
     <!-- Fullscreen image -->
     <string name="fullscreen_image_title">UnstuckMe</string>

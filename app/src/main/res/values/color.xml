@@ -16,4 +16,6 @@
     <color name="red_pressed">#990000</color>
     <color name="shadow_green">#0E2524</color>
 
+    <color name="transparent">#0000</color>
+
 </resources>

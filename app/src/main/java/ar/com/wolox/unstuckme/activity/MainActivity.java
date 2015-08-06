@@ -1,7 +1,10 @@
 package ar.com.wolox.unstuckme.activity;
 
+
 import android.content.Intent;
 import android.os.Bundle;
+
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.view.ViewPager;
@@ -173,5 +176,10 @@ public class MainActivity extends FragmentActivity implements
     @Override
     public void canShare(boolean canShare) {
         mShare.setVisibility(canShare ? View.VISIBLE : View.GONE);
+    }
+
+    public void removeFragment(Fragment fragment) {
+        // Be careful with the kind of fragment we are dealing , remove() doesnt like appv4fragent
+        getSupportFragmentManager().beginTransaction().remove(fragment).commit();
     }
 }

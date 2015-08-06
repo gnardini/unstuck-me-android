@@ -27,7 +27,7 @@ import ar.com.wolox.unstuckme.utils.ImageEraseListener;
 import ar.com.wolox.unstuckme.utils.ImageUploadListener;
 import ar.com.wolox.unstuckme.utils.QuestionBuilder;
 
-public class CreateQuestionsFragment extends Fragment {
+public class CreateQuestionsFragment extends Fragment implements CroppedImageHandler{
 
     private static final int IMAGE_UPLOAD_1 = 11;
     private static final int IMAGE_UPLOAD_2 = 12;
@@ -54,6 +54,9 @@ public class CreateQuestionsFragment extends Fragment {
     ImageButton mImageErase4;
 
     ImageView mReadyButton;
+
+    View.OnClickListener mEraseImageListener;
+    private int lastCode;
 
     @Override
     public void onResume() {
@@ -86,6 +89,7 @@ public class CreateQuestionsFragment extends Fragment {
         mImageUpload2 = (ImageView) v.findViewById(R.id.create_questions_image_upload_2);
         mImageUpload3 = (ImageView) v.findViewById(R.id.create_questions_image_upload_3);
         mImageUpload4 = (ImageView) v.findViewById(R.id.create_questions_image_upload_4);
+
 
         mImagePlaceholder1 = (ImageView) v.findViewById(R.id.create_questions_placeholder_1);
         mImagePlaceholder2 = (ImageView) v.findViewById(R.id.create_questions_placeholder_2);
@@ -136,24 +140,23 @@ public class CreateQuestionsFragment extends Fragment {
                 if (countEffectiveImages() >= MIN_IMAGES_TO_UPLOAD) {
                     AnimationsHelper.startAnimation(getActivity(), mReadyButton, R.anim.fly_plane)
                             .setAnimationListener(new Animation.AnimationListener() {
-                                @Override
-                                public void onAnimationStart(Animation arg0) {
-                                }
+                                                    @Override
+                                                    public void onAnimationStart(Animation arg0) {
+                                                    }
 
-                                @Override
-                                public void onAnimationRepeat(Animation arg0) {
-                                }
+                                                    @Override
+                                                    public void onAnimationRepeat(Animation arg0) {
+                                                    }
 
-                                @Override
-                                public void onAnimationEnd(Animation arg0) {
-                                    getFragmentManager()
-                                            .beginTransaction()
-                                            .add(R.id.create_questions_container,
-                                                    PrivacyQuestionsFragment.newInstance())
-                                            .addToBackStack(TAG)
-                                            .commit();
-                                }
-                            });
+                                                    @Override
+                                                    public void onAnimationEnd(Animation arg0) {
+                                                        getFragmentManager()
+                                                                .beginTransaction()
+                                                                .add(R.id.create_questions_container, PrivacyQuestionsFragment.newInstance())
+                                                                .addToBackStack(TAG)
+                                    .commit();
+                        }});
+
                 } else {
                     Toast.makeText(getActivity(), R.string.error_create_question_not_enough_images, Toast.LENGTH_SHORT).show();
                 }
@@ -177,83 +180,20 @@ public class CreateQuestionsFragment extends Fragment {
                 requestCode == IMAGE_UPLOAD_2 ||
                 requestCode == IMAGE_UPLOAD_3 ||
                 requestCode == IMAGE_UPLOAD_4;
+
         if (codeOk && resultCode == getActivity().RESULT_OK && null != data) {
             Uri selectedImageUri = data.getData();
-            String picturePath = getPath(selectedImageUri);
-
-            ImageView imageView = null;
-            ImageView placeholderView = null;
-
-            switch (requestCode) {
-                case IMAGE_UPLOAD_1:
-                    imageView = (ImageView) getActivity().findViewById(R.id.create_questions_image_upload_1);
-                    placeholderView = (ImageView) getActivity().findViewById(R.id.create_questions_placeholder_1);
-                    mImageErase1.setVisibility(View.VISIBLE);
-                    break;
-                case IMAGE_UPLOAD_2:
-                    imageView = (ImageView) getActivity().findViewById(R.id.create_questions_image_upload_2);
-                    placeholderView = (ImageView) getActivity().findViewById(R.id.create_questions_placeholder_2);
-                    mImageErase2.setVisibility(View.VISIBLE);
-                    break;
-                case IMAGE_UPLOAD_3:
-                    imageView = (ImageView) getActivity().findViewById(R.id.create_questions_image_upload_3);
-                    placeholderView = (ImageView) getActivity().findViewById(R.id.create_questions_placeholder_3);
-                    mImageErase3.setVisibility(View.VISIBLE);
-                    break;
-                case IMAGE_UPLOAD_4:
-                    imageView = (ImageView) getActivity().findViewById(R.id.create_questions_image_upload_4);
-                    placeholderView = (ImageView) getActivity().findViewById(R.id.create_questions_placeholder_4);
-                    mImageErase4.setVisibility(View.VISIBLE);
-                    break;
-            }
-
-            if (imageView != null) {
-                imageView.setImageBitmap(decodeFile(picturePath));
-                placeholderView.setVisibility(View.GONE);
-            }
-
-            setReadyButton();
+            lastCode = requestCode;
+            getFragmentManager()
+                    .beginTransaction()
+                    .add(R.id.create_questions_container, CropImageFragment.newInstance(selectedImageUri, this))
+                    .commit();
         }
-    }
-
-    public String getPath(Uri uri) {
-        String[] projection = { MediaStore.Images.Media.DATA };
-        Cursor cursor = getActivity().getContentResolver().query(uri,
-                projection, null, null, null);
-        int column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
-        cursor.moveToFirst();
-        return cursor.getString(column_index);
     }
 
     private CreateQuestionsFragment add(ImageView iv) {
         mImagesToUpload.add(iv);
         return this;
-    }
-
-    // Decodes image and scales it to reduce memory consumption
-    private Bitmap decodeFile(String path) {
-        try {
-            // Decode image size
-            BitmapFactory.Options o = new BitmapFactory.Options();
-            o.inJustDecodeBounds = true;
-            BitmapFactory.decodeStream(new FileInputStream(path), null, o);
-
-            // The new size we want to scale_anticipate to
-            final int REQUIRED_SIZE=150;
-
-            // Find the correct scale_anticipate value. It should be the power of 2.
-            int scale = 1;
-            while(o.outWidth / scale / 2 >= REQUIRED_SIZE &&
-                    o.outHeight / scale / 2 >= REQUIRED_SIZE) {
-                scale *= 2;
-            }
-
-            // Decode with inSampleSize
-            BitmapFactory.Options o2 = new BitmapFactory.Options();
-            o2.inSampleSize = scale;
-            return BitmapFactory.decodeStream(new FileInputStream(path), null, o2);
-        } catch (FileNotFoundException e) {}
-        return null;
     }
 
     private void setReadyButton() {
@@ -263,5 +203,46 @@ public class CreateQuestionsFragment extends Fragment {
         } else {
             mReadyButton.setVisibility(View.GONE);
         }
+    }
+
+    @Override
+    public void onCroppedImage(Bitmap cropped) {
+
+        ImageView imageView = null;
+        ImageView placeholderView = null;
+
+        switch (lastCode) {
+            case IMAGE_UPLOAD_1:
+                imageView = (ImageView) getActivity().findViewById(R.id.create_questions_image_upload_1);
+                mImageErase1.setVisibility(View.VISIBLE);
+                break;
+            case IMAGE_UPLOAD_2:
+                imageView = (ImageView) getActivity().findViewById(R.id.create_questions_image_upload_2);
+                mImageErase2.setVisibility(View.VISIBLE);
+                break;
+            case IMAGE_UPLOAD_3:
+                imageView = (ImageView) getActivity().findViewById(R.id.create_questions_image_upload_3);
+                mImageErase3.setVisibility(View.VISIBLE);
+                break;
+            case IMAGE_UPLOAD_4:
+                imageView = (ImageView) getActivity().findViewById(R.id.create_questions_image_upload_4);
+                mImageErase4.setVisibility(View.VISIBLE);
+                break;
+        }
+
+        if (imageView != null) {
+            imageView.setImageBitmap(cropped);
+            togglePlaceholderVisibility(imageView, View.INVISIBLE);
+        }
+
+        setReadyButton();
+    }
+
+    public static void togglePlaceholderVisibility(ImageView iv, int visibility) {
+        if (iv == null)
+            return;
+        ViewGroup parent = (ViewGroup) iv.getParent();
+        // The scope changed to the parent, so there will be only one [TESTED]
+        parent.findViewWithTag("placeholder").setVisibility(visibility);
     }
 }
