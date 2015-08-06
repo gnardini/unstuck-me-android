@@ -54,10 +54,9 @@ public class CreateQuestionsFragment extends Fragment implements CroppedImageHan
     ImageButton mImageErase4;
 
     ImageView mReadyButton;
-    View.OnClickListener mOpenGallery;
+
     View.OnClickListener mEraseImageListener;
     private int lastCode;
-
 
     @Override
     public void onResume() {
@@ -139,24 +138,25 @@ public class CreateQuestionsFragment extends Fragment implements CroppedImageHan
                 if (mImageUpload4.getDrawable() != null)
                     QuestionBuilder.putImage(mImageUpload4);
                 if (countEffectiveImages() >= MIN_IMAGES_TO_UPLOAD) {
-                    AnimationsHelper.flyPlane(mReadyButton).setAnimationListener(new Animation.AnimationListener() {
-                        @Override
-                        public void onAnimationStart(Animation arg0) {
-                        }
+                    AnimationsHelper.startAnimation(getActivity(), mReadyButton, R.anim.fly_plane)
+                            .setAnimationListener(new Animation.AnimationListener() {
+                                                    @Override
+                                                    public void onAnimationStart(Animation arg0) {
+                                                    }
 
-                        @Override
-                        public void onAnimationRepeat(Animation arg0) {
-                        }
+                                                    @Override
+                                                    public void onAnimationRepeat(Animation arg0) {
+                                                    }
 
-                        @Override
-                        public void onAnimationEnd(Animation arg0) {
-                            getFragmentManager()
-                                    .beginTransaction()
-                                    .add(R.id.create_questions_container, PrivacyQuestionsFragment.newInstance())
-                                    .addToBackStack(TAG)
+                                                    @Override
+                                                    public void onAnimationEnd(Animation arg0) {
+                                                        getFragmentManager()
+                                                                .beginTransaction()
+                                                                .add(R.id.create_questions_container, PrivacyQuestionsFragment.newInstance())
+                                                                .addToBackStack(TAG)
                                     .commit();
-                        }
-                    });
+                        }});
+
                 } else {
                     Toast.makeText(getActivity(), R.string.error_create_question_not_enough_images, Toast.LENGTH_SHORT).show();
                 }
@@ -199,7 +199,7 @@ public class CreateQuestionsFragment extends Fragment implements CroppedImageHan
     private void setReadyButton() {
         if (countEffectiveImages() >= MIN_IMAGES_TO_UPLOAD) {
             mReadyButton.setVisibility(View.VISIBLE);
-            AnimationsHelper.scaleDecelerate(mReadyButton);
+            AnimationsHelper.startAnimation(getActivity(), mReadyButton, R.anim.scale_anticipate);
         } else {
             mReadyButton.setVisibility(View.GONE);
         }

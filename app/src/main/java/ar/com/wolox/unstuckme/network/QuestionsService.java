@@ -30,7 +30,7 @@ public interface QuestionsService {
             @Query("amount") int amountPerPage,
             Callback<List<Question>> db);
 
-    @POST(Configuration.API_PREFIX + "/questions")
+    @POST(Configuration.API_PREFIX + "questions")
     void postQuestion(
             @Body QuestionNew body,
             Callback<QuestionNew> cb);
@@ -42,4 +42,9 @@ public interface QuestionsService {
     @GET(Configuration.API_PREFIX + "questions/{question_id}")
     void getQuestion(@Path("question_id") int questionId,
                      Callback<Question> cb);
+
+    @POST(Configuration.API_PREFIX + "questions/{question_id}/unlock")
+    void unlockQuestion(@Path("question_id") int questionId,
+                        @Body String body,
+                        Callback<Void> cb);
 }
