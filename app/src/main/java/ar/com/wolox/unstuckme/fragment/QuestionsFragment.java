@@ -142,7 +142,7 @@ public class QuestionsFragment extends Fragment implements SwipeRefreshLayout.On
 
             Uri uri;
             for (Option option : removedQuestion.getOptions()) {
-                uri = Uri.parse(CloudinaryUtils.getQuestionCompressedImage(option.getImageUrl()));
+                uri = Uri.parse(CloudinaryUtils.getReducedImage(option.getImageUrl()));
                 mImagePipeline.evictFromCache(uri);
             }
             mPrefetchedQuestions--;
@@ -218,7 +218,7 @@ public class QuestionsFragment extends Fragment implements SwipeRefreshLayout.On
         int i = 0;
         Question question = mQuestionList.get(0);
         for (Option option : question.getOptions()) {
-            Uri uri = Uri.parse(CloudinaryUtils.getQuestionCompressedImage(option.getImageUrl()));
+            Uri uri = Uri.parse(CloudinaryUtils.getReducedImage(option.getImageUrl()));
             mAnswerImages.get(i).setImageURI(uri);
             mAnswerImages.get(i).setVisibility(View.VISIBLE);
             mAnswerImagesTick.get(i).setVisibility(View.GONE);
@@ -245,7 +245,7 @@ public class QuestionsFragment extends Fragment implements SwipeRefreshLayout.On
             Question prefetchQuestion = getNextPrefetchableQuestion();
             if (prefetchQuestion == null) return;
             for (Option option : prefetchQuestion.getOptions()) {
-                uri = Uri.parse(CloudinaryUtils.getQuestionCompressedImage(option.getImageUrl()));
+                uri = Uri.parse(CloudinaryUtils.getReducedImage(option.getImageUrl()));
                 mImagePipeline.prefetchToBitmapCache(buildImageRequestFromUri(uri), getActivity());
             }
             mPrefetchedQuestions++;

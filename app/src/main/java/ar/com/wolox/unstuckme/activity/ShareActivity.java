@@ -134,7 +134,7 @@ public class ShareActivity extends FragmentActivity {
     private void populate(Question question) {
         int i = 0;
         for (Option option : question.getOptions()) {
-            Uri uri = Uri.parse(CloudinaryUtils.getQuestionCompressedImage(option.getImageUrl()));
+            Uri uri = Uri.parse(CloudinaryUtils.getReducedImage(option.getImageUrl()));
             mAnswerImages.get(i).setImageURI(uri);
             mAnswerImages.get(i).setVisibility(View.VISIBLE);
             mAnswerImagesTick.get(i).setVisibility(View.GONE);

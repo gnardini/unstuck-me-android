@@ -54,9 +54,6 @@ public class CreateQuestionsFragment extends Fragment {
     ImageButton mImageErase4;
 
     ImageView mReadyButton;
-    View.OnClickListener mOpenGallery;
-    View.OnClickListener mEraseImageListener;
-
 
     @Override
     public void onResume() {
