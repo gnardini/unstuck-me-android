@@ -42,4 +42,9 @@ public interface QuestionsService {
     @GET(Configuration.API_PREFIX + "questions/{question_id}")
     void getQuestion(@Path("question_id") int questionId,
                      Callback<Question> cb);
+
+    @POST(Configuration.API_PREFIX + "questions/{question_id}/unlock")
+    void unlockQuestion(@Path("question_id") int questionId,
+                        @Body String body,
+                        Callback<Void> cb);
 }

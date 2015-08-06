@@ -25,6 +25,8 @@ import retrofit.converter.GsonConverter;
 
 public class UnstuckMeApplication extends Application {
 
+    public static String SHARED_PREFERENCES = "Unstuck Me Preferences";
+
     private static Context sContext;
     private static RequestInterceptor sSecureRequestInterceptor;
     private static Cloudinary sCloudinary;

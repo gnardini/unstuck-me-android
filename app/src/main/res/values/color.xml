@@ -9,6 +9,7 @@
 
     <!-- basic colors -->
     <color name="highlight_black">#881B1B1B</color>
+    <color name="highlight_white">#AAF2F2F2</color>
     <color name="green">#53C3B0</color>
     <color name="red">#E44E4B</color>
     <color name="red_dark">#B63E3C</color>

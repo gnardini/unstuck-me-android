@@ -52,6 +52,14 @@
             </intent-filter>
         </activity>
 
+        <activity android:name=".activity.ConfirmUnlockActivity"
+            android:theme="@android:style/Theme.Holo.Light.Dialog.NoActionBar"
+            android:screenOrientation="portrait">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".activity.MainActivity" />
+        </activity>
+
         <!-- TODO configurar ASI -->
         <!-- <meta-data android:name="CLOUDINARY_URL" android:value="cloudinary://123456789012345:abcdeghijklmnopqrstuvwxyz12@n07t21i7"/> -->
 

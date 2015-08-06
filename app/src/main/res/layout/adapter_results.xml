@@ -52,7 +52,6 @@
             android:layout_height="wrap_content"
             android:layout_gravity="left|center_vertical"
             android:layout_marginLeft="30dp"
-            android:text="Total Votes: 200"
             android:textColor="@color/white"
             android:textSize="16sp"
             app:font="@string/font_open_sans_regular"/>
@@ -64,6 +63,31 @@
             android:layout_gravity="center"
             android:layout_marginLeft="70dp"
             android:src="@drawable/ic_share"/>
+
+    </FrameLayout>
+
+    <FrameLayout
+        android:id="@+id/results_locked"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/highlight_white">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:src="@drawable/lock_closed"/>
+
+        <ar.com.wolox.unstuckme.view.FontTextView
+            android:id="@+id/results_unlock_price"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginLeft="70dp"
+            android:textColor="@color/black"
+            android:textSize="16sp"
+            android:textAllCaps="true"
+            app:font="@string/font_open_sans_regular"/>
 
     </FrameLayout>
 

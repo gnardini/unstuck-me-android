@@ -25,6 +25,10 @@ public class Configuration {
     public static final String PARSE_APP_ID = "wtyCWCDbimy34dtue0wuMNW2LT7T8fkbJda7TqcT";
     public static final String PARSE_CLIENT_KEY = "vMLOjrn5lf47kzBuFJz2vsMwcbk89ywkHfO4kiqS";
 
+    //PRICING
+    public static final int PRICE_UNBLOCK_MINE = 5;
+    public static final int PRICE_UNBLOCK_OTHER = 2;
+
     //ERROR
     public static final int QUESTION_ID_ERROR = -1;
 }
