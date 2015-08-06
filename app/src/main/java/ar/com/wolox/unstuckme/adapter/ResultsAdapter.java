@@ -1,6 +1,7 @@
 package ar.com.wolox.unstuckme.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,9 +14,11 @@ import com.facebook.drawee.view.DraweeView;
 import java.util.List;
 
 import ar.com.wolox.unstuckme.R;
+import ar.com.wolox.unstuckme.activity.FullscreenImageActivity;
 import ar.com.wolox.unstuckme.model.Option;
 import ar.com.wolox.unstuckme.model.Question;
 import ar.com.wolox.unstuckme.network.share.ShareObject;
+import ar.com.wolox.unstuckme.utils.CloudinaryUtils;
 
 public class ResultsAdapter extends BaseAdapter {
 
@@ -63,17 +66,31 @@ public class ResultsAdapter extends BaseAdapter {
         }
         Question question = mList.get(position);
         populate(question, v);
-        setListeners(question, v, view);
+        setRowListeners(question, v, view);
         return view;
     }
 
     private void populate(Question question, ViewHolder v) {
         List<Option> options = question.getOptions();
-        int winner = question.getWinnerIndex();
+        final int winner = question.getWinnerIndex();
         for (int i = 0 ; i < MAX_IMAGES ; i++) {
             if ( i < options.size()) {
+                final String imageUri = options.get(i).getImageUrl();
+                final boolean isWinner = (i == winner);
                 v.mPictures[i].mRoot.setVisibility(View.VISIBLE);
-                v.mPictures[i].mImage.setImageURI(Uri.parse(options.get(i).getImageUrl()));
+                v.mPictures[i].mImage.setImageURI(Uri.parse(CloudinaryUtils.getReducedImage(imageUri)));
+                v.mPictures[i].mImage.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        Intent i = new Intent(mContext, FullscreenImageActivity.class);
+                        i.putExtra(FullscreenImageActivity.EXT_LOW_RES_URI,
+                                CloudinaryUtils.getReducedImage(imageUri));
+                        i.putExtra(FullscreenImageActivity.EXT_FULL_RES_URI,
+                                CloudinaryUtils.getFullScreenImage(imageUri));
+                        i.putExtra(FullscreenImageActivity.EXT_IS_WINNER, isWinner);
+                        mContext.startActivity(i);
+                    }
+                });
             } else {
                 v.mPictures[i].mRoot.setVisibility(View.GONE);
             }
@@ -84,7 +101,7 @@ public class ResultsAdapter extends BaseAdapter {
         }
     }
 
-    private void setListeners(final Question question, final ViewHolder v, final View view) {
+    private void setRowListeners(final Question question, final ViewHolder v, final View view) {
         view.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View view) {
