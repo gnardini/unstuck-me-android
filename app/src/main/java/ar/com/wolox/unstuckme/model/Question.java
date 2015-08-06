@@ -8,6 +8,7 @@ public class Question {
 
     private int id;
     private boolean voted ;
+    private boolean unlocked;
     private List<Option> options;
 
     public int getId() {
@@ -20,6 +21,14 @@ public class Question {
 
     public boolean isVoted() {
         return voted;
+    }
+
+    public boolean isUnlocked() {
+        return unlocked;
+    }
+
+    public void unlock() {
+        unlocked = true;
     }
 
     public int getWinnerIndex() {

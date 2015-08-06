@@ -6,18 +6,28 @@ import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.view.ViewPager;
 import android.view.View;
+import android.widget.TextView;
 
 import ar.com.wolox.unstuckme.Configuration;
 import ar.com.wolox.unstuckme.R;
+import ar.com.wolox.unstuckme.UnstuckMeApplication;
 import ar.com.wolox.unstuckme.adapter.MainAdapter;
+import ar.com.wolox.unstuckme.listener.OnCreditsAddedListener;
 import ar.com.wolox.unstuckme.listener.OnShareAvailableListener;
+import ar.com.wolox.unstuckme.model.User;
 import ar.com.wolox.unstuckme.model.event.LeaveVoteViewEvent;
 import ar.com.wolox.unstuckme.model.event.ShareEvent;
 import ar.com.wolox.unstuckme.network.notification.PushReceiver;
+import ar.com.wolox.unstuckme.utils.AccessUtils;
 import ar.com.wolox.unstuckme.utils.QuestionBuilder;
 import de.greenrobot.event.EventBus;
+import retrofit.Callback;
+import retrofit.RetrofitError;
+import retrofit.client.Response;
 
-public class MainActivity extends FragmentActivity implements OnShareAvailableListener {
+public class MainActivity extends FragmentActivity implements
+        OnShareAvailableListener,
+        OnCreditsAddedListener {
 
     private final static int POSITION_ANSWERS = 0;
     private final static int POSITION_QUESTIONS = 1;
@@ -28,8 +38,11 @@ public class MainActivity extends FragmentActivity implements OnShareAvailableLi
     private View mAnswersTab;
     private View mQuestionsTab;
     private View mCreateQuestionTab;
+    private TextView mCredits;
     private View mShare;
     private View mProfile;
+
+    private User mUser;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -45,6 +58,7 @@ public class MainActivity extends FragmentActivity implements OnShareAvailableLi
         mAnswersTab = findViewById(R.id.main_tab_answers);
         mQuestionsTab = findViewById(R.id.main_tab_questions);
         mCreateQuestionTab = findViewById(R.id.main_tab_create_question);
+        mCredits = (TextView) findViewById(R.id.toolbar_credits);
         mShare = findViewById(R.id.toolbar_share);
         mProfile = findViewById(R.id.toolbar_user);
     }
@@ -53,6 +67,8 @@ public class MainActivity extends FragmentActivity implements OnShareAvailableLi
         mAnswersTab.setTag(POSITION_ANSWERS);
         mQuestionsTab.setTag(POSITION_QUESTIONS);
         mCreateQuestionTab.setTag(POSITION_CREATE_QUESTIONS);
+
+        getCredits();
 
         Bundle extras = getIntent().getExtras();
         if (extras != null && extras.containsKey(PushReceiver.QUESTION_ID)) {
@@ -79,6 +95,34 @@ public class MainActivity extends FragmentActivity implements OnShareAvailableLi
         if (extras != null && extras.containsKey(PushReceiver.LEVEL_UP)) {
             startActivity(new Intent(this, UserActivity.class));
             return;
+        }
+    }
+
+    private void getCredits() {
+        mUser = AccessUtils.getLoggedUser();
+        if (mUser != null) {
+            mCredits.setText(String.valueOf(mUser.getCredits()));
+        } else {
+            UnstuckMeApplication.sUserService.getUserStats(new Callback<User>() {
+                @Override
+                public void success(User user, Response response) {
+                    AccessUtils.updateUser(user);
+                    mUser = user;
+                    mCredits.setText(String.valueOf(user.getCredits()));
+                }
+
+                @Override
+                public void failure(RetrofitError error) {
+                }
+            });
+        }
+    }
+
+    public void addCredits(int credits) {
+        if (mUser != null) {
+            mUser.addCredits(credits);
+            mCredits.setText(String.valueOf(mUser.getCredits()));
+            AccessUtils.updateCredits(mUser);
         }
     }
 

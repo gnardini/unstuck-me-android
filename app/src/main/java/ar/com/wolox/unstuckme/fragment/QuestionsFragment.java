@@ -24,6 +24,7 @@ import java.util.List;
 import ar.com.wolox.unstuckme.Configuration;
 import ar.com.wolox.unstuckme.R;
 import ar.com.wolox.unstuckme.UnstuckMeApplication;
+import ar.com.wolox.unstuckme.listener.OnCreditsAddedListener;
 import ar.com.wolox.unstuckme.listener.OnShareAvailableListener;
 import ar.com.wolox.unstuckme.model.Option;
 import ar.com.wolox.unstuckme.model.Question;
@@ -43,6 +44,7 @@ import retrofit.client.Response;
 public class QuestionsFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
 
     private static final int PREFETCHED_IMAGES_COUNT = 5;
+    private static final int ANSWER_CREDITS = 1;
 
     private List<SimpleDraweeView> mAnswerImages = new ArrayList<>();
     private List<ImageView> mAnswerImagesTick = new ArrayList<>();
@@ -147,6 +149,7 @@ public class QuestionsFragment extends Fragment implements SwipeRefreshLayout.On
             }
             mPrefetchedQuestions--;
             checkPrefetchedImages();
+            addCredit();
         }
     };
 
@@ -356,6 +359,10 @@ public class QuestionsFragment extends Fragment implements SwipeRefreshLayout.On
     private void disablePullToRefresh() {
         mRefreshView.setEnabled(false);
         if (mRefreshView.isRefreshing()) mRefreshView.setRefreshing(false);
+    }
+
+    private void addCredit() {
+        ((OnCreditsAddedListener) getActivity()).addCredits(ANSWER_CREDITS);
     }
 
     private void setCanShare(boolean canShare) {

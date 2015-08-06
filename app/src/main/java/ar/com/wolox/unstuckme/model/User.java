@@ -2,7 +2,7 @@ package ar.com.wolox.unstuckme.model;
 
 public class User {
 
-    private String id;
+    private int id;
     private int answeredQuestions;
     private int myQuestionsAnswers;
     private int questionsAsked;
@@ -10,6 +10,28 @@ public class User {
     private int level;
     private int currentExp;
     private int expToLevelUp;
+
+    public User(int id,
+                int answeredQuestions,
+                int myQuestionsAnswers,
+                int questionsAsked,
+                int credits,
+                int level,
+                int currentExp,
+                int expToLevelUp) {
+        this.id = id;
+        this.answeredQuestions = answeredQuestions;
+        this.myQuestionsAnswers = myQuestionsAnswers;
+        this.questionsAsked = questionsAsked;
+        this.credits = credits;
+        this.level = level;
+        this.currentExp = currentExp;
+        this.expToLevelUp = expToLevelUp;
+    }
+
+    public int getId() {
+        return id;
+    }
 
     public int getAnsweredQuestions() {
         return answeredQuestions;
@@ -37,5 +59,9 @@ public class User {
 
     public int getExpToLevelUp() {
         return expToLevelUp;
+    }
+
+    public void addCredits(int credits) {
+        this.credits += credits;
     }
 }

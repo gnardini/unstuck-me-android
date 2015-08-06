@@ -15,14 +15,17 @@
     <!-- Answers -->
     <string name="my_answers">My Answers</string>
     <string name="my_questions">My Questions</string>
+    <string name="results_no_credits">You don\'t have enough credits!</string>
+    <string name="results_unlock_fail">Failed to unlock results</string>
     
     <!-- Questions -->
     <string name="question_image_id">ID</string>
 
     <!-- User -->
-    <string name="user_my_questions_answered">My Questions answered</string>
+    <string name="user_credits">Credits</string>
     <string name="user_questions_asked">Questions asked</string>
-    <string name="user_questions_asnwered">Questions answered</string>
+    <string name="user_questions_answered">Questions answered</string>
+    <string name="user_my_questions_answered">My Questions answered</string>
 
     <!-- Push Notifications -->
     <string name="push_notification_limit">Your question reached its limit!</string>
