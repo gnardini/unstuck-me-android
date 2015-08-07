@@ -17,6 +17,10 @@
     <string name="my_questions">My Questions</string>
     <string name="results_no_credits">You don\'t have enough credits!</string>
     <string name="results_unlock_fail">Failed to unlock results</string>
+    <string name="results_confirm_unlock">Do you want to unlock this Question\'s
+        result for %d credits?</string>
+    <string name="results_unlock_yes">Unlock</string>
+    <string name="results_unlock_no">No</string>
     
     <!-- Questions -->
     <string name="question_image_id">ID</string>

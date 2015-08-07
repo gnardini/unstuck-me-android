@@ -1,8 +1,10 @@
 package ar.com.wolox.unstuckme.adapter;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
+import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -80,7 +82,7 @@ public class ResultsAdapter extends BaseAdapter {
         return view;
     }
 
-    private void populate(Question question, ViewHolder v) {
+    private void populate(final Question question, final ViewHolder v) {
         List<Option> options = question.getOptions();
         final int winner = question.getWinnerIndex();
         for (int i = 0 ; i < MAX_IMAGES ; i++) {
@@ -102,6 +104,17 @@ public class ResultsAdapter extends BaseAdapter {
                         mContext.startActivity(i);
                     }
                 });
+                v.mPictures[i].mImage.setOnLongClickListener(new View.OnLongClickListener() {
+                    @Override
+                    public boolean onLongClick(View view) {
+                        if (!question.isUnlocked()) return false;
+                        if (mLongClicked != null) mLongClicked.setVisibility(View.GONE);
+                        mLongClicked = v.mHighlight;
+                        v.mHighlight.setVisibility(View.VISIBLE);
+                        v.mTotalVotes.setText(String.format(TOTAL_VOTES, question.getTotalVotes()));
+                        return true;
+                    }
+                });
             } else {
                 v.mPictures[i].mRoot.setVisibility(View.GONE);
             }
@@ -119,17 +132,6 @@ public class ResultsAdapter extends BaseAdapter {
     }
 
     private void setRowListeners(final Question question, final ViewHolder v, final View view) {
-        view.setOnLongClickListener(new View.OnLongClickListener() {
-            @Override
-            public boolean onLongClick(View view) {
-                if (!question.isUnlocked()) return false;
-                if (mLongClicked != null) mLongClicked.setVisibility(View.GONE);
-                mLongClicked = v.mHighlight;
-                v.mHighlight.setVisibility(View.VISIBLE);
-                v.mTotalVotes.setText(String.format(TOTAL_VOTES, question.getTotalVotes()));
-                return false;
-            }
-        });
         view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -152,48 +154,47 @@ public class ResultsAdapter extends BaseAdapter {
             @Override
             public void onClick(View view) {
                 if (AccessUtils.getLoggedUser().getCredits() >= mPrice) {
-                    // showConfirmationDialog();
-                    UnstuckMeApplication.sQuestionsService.unlockQuestion(question.getId(), "",
-                            new Callback<Void>() {
-                                @Override
-                                public void success(Void aVoid, Response response) {
-                                    v.mLocked.setVisibility(View.GONE);
-                                    updateCredits();
-                                    question.unlock();
-                                    populate(question, v);
-                                }
-
-                                @Override
-                                public void failure(RetrofitError error) {
-                                    ToastUtils.showToast(mContext, R.string.results_unlock_fail);
-                                }
-                            });
+                    showConfirmationDialog(question, v);
                 } else {
                     ToastUtils.showToast(mContext, R.string.results_no_credits);
                 }
             }
         });
     }
-/* TODO confirmation dialog
-    private void showConfirmationDialog() {
+
+    private void showConfirmationDialog(final Question question, final ViewHolder v) {
         new AlertDialog.Builder(mContext)
-                .setIcon(android.R.drawable.ic_dialog_alert)
-                .setTitle(R.string.quit)
-                .setMessage(R.string.results_confirm_unlock)
-                .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
+                .setTitle(R.string.app_name)
+                .setIcon(R.drawable.selector_tab_questions)
+                .setMessage(mContext.getString(R.string.results_confirm_unlock, mPrice))
+                .setPositiveButton(R.string.results_unlock_yes,
+                        new DialogInterface.OnClickListener() {
 
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
+                        UnstuckMeApplication.sQuestionsService.unlockQuestion(
+                                question.getId(), "",
+                                new Callback<Void>() {
+                                    @Override
+                                    public void success(Void aVoid, Response response) {
+                                        v.mLocked.setVisibility(View.GONE);
+                                        updateCredits();
+                                        question.unlock();
+                                        populate(question, v);
+                                    }
 
-                        //Stop the activity
-                        YourClass.this.finish();
+                                    @Override
+                                    public void failure(RetrofitError error) {
+                                        ToastUtils.showToast(mContext,
+                                                R.string.results_unlock_fail);
+                                    }
+                                });
                     }
-
                 })
-                .setNegativeButton(R.string.no, null)
+                .setNegativeButton(R.string.results_unlock_no, null)
                 .show();
     }
-*/
+
     private void updateCredits() {
         ((MainActivity) mContext).addCredits(-mPrice);
     }
