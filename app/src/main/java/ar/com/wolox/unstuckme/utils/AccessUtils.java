@@ -79,7 +79,7 @@ public class AccessUtils {
 
     public static String getDeviceId() {
         return Settings.Secure.getString(getContext().getContentResolver(),
-                Settings.Secure.ANDROID_ID);
+                Settings.Secure.ANDROID_ID)+"dfg";
     }
 
     private static Context getContext() {
