@@ -34,7 +34,7 @@
                         android:id="@+id/questions_imageview_answer_1"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        fresco:progressBarImage="@drawable/ic_loader_spinner"
+                        fresco:progressBarImage="@drawable/ic_loader_spinner_colors"
                         fresco:progressBarImageScaleType="centerInside"
                         fresco:progressBarAutoRotateInterval="1500"
                         style="@style/QuestionsImage"/>
@@ -58,7 +58,7 @@
                         android:id="@+id/questions_imageview_answer_2"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        fresco:progressBarImage="@drawable/ic_loader_spinner"
+                        fresco:progressBarImage="@drawable/ic_loader_spinner_colors"
                         fresco:progressBarImageScaleType="centerInside"
                         fresco:progressBarAutoRotateInterval="1500"
                         style="@style/QuestionsImage"/>
@@ -92,7 +92,7 @@
                         android:id="@+id/questions_imageview_answer_3"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        fresco:progressBarImage="@drawable/ic_loader_spinner"
+                        fresco:progressBarImage="@drawable/ic_loader_spinner_colors"
                         fresco:progressBarImageScaleType="centerInside"
                         fresco:progressBarAutoRotateInterval="1500"
                         style="@style/QuestionsImage"/>
@@ -116,7 +116,7 @@
                         android:id="@+id/questions_imageview_answer_4"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        fresco:progressBarImage="@drawable/ic_loader_spinner"
+                        fresco:progressBarImage="@drawable/ic_loader_spinner_colors"
                         fresco:progressBarImageScaleType="centerInside"
                         fresco:progressBarAutoRotateInterval="1500"
                         style="@style/QuestionsImage"/>

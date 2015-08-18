@@ -7,7 +7,7 @@
         android:id="@+id/create_questions_spinner"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:src="@drawable/ic_loader_spinner"
+        android:src="@drawable/ic_loader_spinner_colors"
         android:layout_centerVertical="true"/>
 
     <TextView
